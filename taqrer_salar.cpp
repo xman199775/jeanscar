@@ -211,4 +211,5 @@ void Taqrer_salar::on_pushButton_2_clicked()
    // report->setSqlQuery("select e.`Ecode` as ecode, m.month , e.`Name`, e.`Clear-salary`, ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis, ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa, ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary' from `employee` as e , `month`as m where m.id="+month);
     report->printExec(true);
 */
+
 }

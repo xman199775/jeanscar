@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     ui->deldate->setDate(*curdate);
     ui->delevertime->setDate(*curdate);
     ui->dateEdit_3->setDate(*curdate);
+    ui->daily_re->setDate(*curdate);
 
     reportSalary=NULL;
     english = QLocale(QLocale::English, QLocale::UnitedStates);
@@ -1839,8 +1840,16 @@ void MainWindow::on_pushButton_32_clicked()//اليومية
 {
     QSqlTableModel *table= new  QSqlTableModel;
     table->setTable("Daily");
-    table->setFilter("`Done`= '0'");
+    QString date = english.toString(ui->daily_re->date(),"yyyy-MM-dd");
+    table->setFilter("Date = '"+date+"'");
     table->select();
+    table->setHeaderData(0, Qt::Horizontal, tr("كود اليومية"));
+    table->setHeaderData(1, Qt::Horizontal, tr("كود المستخدم"));
+    table->setHeaderData(2, Qt::Horizontal, tr("القيمة"));
+    table->setHeaderData(3, Qt::Horizontal, tr("السبب"));
+    table->setHeaderData(4, Qt::Horizontal, tr("التاريخ"));
+    table->setHeaderData(5, Qt::Horizontal, tr("داخل"));
+    table->setHeaderData(6, Qt::Horizontal, tr("حسابات شركة"));
     ui->dailymtable->setModel(table);
 }
 
