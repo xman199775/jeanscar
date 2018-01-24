@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
@@ -563,7 +563,7 @@ background-color: rgb(170, 170, 170);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                       <property name="calendarPopup">
                        <bool>true</bool>
@@ -617,7 +617,7 @@ background-color: rgb(170, 170, 170);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                       <property name="calendarPopup">
                        <bool>true</bool>
@@ -819,8 +819,11 @@ background-color: rgb(170, 170, 170);
                       <second>0</second>
                      </time>
                     </property>
+                    <property name="currentSection">
+                     <enum>QDateTimeEdit::DaySection</enum>
+                    </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -1555,7 +1558,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -1796,7 +1799,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -2044,7 +2047,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -2409,7 +2412,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -2657,7 +2660,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -2882,7 +2885,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -3328,7 +3331,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -5338,7 +5341,7 @@ background-color: rgb(108, 108, 108);
                          <string notr="true">background-color: rgb(255, 255, 255);</string>
                         </property>
                         <property name="displayFormat">
-                         <string>dd/MM/yyyy</string>
+                         <string>dd-MM-yyyy</string>
                         </property>
                         <property name="calendarPopup">
                          <bool>true</bool>
@@ -5479,7 +5482,7 @@ background-color: rgb(108, 108, 108);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/MM/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                      </widget>
                     </item>
@@ -5540,7 +5543,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/MM/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -6364,7 +6367,7 @@ background-color: rgb(108, 108, 108);
                        </font>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                      </widget>
                     </item>
@@ -8208,7 +8211,7 @@ background-color: rgb(108, 108, 108);
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="displayFormat">
-             <string>dd/M/yyyy</string>
+             <string>dd-MM-yyyy</string>
             </property>
            </widget>
           </item>
@@ -8234,192 +8237,51 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>  حسابات   </string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_12">
-        <item row="0" column="0" rowspan="2">
-         <layout class="QVBoxLayout" name="verticalLayout_96">
+       <layout class="QVBoxLayout" name="verticalLayout_108">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_54">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_95">
+           <layout class="QVBoxLayout" name="verticalLayout_96">
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_69">
+             <layout class="QVBoxLayout" name="verticalLayout_95">
               <item>
-               <widget class="QPushButton" name="pushButton_39">
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
+               <layout class="QHBoxLayout" name="horizontalLayout_69">
+                <item>
+                 <widget class="QPushButton" name="pushButton_39">
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-                </property>
-                <property name="text">
-                 <string>طباعة</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_35">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
+                  </property>
+                  <property name="text">
+                   <string>طباعة</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_35">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-                </property>
-                <property name="text">
-                 <string>بحث محدد</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDateEdit" name="dateEdit_2">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-                </property>
-                <property name="displayFormat">
-                 <string>dd/M/yyyy</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_140">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>يومية</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_72">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_89">
-                <item>
-                 <widget class="QLabel" name="label_152">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
                   </property>
                   <property name="text">
-                   <string>حسابات خارجية</string>
+                   <string>بحث محدد</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTableView" name="dayout">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_92">
-                <item>
-                 <widget class="QLabel" name="label_151">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>حسابات شركة</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QTableView" name="dayin">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_71">
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_70">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_87">
-                <item>
-                 <widget class="QLabel" name="label_143">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>داخل</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="dinin">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="doutin">
+                 <widget class="QDateEdit" name="dateEdit_2">
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -8428,203 +8290,70 @@ background-color: rgb(108, 108, 108);
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true"/>
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
+                  <property name="displayFormat">
+                   <string>dd-MM-yyyy</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_140">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
                   </property>
                   <property name="text">
-                   <string>0</string>
+                   <string>يومية</string>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_86">
+               <layout class="QHBoxLayout" name="horizontalLayout_72">
                 <item>
-                 <widget class="QLabel" name="label_144">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>خارج</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="dinout">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="doutout">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>0</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_88">
-              <item>
-               <spacer name="horizontalSpacer">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_138">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-                <property name="text">
-                 <string>حسابات شركة:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_139">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-                <property name="text">
-                 <string>حسابات خارجية:        </string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item row="0" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_83">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_82">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_81">
-              <item>
-               <widget class="QLabel" name="label_131">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>يومية</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_67">
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_76">
+                 <layout class="QVBoxLayout" name="verticalLayout_89">
                   <item>
-                   <widget class="QDoubleSpinBox" name="money">
+                   <widget class="QLabel" name="label_152">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
                     </property>
-                    <property name="maximum">
-                     <double>999999999.990000009536743</double>
+                    <property name="text">
+                     <string>حسابات خارجية</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="dailyreason">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
+                   <widget class="QTableView" name="dayout">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_75">
+                 <layout class="QVBoxLayout" name="verticalLayout_92">
                   <item>
-                   <widget class="QLabel" name="label_132">
+                   <widget class="QLabel" name="label_151">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -8633,32 +8362,18 @@ background-color: rgb(108, 108, 108);
                      <enum>QFrame::Box</enum>
                     </property>
                     <property name="text">
-                     <string>  المبلغ :</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     <string>حسابات شركة</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_133">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
+                   <widget class="QTableView" name="dayin">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>  السبب :           </string>
                     </property>
                    </widget>
                   </item>
@@ -8669,9 +8384,340 @@ background-color: rgb(108, 108, 108);
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_66">
+             <layout class="QHBoxLayout" name="horizontalLayout_71">
               <item>
-               <widget class="QRadioButton" name="radioButton_2">
+               <layout class="QHBoxLayout" name="horizontalLayout_70">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_87">
+                  <item>
+                   <widget class="QLabel" name="label_143">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>داخل</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="dinin">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="doutin">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_86">
+                  <item>
+                   <widget class="QLabel" name="label_144">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>خارج</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="dinout">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="doutout">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_88">
+                <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_138">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>حسابات شركة:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_139">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>حسابات خارجية:        </string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_102">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_83">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_82">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_81">
+                  <item>
+                   <widget class="QLabel" name="label_131">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>يومية</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_67">
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_76">
+                      <item>
+                       <widget class="QDoubleSpinBox" name="money">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255, 255, 255);</string>
+                        </property>
+                        <property name="maximum">
+                         <double>999999999.990000009536743</double>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="dailyreason">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255, 255, 255);</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_75">
+                      <item>
+                       <widget class="QLabel" name="label_132">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
+                        <property name="text">
+                         <string>  المبلغ :</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_133">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
+                        <property name="text">
+                         <string>  السبب :           </string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_66">
+                  <item>
+                   <widget class="QRadioButton" name="radioButton_2">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="text">
+                     <string>داخل</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="radioButton">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="text">
+                     <string>خارج</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_31">
                 <property name="font">
                  <font>
                   <weight>75</weight>
@@ -8681,27 +8727,78 @@ background-color: rgb(108, 108, 108);
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
-                <property name="text">
-                 <string>داخل</string>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
                 </property>
-                <property name="checked">
-                 <bool>true</bool>
+                <property name="text">
+                 <string>ادخال</string>
                 </property>
                </widget>
               </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_74">
               <item>
-               <widget class="QRadioButton" name="radioButton">
+               <layout class="QHBoxLayout" name="horizontalLayout_49">
+                <item>
+                 <widget class="QPushButton" name="pushButton_32">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>تنشيط</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDateEdit" name="daily_re">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="displayFormat">
+                   <string>dd-MM-yyyy</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_134">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>مراجعة اليومية :</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QTableView" name="dailymtable">
                 <property name="font">
                  <font>
+                  <pointsize>12</pointsize>
                   <weight>75</weight>
                   <bold>true</bold>
                  </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>خارج</string>
                 </property>
                </widget>
               </item>
@@ -8709,81 +8806,9 @@ background-color: rgb(108, 108, 108);
             </item>
            </layout>
           </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_31">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-            </property>
-            <property name="text">
-             <string>ادخال</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
-        <item row="1" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_74">
-          <item>
-           <widget class="QLabel" name="label_134">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>يومية غير تامة</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTableView" name="dailymtable">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_32">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-            </property>
-            <property name="text">
-             <string>تنشيط</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="2" column="0" colspan="2">
+        <item>
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0" colspan="2">
            <layout class="QHBoxLayout" name="horizontalLayout_68">
@@ -8921,7 +8946,7 @@ background-color: rgb(108, 108, 108);
           </item>
          </layout>
         </item>
-        <item row="3" column="0" colspan="2">
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_73">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_93">
@@ -9191,7 +9216,7 @@ background-color: rgb(108, 108, 108);
              </font>
             </property>
             <property name="displayFormat">
-             <string>dd/M/yyyy</string>
+             <string>dd-MM-yyyy</string>
             </property>
            </widget>
           </item>
