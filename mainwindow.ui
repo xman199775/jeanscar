@@ -183,7 +183,7 @@ background-color: rgb(170, 170, 170);
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>hhhh</string>
+           <string>اسم الموظف :</string>
           </property>
          </widget>
         </item>
