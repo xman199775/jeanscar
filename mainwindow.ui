@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1439</width>
-    <height>909</height>
+    <width>1436</width>
+    <height>827</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>10</number>
+       <number>3</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3452,180 +3452,150 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>    مدير النظام    </string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_79">
+       <layout class="QVBoxLayout" name="verticalLayout_56">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_98">
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_121">
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1370</width>
+             <height>695</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_79">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_23">
+             <layout class="QHBoxLayout" name="horizontalLayout_58">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_23">
+               <layout class="QVBoxLayout" name="verticalLayout_53">
                 <item>
-                 <widget class="QLabel" name="label_60">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>حذف موظف </string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="Line" name="line_5">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_24">
-                <item>
-                 <widget class="QLineEdit" name="deleteecode">
-                  <property name="font">
-                   <font>
-                    <pointsize>8</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_61">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="frameShape">
-                   <enum>QFrame::Box</enum>
-                  </property>
-                  <property name="text">
-                   <string>كود الموظف :     </string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_8">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
+                 <layout class="QVBoxLayout" name="verticalLayout_46">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_27">
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_44">
+                      <item>
+                       <widget class="QPushButton" name="pushButton_43">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-                </property>
-                <property name="text">
-                 <string>حذف</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_53">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_28">
-                <item>
-                 <widget class="QLabel" name="label_82">
-                  <property name="font">
-                   <font>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>تعديل بيانات موظف /اظهار تقرير حالة</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_30">
-                  <item>
-                   <widget class="QPushButton" name="pushButton_23">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: rgb(255, 255, 255);
+                        </property>
+                        <property name="text">
+                         <string>الاعدادات</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="Accounting">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-                    </property>
-                    <property name="text">
-                     <string>دخول</string>
-                    </property>
-                   </widget>
+                        </property>
+                        <property name="text">
+                         <string>حسابات مفصلة</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_107">
+                      <item>
+                       <widget class="QLabel" name="label_167">
+                        <property name="font">
+                         <font>
+                          <pointsize>12</pointsize>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::WinPanel</enum>
+                        </property>
+                        <property name="text">
+                         <string>تحديد موظف</string>
+                        </property>
+                        <property name="alignment">
+                         <set>Qt::AlignCenter</set>
+                        </property>
+                        <property name="margin">
+                         <number>4</number>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_77">
+                        <item>
+                         <widget class="QPushButton" name="pushButton_52">
+                          <property name="styleSheet">
+                           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+
+</string>
+                          </property>
+                          <property name="text">
+                           <string>اختار موظف</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QComboBox" name="curr_edit">
+                          <property name="font">
+                           <font>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <item>
+                           <property name="text">
+                            <string>اضافة مستخدم</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>حذف مستخدم</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>حذف موظف</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>تعديل موظف</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>تقرير عن مستخدم</string>
+                           </property>
+                          </item>
+                          <item>
+                           <property name="text">
+                            <string>تعديل مستخدم</string>
+                           </property>
+                          </item>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
                   </item>
-                  <item>
-                   <widget class="QLineEdit" name="editemplyeecode">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_83">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>كود الموظف:       </string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_52">
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_51">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_38">
                     <item>
@@ -3683,6 +3653,90 @@ background-color: rgb(108, 108, 108);
                     </item>
                    </layout>
                   </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_28">
+                  <item>
+                   <widget class="QLabel" name="label_82">
+                    <property name="font">
+                     <font>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::WinPanel</enum>
+                    </property>
+                    <property name="text">
+                     <string>تعديل بيانات موظف /اظهار تقرير حالة</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>4</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_30">
+                    <item>
+                     <widget class="QPushButton" name="pushButton_23">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                      </property>
+                      <property name="text">
+                       <string>دخول</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="editemplyeecode">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_83">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود الموظف:       </string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_51">
                   <item>
                    <widget class="QLabel" name="label_74">
                     <property name="font">
@@ -3691,8 +3745,17 @@ background-color: rgb(108, 108, 108);
                       <bold>true</bold>
                      </font>
                     </property>
+                    <property name="frameShape">
+                     <enum>QFrame::WinPanel</enum>
+                    </property>
                     <property name="text">
                      <string>تقرير عن مستخدم </string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>4</number>
                     </property>
                    </widget>
                   </item>
@@ -3769,149 +3832,85 @@ background-color: rgb(108, 108, 108);
                     </item>
                    </layout>
                   </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
+                    <item>
+                     <widget class="QPushButton" name="pushButton_12">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+
+</string>
+                      </property>
+                      <property name="text">
+                       <string>اظهار الكل</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="pushButton_42">
+                      <property name="styleSheet">
+                       <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                      </property>
+                      <property name="text">
+                       <string>طباعة</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <widget class="QTableView" name="admintable">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_52">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_26">
                   <item>
-                   <widget class="QPushButton" name="pushButton_12">
+                   <widget class="QLabel" name="label_70">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-
-</string>
+                    <property name="frameShape">
+                     <enum>QFrame::WinPanel</enum>
                     </property>
                     <property name="text">
-                     <string>اظهار الكل</string>
+                     <string>اضافة مستخدم للنظام  </string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>4</number>
                     </property>
                    </widget>
                   </item>
-                  <item>
-                   <widget class="QPushButton" name="pushButton_42">
-                    <property name="styleSheet">
-                     <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-                    </property>
-                    <property name="text">
-                     <string>طباعة</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_109">
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_107">
-              <item>
-               <widget class="QLabel" name="label_167">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>تحديد موظف</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_77">
-                <item>
-                 <widget class="QPushButton" name="pushButton_52">
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-
-</string>
-                  </property>
-                  <property name="text">
-                   <string>اختار موظف</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QComboBox" name="curr_edit">
-                  <property name="font">
-                   <font>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <item>
-                   <property name="text">
-                    <string>اضافة مستخدم</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>حذف مستخدم</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>حذف موظف</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>تعديل موظف</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>تقرير عن مستخدم</string>
-                   </property>
-                  </item>
-                  <item>
-                   <property name="text">
-                    <string>تعديل مستخدم</string>
-                   </property>
-                  </item>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_27">
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_46">
-                <item>
-                 <widget class="QLabel" name="label_70">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>اضافة مستخدم للنظام  </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_26">
                   <item>
                    <layout class="QHBoxLayout" name="horizontalLayout_37">
                     <item>
@@ -4073,195 +4072,180 @@ background-color: rgb(108, 108, 108);
                   </item>
                  </layout>
                 </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QVBoxLayout" name="verticalLayout_47">
                 <item>
-                 <widget class="QLabel" name="label_72">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>حذف مستخدم للنظام </string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_48">
+                 <layout class="QVBoxLayout" name="verticalLayout_47">
                   <item>
-                   <widget class="QLineEdit" name="deletecode">
+                   <widget class="QLabel" name="label_72">
                     <property name="font">
                      <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_87">
-                    <property name="font">
-                     <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
                     <property name="frameShape">
-                     <enum>QFrame::Box</enum>
+                     <enum>QFrame::WinPanel</enum>
                     </property>
                     <property name="text">
-                     <string>كود الموظف : </string>
+                     <string>حذف مستخدم للنظام </string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>4</number>
                     </property>
                    </widget>
                   </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_14">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-                  </property>
-                  <property name="text">
-                   <string>حذف</string>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_44">
-          <item>
-           <widget class="QTableView" name="admintable">
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QVBoxLayout" name="verticalLayout_56">
-            <item>
-             <widget class="QPushButton" name="pushButton_43">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-              </property>
-              <property name="text">
-               <string>الاعدادات</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="Accounting">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-              </property>
-              <property name="text">
-               <string>حسابات مفصلة</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_31">
-              <item>
-               <widget class="QLabel" name="label_62">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>تعديل مستخدم </string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_25">
-                <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_29">
                   <item>
-                   <widget class="QLineEdit" name="editecode">
+                   <layout class="QHBoxLayout" name="horizontalLayout_48">
+                    <item>
+                     <widget class="QLineEdit" name="deletecode">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_87">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود الموظف : </string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_14">
                     <property name="font">
                      <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
                     </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="newpassword">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="pushButton_22">
                     <property name="styleSheet">
                      <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
-
 </string>
                     </property>
                     <property name="text">
-                     <string>آختر الصلاحية</string>
+                     <string>حذف</string>
                     </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_30">
+                 <layout class="QVBoxLayout" name="verticalLayout_23">
                   <item>
-                   <widget class="QLabel" name="label_75">
+                   <layout class="QHBoxLayout" name="horizontalLayout_23">
+                    <item>
+                     <widget class="QLabel" name="label_60">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::WinPanel</enum>
+                      </property>
+                      <property name="text">
+                       <string>حذف موظف </string>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignCenter</set>
+                      </property>
+                      <property name="margin">
+                       <number>4</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_24">
+                    <item>
+                     <widget class="QLineEdit" name="deleteecode">
+                      <property name="font">
+                       <font>
+                        <pointsize>8</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_61">
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود الموظف :     </string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="pushButton_8">
+                    <property name="font">
+                     <font>
+                      <pointsize>12</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                    </property>
+                    <property name="text">
+                     <string>حذف</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_31">
+                  <item>
+                   <widget class="QLabel" name="label_62">
                     <property name="font">
                      <font>
                       <weight>75</weight>
@@ -4269,42 +4253,136 @@ background-color: rgb(108, 108, 108);
                      </font>
                     </property>
                     <property name="frameShape">
-                     <enum>QFrame::Box</enum>
+                     <enum>QFrame::WinPanel</enum>
                     </property>
                     <property name="text">
-                     <string>كود الموظف :</string>
+                     <string>تعديل مستخدم </string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>4</number>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_79">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>كلمة السر الجديدة :</string>
-                    </property>
-                   </widget>
+                   <layout class="QHBoxLayout" name="horizontalLayout_25">
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_29">
+                      <item>
+                       <widget class="QLineEdit" name="editecode">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255, 255, 255);</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLineEdit" name="newpassword">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color: rgb(255, 255, 255);</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QPushButton" name="pushButton_22">
+                        <property name="styleSheet">
+                         <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+
+</string>
+                        </property>
+                        <property name="text">
+                         <string>آختر الصلاحية</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_30">
+                      <item>
+                       <widget class="QLabel" name="label_75">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
+                        <property name="text">
+                         <string>كود الموظف :</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_79">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
+                        <property name="text">
+                         <string>كلمة السر الجديدة :</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_80">
+                        <property name="font">
+                         <font>
+                          <weight>75</weight>
+                          <bold>true</bold>
+                         </font>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::Box</enum>
+                        </property>
+                        <property name="text">
+                         <string>الصلاحية :</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_80">
+                   <widget class="QPushButton" name="pushButton_20">
                     <property name="font">
                      <font>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
                     </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
                     </property>
                     <property name="text">
-                     <string>الصلاحية :</string>
+                     <string>تعديل</string>
                     </property>
                    </widget>
                   </item>
@@ -4312,32 +4390,11 @@ background-color: rgb(108, 108, 108);
                 </item>
                </layout>
               </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_20">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-                </property>
-                <property name="text">
-                 <string>تعديل</string>
-                </property>
-               </widget>
-              </item>
              </layout>
             </item>
            </layout>
-          </item>
-         </layout>
+          </widget>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -9576,7 +9633,6 @@ background-color: rgb(108, 108, 108);
   <tabstop>admindate</tabstop>
   <tabstop>reoportusercode</tabstop>
   <tabstop>pushButton_12</tabstop>
-  <tabstop>admintable</tabstop>
   <tabstop>editecode</tabstop>
   <tabstop>newpassword</tabstop>
   <tabstop>pushButton_20</tabstop>
