@@ -183,7 +183,7 @@ background-color: rgb(170, 170, 170);
            <enum>Qt::LeftToRight</enum>
           </property>
           <property name="text">
-           <string>اسم الموظف :  </string>
+           <string>hhhh</string>
           </property>
          </widget>
         </item>
@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>9</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
