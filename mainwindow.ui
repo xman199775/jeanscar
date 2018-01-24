@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
@@ -814,7 +814,7 @@ background-color: rgb(170, 170, 170);
                     </property>
                     <property name="time">
                      <time>
-                      <hour>0</hour>
+                      <hour>22</hour>
                       <minute>0</minute>
                       <second>0</second>
                      </time>
@@ -3463,8 +3463,8 @@ background-color: rgb(108, 108, 108);
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1370</width>
-             <height>695</height>
+             <width>1398</width>
+             <height>699</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">
