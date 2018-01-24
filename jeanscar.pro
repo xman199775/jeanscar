@@ -70,4 +70,3 @@ CONFIG += staticlib
 RESOURCES += \
     logo.qrc
 
-#sinclude($$PWD/QtRptProject/QtRPT/QtRPT.pri)

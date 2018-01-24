@@ -2,7 +2,4 @@
     <qresource prefix="/logo">
         <file>logo23.png</file>
     </qresource>
-    <qresource prefix="/print">
-        <file>bh.xml</file>
-    </qresource>
 </RCC>
