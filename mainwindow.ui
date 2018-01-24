@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>9</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
@@ -563,7 +563,7 @@ background-color: rgb(170, 170, 170);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                       <property name="calendarPopup">
                        <bool>true</bool>
@@ -617,7 +617,7 @@ background-color: rgb(170, 170, 170);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                       <property name="calendarPopup">
                        <bool>true</bool>
@@ -814,13 +814,16 @@ background-color: rgb(170, 170, 170);
                     </property>
                     <property name="time">
                      <time>
-                      <hour>22</hour>
+                      <hour>0</hour>
                       <minute>0</minute>
                       <second>0</second>
                      </time>
                     </property>
+                    <property name="currentSection">
+                     <enum>QDateTimeEdit::DaySection</enum>
+                    </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -1555,7 +1558,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -1796,7 +1799,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -2044,7 +2047,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -2409,7 +2412,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                     <property name="calendarPopup">
                      <bool>true</bool>
@@ -2657,7 +2660,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -2882,7 +2885,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -3328,7 +3331,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/M/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -5338,7 +5341,7 @@ background-color: rgb(108, 108, 108);
                          <string notr="true">background-color: rgb(255, 255, 255);</string>
                         </property>
                         <property name="displayFormat">
-                         <string>dd/MM/yyyy</string>
+                         <string>dd-MM-yyyy</string>
                         </property>
                         <property name="calendarPopup">
                          <bool>true</bool>
@@ -5479,7 +5482,7 @@ background-color: rgb(108, 108, 108);
                        <string notr="true">background-color: rgb(255, 255, 255);</string>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/MM/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                      </widget>
                     </item>
@@ -5540,7 +5543,7 @@ background-color: rgb(108, 108, 108);
                      <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
                     <property name="displayFormat">
-                     <string>dd/MM/yyyy</string>
+                     <string>dd-MM-yyyy</string>
                     </property>
                    </widget>
                   </item>
@@ -6364,7 +6367,7 @@ background-color: rgb(108, 108, 108);
                        </font>
                       </property>
                       <property name="displayFormat">
-                       <string>dd/M/yyyy</string>
+                       <string>dd-MM-yyyy</string>
                       </property>
                      </widget>
                     </item>
@@ -8208,7 +8211,7 @@ background-color: rgb(108, 108, 108);
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="displayFormat">
-             <string>dd/M/yyyy</string>
+             <string>dd-MM-yyyy</string>
             </property>
            </widget>
           </item>
@@ -8290,7 +8293,7 @@ background-color: rgb(108, 108, 108);
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="displayFormat">
-                   <string>dd/M/yyyy</string>
+                   <string>dd-MM-yyyy</string>
                   </property>
                  </widget>
                 </item>
@@ -8768,7 +8771,7 @@ background-color: rgb(108, 108, 108);
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="displayFormat">
-                   <string>dd/MM/yyyy</string>
+                   <string>dd-MM-yyyy</string>
                   </property>
                  </widget>
                 </item>
@@ -9213,7 +9216,7 @@ background-color: rgb(108, 108, 108);
              </font>
             </property>
             <property name="displayFormat">
-             <string>dd/M/yyyy</string>
+             <string>dd-MM-yyyy</string>
             </property>
            </widget>
           </item>
