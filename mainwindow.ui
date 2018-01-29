@@ -9239,24 +9239,6 @@ background-color: rgb(108, 108, 108);
        <layout class="QGridLayout" name="gridLayout_13">
         <item row="0" column="0" rowspan="2">
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_18">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-            </property>
-            <property name="text">
-             <string>تنشيط</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="1">
            <widget class="QDateEdit" name="delverdatenew">
             <property name="sizePolicy">
@@ -9277,12 +9259,42 @@ background-color: rgb(108, 108, 108);
             </property>
            </widget>
           </item>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="pushButton_18">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+            </property>
+            <property name="text">
+             <string>تنشيط</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0" colspan="2">
            <widget class="QListWidget" name="delverlist">
             <property name="styleSheet">
              <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="pushButton_51">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+            </property>
+            <property name="text">
+             <string>طباعة الكل</string>
             </property>
            </widget>
           </item>

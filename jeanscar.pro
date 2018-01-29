@@ -49,7 +49,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     password.ui \
     report.ui \
-    form1.ui \
     dialog.ui \
     product.ui \
     todoornottodo.ui \

@@ -191,6 +191,8 @@ private slots:
 
     void on_print_op_clicked();
 
+    void on_pushButton_51_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString *name;
