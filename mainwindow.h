@@ -214,6 +214,7 @@ private:
     QString generate_html_op(QString opcode);
     QString generate_html_all_salary(QString month, QString year);
     void update_flat_color();
+    void update_op_code();
 };
 
 #endif // MAINWINDOW_H

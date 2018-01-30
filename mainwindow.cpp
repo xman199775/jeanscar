@@ -87,7 +87,12 @@ void MainWindow::refresh()
     ui->adminline->setText(*name);
     ui->admincodeline->setText(*code);
 }
-
+void MainWindow::update_op_code(){
+    QSqlQuery qry;
+    qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
+    qry.first();
+    ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
+}
 void MainWindow::updatedate()
 {
     *curtime = QTime::currentTime();
@@ -97,6 +102,7 @@ void MainWindow::updatedate()
     ui->clock->setText(timestr);
     ui->date->setText(datestr);
     ui->dealdate->setDate(*curdate);
+    update_op_code();
 }
 
 void MainWindow::on_pushButton_18_clicked()//تسليم2
@@ -1177,9 +1183,9 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
         ui->customertable->setModel(model1);
 
     }
-    qry.exec("select max(`Order-num`) from `Order`");
+    qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
     qry.first();
-    ui->opreationcode->setText(QString::number(qry.value(0).toInt()+1));
+    ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
 
 }
 
@@ -1449,11 +1455,12 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                 }
                 else
                 {
+                    QMessageBox msgBox;
+                    msgBox.setWindowTitle("خطاء");
+                    msgBox.setText(qry.lastError().text());
+                    msgBox.exec();
                     qDebug()<<qry.lastError().text();
                 }
-                qry.exec("select max(`Order-num`) from `Order`");
-                qry.first();
-                ui->opreationcode->setText(QString::number(qry.value(0).toInt()+1));
             }
             else
             {
