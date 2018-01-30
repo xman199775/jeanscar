@@ -222,11 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-<<<<<<< HEAD
        <number>5</number>
-=======
-       <number>10</number>
->>>>>>> origin/test0.0
       </property>
       <property name="iconSize">
        <size>
@@ -3467,13 +3463,8 @@ background-color: rgb(108, 108, 108);
             <rect>
              <x>0</x>
              <y>0</y>
-<<<<<<< HEAD
              <width>1386</width>
              <height>703</height>
-=======
-             <width>1398</width>
-             <height>699</height>
->>>>>>> origin/test0.0
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">
@@ -5774,7 +5765,7 @@ background-color: rgb(108, 108, 108);
          </widget>
         </item>
        </layout>
-       <zorder>splitter_2</zorder>
+       <zorder>splitter</zorder>
        <zorder>pushButton</zorder>
        <zorder>label_21</zorder>
       </widget>
