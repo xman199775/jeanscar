@@ -222,7 +222,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>6</number>
       </property>
       <property name="iconSize">
        <size>
@@ -5775,7 +5775,7 @@ background-color: rgb(108, 108, 108);
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_77">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_53">
+         <layout class="QHBoxLayout" name="horizontalLayout_59">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_61">
             <item>
@@ -6294,7 +6294,7 @@ background-color: rgb(108, 108, 108);
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_126">
+           <layout class="QVBoxLayout" name="verticalLayout_57">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_220">
               <item>
@@ -6639,7 +6639,7 @@ background-color: rgb(108, 108, 108);
              </layout>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_125">
+             <layout class="QVBoxLayout" name="verticalLayout_55">
               <item>
                <widget class="QLabel" name="label_338">
                 <property name="sizePolicy">
@@ -6659,7 +6659,7 @@ background-color: rgb(108, 108, 108);
                  <enum>QFrame::Box</enum>
                 </property>
                 <property name="text">
-                 <string>تعديل بيانات عميل</string>
+                 <string>تعديل او حذف بيانات عميل</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
@@ -6670,9 +6670,9 @@ background-color: rgb(108, 108, 108);
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_99">
+               <layout class="QHBoxLayout" name="horizontalLayout_56">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_124">
+                 <layout class="QVBoxLayout" name="verticalLayout_54">
                   <item>
                    <widget class="QLineEdit" name="cphone_edit">
                     <property name="sizePolicy">
@@ -6776,26 +6776,52 @@ background-color: rgb(108, 108, 108);
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_53">
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
+               <layout class="QHBoxLayout" name="horizontalLayout_53">
+                <item>
+                 <widget class="QPushButton" name="delete_cus">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-                </property>
-                <property name="text">
-                 <string>تعديل</string>
-                </property>
-               </widget>
+                  </property>
+                  <property name="text">
+                   <string>حذف</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_53">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>تعديل</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>

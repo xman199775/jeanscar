@@ -102,7 +102,7 @@ void MainWindow::updatedate()
     ui->clock->setText(timestr);
     ui->date->setText(datestr);
     ui->dealdate->setDate(*curdate);
-    update_op_code();
+    //update_op_code();
 }
 
 void MainWindow::on_pushButton_18_clicked()//تسليم2
@@ -1129,9 +1129,17 @@ void MainWindow::on_recived_editingFinished()//عملية شراء4
 
 void MainWindow::on_pushButton_2_clicked()//اضافة عميل
 {
+    update_op_code();
     QString customername=ui->customername->text()
             ,customerphone=ui->customerphone->text()
             ,customerid;
+    if (customername == "" || customerphone == ""){
+        QMessageBox mb(this);
+        mb.setWindowTitle("خطأ");
+        mb.setText("حقول فارغة");
+        mb.exec();
+    }
+    else{
     QSqlQueryModel *model1=new QSqlQueryModel;
     bool found = false;
     QSqlQuery qry;
@@ -1186,7 +1194,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
     qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
     qry.first();
     ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
-
+    }
 }
 
 void MainWindow::on_pushButton_17_clicked()//بحث التاريخ
@@ -1209,6 +1217,7 @@ void MainWindow::on_pushButton_17_clicked()//بحث التاريخ
 
 void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
 {
+    update_op_code();
     QMessageBox::StandardButton x;
     x=QMessageBox::question(this,"اضافة العملية","سيتم اضافة العملية",QMessageBox::Ok|QMessageBox::Cancel);
     if(x==QMessageBox::Ok)
@@ -1450,7 +1459,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                     }
                     QMessageBox msgBox(this);
                     msgBox.setWindowTitle("تم");
-                    msgBox.setText("تم حفظ العملية بنجاح ");
+                    msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
                     msgBox.exec();
                 }
                 else
@@ -3019,4 +3028,64 @@ void MainWindow::on_print_op_clicked()
 {
     print = new Print(generate_html_op(ui->op_code_print->text()));
     print->exec();
+}
+
+void MainWindow::on_delete_cus_clicked()
+{
+    QString cphone, title, ques, sql;
+    cphone = ui->cphone_edit->text();
+    QMessageBox mb(this);
+    bool found = 0;
+    title = "رسالة تأكيد";
+        ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
+        QMessageBox::StandardButton msg;
+        msg=QMessageBox::question(this, title, ques, QMessageBox::Ok|QMessageBox::Cancel);
+        if(msg == QMessageBox::Ok){
+            QSqlQuery qry;
+            qry.exec("select `Number` from `Customer`;");
+            while (qry.next()) {
+                if (cphone == qry.value(0).toString()){
+                    found = 1;
+                    break;
+                }
+            }
+            sql = "delete from `Customer` where `Number` = '"+cphone+"';";
+            bool done = qry.exec(sql);
+            if(done && found){
+                mb.setWindowTitle("تم");
+                mb.setText("تم حذف العميل بنجاح.");
+                mb.exec();
+            }
+            else{
+                mb.setWindowTitle("خطأ");
+                mb.setText("لا يوجد عميل بهذا الرقم!");
+                mb.exec();
+            }
+        }
+
+}
+
+void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
+{
+    QString cphone;
+    cphone = ui->cphone_edit->text();
+    ui->cphone_edit->setStyleSheet("background-color: rgb(255, 255, 255);");
+    bool found = 0;
+    QSqlQuery qry;
+    qry.exec("select `Number` from `Customer`;");
+    while (qry.next()) {
+        if (cphone == qry.value(0).toString()){
+            found = 1;
+            break;
+        }
+    }
+    if (!found){
+        ui->cphone_edit->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+    }
+    else{
+        ui->cphone_edit->setStyleSheet("background-color: rgb(255, 255, 255);");
+        qry.exec("select `Name`from `Customer` where `Number` = '" + cphone + "'");
+        qry.first();
+        ui->cname_new->setText(qry.value(0).toString());
+    }
 }

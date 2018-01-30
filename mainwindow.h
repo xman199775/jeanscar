@@ -191,7 +191,10 @@ private slots:
 
     void on_print_op_clicked();
 
-    void on_pushButton_51_clicked();
+
+    void on_delete_cus_clicked();
+
+    void on_cphone_edit_cursorPositionChanged(int arg1, int arg2);
 
 private:
     Ui::MainWindow *ui;
