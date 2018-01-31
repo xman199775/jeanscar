@@ -17,6 +17,7 @@ SOURCES += main.cpp\
     password.cpp \
     thread.cpp \
     report.cpp \
+    form1.cpp \
     dialog.cpp \
     product.cpp \
     todoornottodo.cpp \
@@ -34,6 +35,7 @@ HEADERS  += mainwindow.h \
     password.h \
     thread.h \
     report.h \
+    form1.h \
     dialog.h \
     product.h \
     todoornottodo.h \
@@ -49,6 +51,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     password.ui \
     report.ui \
+    form1.ui \
     dialog.ui \
     product.ui \
     todoornottodo.ui \
