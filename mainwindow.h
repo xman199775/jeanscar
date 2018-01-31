@@ -193,6 +193,8 @@ private slots:
 
     void on_pushButton_51_clicked();
 
+    QString generate_html_delevers(QString date);
+
 private:
     Ui::MainWindow *ui;
     QString *name;

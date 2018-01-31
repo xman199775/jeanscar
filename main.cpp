@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     mydata.setDatabaseName("JeansCar");
     mydata.setUserName("root");
     mydata.setPassword("root");
-    mydata.setPort(8889);
+  //  mydata.setPort(8889);
     bool ok = mydata.open();
     if(ok)
     {
