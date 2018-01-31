@@ -101,7 +101,7 @@ void MainWindow::updatedate()
     ui->clock->setText(timestr);
     ui->date->setText(datestr);
     ui->dealdate->setDate(*curdate);
-    update_op_code();
+   // update_op_code();
 }
 
 void MainWindow::on_pushButton_18_clicked()//تسليم2
@@ -224,7 +224,7 @@ void MainWindow::on_pushButton_8_clicked()//حذف موظف
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -439,7 +439,7 @@ void MainWindow::on_pushButton_14_clicked()//حذف مستخدم
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1133,7 +1133,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
             ,customerphone=ui->customerphone->text()
             ,customerid;
     if (customername == "" || customerphone == ""){
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("حقول فارغة");
         mb.exec();
@@ -1532,7 +1532,7 @@ void MainWindow::on_pushButton_25_clicked()//حذف عملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1550,7 +1550,7 @@ void MainWindow::on_pushButton_19_clicked()//الغاءعملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1841,14 +1841,14 @@ void MainWindow::on_pushButton_31_clicked()//اضافة يومية
     QSqlQuery qry;
     if( qry.exec("INSERT INTO `Daily` (`E-code`, `Amount`, `Reason`, `Date`, `Income`, `Done`)VALUES('"+*code+"', "+money+", '"+reson+"', '"+date+" "+time+"', '"+type+"', 'y');"))
     {
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("تم");
         mb.setText("تمت الاإضافة بنجاح.");
         mb.exec();
     }
     else
     {
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText(qry.lastError().text());
         mb.exec();
@@ -2116,7 +2116,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
                 ok=false;
             }
         }
-        QMessageBox mb;
+         QMessageBox mb  (this);
         if (ok && !duplicate){
             switch (time) {
                 case 'a':
@@ -2233,7 +2233,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
     }
     else
     {
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("لايوجد عملية تسليم بهذا الكود");
         mb.exec();
@@ -2585,7 +2585,7 @@ void MainWindow::on_pushButton_53_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if(!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد عميل بهذا الرقم");
@@ -2684,7 +2684,7 @@ void MainWindow::on_pushButton_54_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -2721,7 +2721,7 @@ void MainWindow::on_pushButton_55_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -3046,7 +3046,7 @@ void MainWindow::on_delete_cus_clicked()
 {
     QString cphone, title, ques, sql;
     cphone = ui->cphone_edit->text();
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     bool found = 0;
     title = "رسالة تأكيد";
         ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
