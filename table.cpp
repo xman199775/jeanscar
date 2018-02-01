@@ -4,6 +4,7 @@
 #include <QLayout>
 #include <QSqlQuery>
 
+//background-color: rgb(255, 128, 0);
 
 void table::clear_all(){
     ui->fri1->setStyleSheet("");
@@ -42,6 +43,56 @@ void table::clear_all(){
     ui->wed4->setStyleSheet("");
     ui->wed5->setStyleSheet("");
     ui->wed6->setStyleSheet("");
+
+    ui->monday->setStyleSheet("");
+    ui->monday_2->setStyleSheet("");
+    ui->tuesday->setStyleSheet("");
+    ui->tuesday_2->setStyleSheet("");
+    ui->wedensday->setStyleSheet("");
+    ui->wedensday_2->setStyleSheet("");
+    ui->thursday->setStyleSheet("");
+    ui->thursday_2->setStyleSheet("");
+    ui->friday->setStyleSheet("");
+    ui->friday_2->setStyleSheet("");
+    ui->saturday->setStyleSheet("");
+    ui->saturday_2->setStyleSheet("");
+
+}
+
+void table::set_curr(QDate date1){
+    QLocale english(QLocale::English, QLocale::UnitedStates);
+    QString cur = english.toString(date1,"dd-MM-yyyy");
+    QString mon, tue, wed, thu, fri, sat;
+    mon = ui->monday->text();
+    tue = ui->tuesday->text();
+    wed = ui->wedensday->text();
+    thu = ui->thursday->text();
+    fri = ui->friday->text();
+    sat = ui->saturday->text();
+    if (cur == mon){
+        ui->monday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->monday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
+    else if (cur == tue){
+        ui->tuesday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->tuesday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
+    else if (cur == wed) {
+        ui->wedensday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->wedensday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
+    else if (cur == thu) {
+        ui->thursday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->thursday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
+    else if (cur == fri) {
+        ui->friday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->friday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
+    else if (cur == sat) {
+        ui->saturday->setStyleSheet("background-color: rgb(255, 128, 0);");
+        ui->saturday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
+    }
 }
 
 void table::set11to5(QDate date){
@@ -2165,9 +2216,11 @@ table::table(QWidget *parent, QDate date1) :
     ui(new Ui::table)
 {
     ui->setupUi(this);
+    cur = date1;
     date = date1;
     set11to5(date);
     ui->change_date->setDate(QDate::currentDate());
+    set_curr(date1);
 }
 
 table::~table()
@@ -2187,6 +2240,7 @@ void table::on_comboBox_currentIndexChanged(const QString &arg1)
     else{
         set5to11(date);
     }
+    set_curr(date);
 }
 
 void table::on_pushButton_clicked()//prev
@@ -2196,13 +2250,13 @@ void table::on_pushButton_clicked()//prev
     QLocale english(QLocale::English, QLocale::UnitedStates);
     date = date.addDays(-7);
     QDate date1 = date;
-    if(ui->comboBox->currentText() == "11:5"){
+    if(ui->comboBox->currentText() == "11:5")
         set11to5(date1);
-    }
     else if (ui->comboBox->currentText() == "2:8")
         set2to8(date1);
     else
         set5to11(date1);
+    set_curr(cur);
 }
 
 void table::on_pushButton_2_clicked()//next
@@ -2219,6 +2273,7 @@ void table::on_pushButton_2_clicked()//next
         set2to8(date1);
     else
         set5to11(date1);
+    set_curr(cur);
 }
 
 void table::on_pushButton_3_clicked()
@@ -2233,11 +2288,12 @@ void table::on_change_date_editingFinished()
     QLocale english(QLocale::English, QLocale::UnitedStates);
     date = ui->change_date->date();
     QDate date1 = date;
-    if(ui->comboBox->currentText() == "11:5"){
+    cur = date;
+    if(ui->comboBox->currentText() == "11:5")
         set11to5(date1);
-    }
     else if (ui->comboBox->currentText() == "2:8")
         set2to8(date1);
     else
         set5to11(date1);
+    set_curr(cur);
 }

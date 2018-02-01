@@ -34,6 +34,8 @@ private:
     void set2to8(QDate date);
     void clear_all();
     void count(QDate date, QLabel *label);
+    void set_curr(QDate date1);
+    QDate cur;
 };
 
 #endif // TABLE_H
