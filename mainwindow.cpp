@@ -1456,11 +1456,8 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                         print = new Print(generate_html_op(opcode));
                         print->show();
                     }
-<<<<<<< HEAD
-                    QMessageBox msgBox (this);
-=======
+
                     QMessageBox msgBox(this);
->>>>>>> 18024f45cffe1624a92663c78c746765796cb7c5
                     msgBox.setWindowTitle("تم");
                     msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
                     msgBox.exec();
@@ -2936,7 +2933,7 @@ void MainWindow::on_actionSettings_triggered()
 }
 QString MainWindow::generate_html_op(QString opcode){
     QSqlQuery qry;
-    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat` from `Order`,`Customer`, `employee`where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
+    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
     qry.first();
           QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
@@ -2944,7 +2941,6 @@ QString MainWindow::generate_html_op(QString opcode){
                    "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">عمليه شراء</span></p>\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">Jeans Car for farsh and cut and all these stuff</span> </p>\n"
                    "<table border=\"1\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
                    "<tr>\n"
                    "<td>\n"
@@ -2994,7 +2990,7 @@ QString MainWindow::generate_html_op(QString opcode){
                    "<td>\n"
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(9).toString()+" </p></td>\n"
                    "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ضمان </p></td></tr>\n"
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الضمان بالسنوات </p></td></tr>\n"
                    "<tr>\n"
                    "<td>\n"
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
@@ -3021,10 +3017,19 @@ QString MainWindow::generate_html_op(QString opcode){
                    html +=
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+wheel+" </p></td>\n"
                    "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td></tr>\n"
-                   "</table>\n"
-                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>";
-    return html;
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td>"
+                   "</tr>\n"
+                   "<tr>\n"
+                   "<td>\n"
+                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
+                   "<td>\n"
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دفع مسبق </p></td>"
+                   "</tr></table>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">٣٠ شارع زهير صبري متفرع من شارع الطيران خلف حي مدينة نصر</span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">للتواصل : 01020977790</span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.jeanscar.com  او زورو موقعنا على </span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.facebook.com/jeanscar62  او زورو صفحتنا على </span> </p>";
+                   return html;
 }
 
 void MainWindow::on_print_op_clicked()
@@ -3035,7 +3040,6 @@ void MainWindow::on_print_op_clicked()
 
 void MainWindow::on_delete_cus_clicked()
 {
-<<<<<<< HEAD
     print = new Print(generate_html_delevers(english.toString(ui->delverdatenew->date())));
     print->exec();
 }
@@ -3082,7 +3086,6 @@ QString MainWindow::generate_html_delevers(QString date){
                   +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
                   +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"1234 +"</span></p></td></tr></table></body></html>"";
    */       return html;
-=======
     QString cphone, title, ques, sql;
     cphone = ui->cphone_edit->text();
     QMessageBox mb(this);
@@ -3139,5 +3142,4 @@ void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
         qry.first();
         ui->cname_new->setText(qry.value(0).toString());
     }
->>>>>>> 18024f45cffe1624a92663c78c746765796cb7c5
 }
