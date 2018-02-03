@@ -1462,7 +1462,11 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                         report->printExec(true);
                     }
 
+<<<<<<< HEAD
                     QMessageBox msgBox (this);
+=======
+                    QMessageBox msgBox(this);
+>>>>>>> e0e828d0b208b233fe11bc95ab8ef654467b31e1
                     msgBox.setWindowTitle("تم");
                     msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
                     msgBox.exec();
@@ -2938,7 +2942,7 @@ void MainWindow::on_actionSettings_triggered()
 }
 QString MainWindow::generate_html_op(QString opcode){
     QSqlQuery qry;
-    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat` from `Order`,`Customer`, `employee`where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
+    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
     qry.first();
           QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
@@ -2946,7 +2950,6 @@ QString MainWindow::generate_html_op(QString opcode){
                    "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">عمليه شراء</span></p>\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">Jeans Car for farsh and cut and all these stuff</span> </p>\n"
                    "<table border=\"1\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
                    "<tr>\n"
                    "<td>\n"
@@ -2996,7 +2999,7 @@ QString MainWindow::generate_html_op(QString opcode){
                    "<td>\n"
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(9).toString()+" </p></td>\n"
                    "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">ضمان </p></td></tr>\n"
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الضمان بالسنوات </p></td></tr>\n"
                    "<tr>\n"
                    "<td>\n"
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
@@ -3023,10 +3026,19 @@ QString MainWindow::generate_html_op(QString opcode){
                    html +=
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+wheel+" </p></td>\n"
                    "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td></tr>\n"
-                   "</table>\n"
-                   "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>";
-    return html;
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td>"
+                   "</tr>\n"
+                   "<tr>\n"
+                   "<td>\n"
+                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
+                   "<td>\n"
+                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دفع مسبق </p></td>"
+                   "</tr></table>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">٣٠ شارع زهير صبري متفرع من شارع الطيران خلف حي مدينة نصر</span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">للتواصل : 01020977790</span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.jeanscar.com  او زورو موقعنا على </span> </p>"
+                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.facebook.com/jeanscar62  او زورو صفحتنا على </span> </p>";
+                   return html;
 }
 
 void MainWindow::on_print_op_clicked()
@@ -3044,6 +3056,55 @@ void MainWindow::on_print_op_clicked()
 
 void MainWindow::on_delete_cus_clicked()
 {
+<<<<<<< HEAD
+=======
+    print = new Print(generate_html_delevers(english.toString(ui->delverdatenew->date())));
+    print->exec();
+}
+QString MainWindow::generate_html_delevers(QString date){
+    QSqlQuery qry;
+    qry.exec("select `Order-num` , `Order`, `wheel` ,`flat` ,`flat_color` , `Name` , `Number` from `Order`, `customer` where `C-code`= `Cnum` and `Delvtime` = '"+date+"'");// هنا التسليمات بتاريخ date واول فترة
+    qry.first();
+          QString html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">"
+                  "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">"
+                  "p, li { white-space: pre-wrap; }"
+                  "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8pt; font-weight:400; font-style:normal;\">"
+                  "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:18pt; font-weight:600;\">تسليمات </span></p>"
+                  "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /><span style=\" font-family:'.SF NS Text'; font-size:13pt;\"></span></p>"
+                  "<table border=\"1\" style=\" margin-top:0px; margin-bottom:0px; margin-left:10px; margin-right:10px;\" cellspacing=\"2\" cellpadding=\"10\">"
+                  "<tr>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:13pt; font-weight:600; color:#000000;\"> لون </span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:13pt; font-weight:600; color:#000000;\">طارة </span><span style=\" font-family:'.SF NS Text'; font-size:13pt;\"></span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:13pt; font-weight:600; color:#000000;\"> دواسة </span><span style=\" font-family:'.SF NS Text'; font-size:13pt;\"></span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:13pt; font-weight:600; color:#000000;\"> الطلب </span><span style=\" font-family:'.SF NS Text'; font-size:13pt;\"></span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:600;\"> رقم الهاتف </span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:600;\"> إسم العميل </span></p></td>"
+                  "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:600;\"> كود العملية </span></p></td></tr>"
+                  "<tr>";
+/*
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"3500 +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"0 +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"0 +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"500 +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"3000 +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"King Of Phantoms +"</span></p></td>"
+                  +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
+                  +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"1234 +"</span></p></td></tr></table></body></html>"";
+   */       return html;
+>>>>>>> e0e828d0b208b233fe11bc95ab8ef654467b31e1
     QString cphone, title, ques, sql;
     cphone = ui->cphone_edit->text();
      QMessageBox mb  (this);
@@ -3098,6 +3159,7 @@ void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
         qry.first();
         ui->cname_new->setText(qry.value(0).toString());
     }
+<<<<<<< HEAD
 }
 
 void MainWindow::on_pushButton_51_clicked()
@@ -3109,4 +3171,6 @@ void MainWindow::on_pushButton_51_clicked()
     report->loadReport(dir.absolutePath()+"/delever.xml");
     report->setSqlQuery("select `Order-num` , `Order`, `flat`,`wheel`,`flat_color` , `Name` , `Number` ,`Delvtime`  from `Order`, `customer` where `Cnum`= `C-code`    and `Delvtime` = '"+date+"'");
     report->printExec(true);
+=======
+>>>>>>> e0e828d0b208b233fe11bc95ab8ef654467b31e1
 }
