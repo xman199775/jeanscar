@@ -84,6 +84,21 @@ background-color: rgb(170, 170, 170);
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="sign_out">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+          </property>
+          <property name="text">
+           <string>تسجيل الخروج</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLineEdit" name="admincodeline">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -3464,7 +3479,7 @@ background-color: rgb(108, 108, 108);
              <x>0</x>
              <y>0</y>
              <width>1386</width>
-             <height>703</height>
+             <height>693</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">

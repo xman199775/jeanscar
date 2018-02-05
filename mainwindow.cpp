@@ -9,6 +9,7 @@
 //#include <qtrpt.h>
 #include <QDir>
 #include <settings.h>
+#include <password.h>
 MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QString *pir,QSqlDatabase *m) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -112,7 +113,6 @@ void MainWindow::on_pushButton_18_clicked()//تسليم2
     // كود + موديل العربية
     ui->delverlist->clear();
     while (qry.next()) {
-
         QString x = qry.value(0).toString()+": "+qry.value(1).toString();
         ui->delverlist->addItem(x);
     }
@@ -1148,6 +1148,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
         if(customerphone==qry.value(0).toString())
         {
             found=true;
+            break;
         }
     }
 
@@ -3040,8 +3041,37 @@ void MainWindow::on_print_op_clicked()
 
 void MainWindow::on_delete_cus_clicked()
 {
-    print = new Print(generate_html_delevers(english.toString(ui->delverdatenew->date())));
-    print->exec();
+    QString cphone, title, ques, sql;
+    cphone = ui->cphone_edit->text();
+    QMessageBox mb(this);
+    bool found = 0;
+    title = "رسالة تأكيد";
+        ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
+        QMessageBox::StandardButton msg;
+        msg=QMessageBox::question(this, title, ques, QMessageBox::Ok|QMessageBox::Cancel);
+        if(msg == QMessageBox::Ok){
+            QSqlQuery qry;
+            qry.exec("select `Number` from `Customer`;");
+            while (qry.next()) {
+                if (cphone == qry.value(0).toString()){
+                    found = 1;
+                    break;
+                }
+            }
+            sql = "delete from `Customer` where `Number` = '"+cphone+"';";
+            bool done = qry.exec(sql);
+            if(done && found){
+                mb.setWindowTitle("تم");
+                mb.setText("تم حذف العميل بنجاح.");
+                mb.exec();
+            }
+            else{
+                mb.setWindowTitle("خطأ");
+                mb.setText("لا يوجد عميل بهذا الرقم!");
+                mb.exec();
+            }
+        }
+
 }
 QString MainWindow::generate_html_delevers(QString date){
     QSqlQuery qry;
@@ -3086,36 +3116,7 @@ QString MainWindow::generate_html_delevers(QString date){
                   +"<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">"
                   +"<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'.SF NS Text'; font-size:13pt;\">"1234 +"</span></p></td></tr></table></body></html>"";
    */       return html;
-    QString cphone, title, ques, sql;
-    cphone = ui->cphone_edit->text();
-    QMessageBox mb(this);
-    bool found = 0;
-    title = "رسالة تأكيد";
-        ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
-        QMessageBox::StandardButton msg;
-        msg=QMessageBox::question(this, title, ques, QMessageBox::Ok|QMessageBox::Cancel);
-        if(msg == QMessageBox::Ok){
-            QSqlQuery qry;
-            qry.exec("select `Number` from `Customer`;");
-            while (qry.next()) {
-                if (cphone == qry.value(0).toString()){
-                    found = 1;
-                    break;
-                }
-            }
-            sql = "delete from `Customer` where `Number` = '"+cphone+"';";
-            bool done = qry.exec(sql);
-            if(done && found){
-                mb.setWindowTitle("تم");
-                mb.setText("تم حذف العميل بنجاح.");
-                mb.exec();
-            }
-            else{
-                mb.setWindowTitle("خطأ");
-                mb.setText("لا يوجد عميل بهذا الرقم!");
-                mb.exec();
-            }
-        }
+
 
 }
 
@@ -3142,4 +3143,115 @@ void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
         qry.first();
         ui->cname_new->setText(qry.value(0).toString());
     }
+}
+
+void MainWindow::on_pushButton_51_clicked()
+{
+    print = new Print(generate_html_delevers(english.toString(ui->delverdatenew->date())));
+    print->exec();
+}
+
+void MainWindow::on_customername_cursorPositionChanged(int arg1, int arg2)
+{
+    ui->customername->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    QString cname = ui->customername->text();
+    bool found = false;
+    QSqlQuery qry;
+    qry.exec("select `Name` from `JeansCar`.`Customer`");//هاتلي كل ارقام التليفون المتسجلة
+    while(qry.next())
+    {
+        if(cname == qry.value(0).toString())
+        {
+            found = true;
+            break;
+        }
+    }
+    if (found || cname == ""){
+        ui->customername->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+        qry.exec("select `Number` from `Customer` where `Name` = '" + cname + "'");
+        qry.first();
+        ui->customerphone->setText(qry.value(0).toString());
+    }else{
+        ui->customername->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+    }
+
+}
+
+void MainWindow::on_customerphone_cursorPositionChanged(int arg1, int arg2)
+{
+    ui->customerphone->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    QString cphone = ui->customerphone->text();
+    bool found = false;
+    QSqlQuery qry;
+    qry.exec("select `Number` from `JeansCar`.`Customer`");//هاتلي كل ارقام التليفون المتسجلة
+    while(qry.next())
+    {
+        if(cphone == qry.value(0).toString())
+        {
+            found = true;
+            break;
+        }
+    }
+    if (found || cphone == ""){
+        ui->customerphone->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+        qry.exec("select `Name` from `Customer` where `Number` = '" + cphone + "'");
+        qry.first();
+        ui->customername->setText(qry.value(0).toString());
+    }else{
+        ui->customerphone->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+    }
+}
+
+void MainWindow::search_for_up(QString opcode, QLineEdit *le){
+    le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    bool found = false;
+    QSqlQuery qry;
+    qry.exec("select `Order-num` from `JeansCar`.`Order`;");
+    while (qry.next()) {
+        if (qry.value(0).toString() == opcode){
+            found = 1;
+            break;
+        }
+    }
+    if (found || opcode == ""){
+        le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    }
+    else{
+        le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+    }
+}
+void MainWindow::on_opcode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->opcode->text(), ui->opcode);
+}
+
+void MainWindow::on_delevercode1_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->delevercode1->text(), ui->delevercode1);
+}
+
+void MainWindow::on_deleteopcode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->deleteopcode->text(), ui->deleteopcode);
+}
+
+void MainWindow::on_op_code_print_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->op_code_print->text(), ui->op_code_print);
+}
+
+void MainWindow::on_delevercode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->delevercode->text(), ui->delevercode);
+}
+
+void MainWindow::on_sign_out_clicked()
+{
+    QString name="Admine";
+    QString code="";
+    QString pass="";
+    QString pirorty="";
+    password p(0, this, &name,&code,&pass,&pirorty,mydata);
+    this->hide();
+    p.show();
 }

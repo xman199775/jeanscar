@@ -72,7 +72,7 @@ void password::on_pushButton_clicked()
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox ( this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("خطاء في كود الموظف او كلمة السر");
         msgBox.exec();
