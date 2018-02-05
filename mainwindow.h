@@ -199,8 +199,6 @@ private slots:
 
     void on_pushButton_51_clicked();
 
-    void on_pushButton_51_clicked();
-
     void on_customername_cursorPositionChanged(int arg1, int arg2);
 
     void on_customerphone_cursorPositionChanged(int arg1, int arg2);
