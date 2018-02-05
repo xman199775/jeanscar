@@ -191,6 +191,13 @@ private slots:
 
     void on_print_op_clicked();
 
+
+    void on_delete_cus_clicked();
+
+    void on_cphone_edit_cursorPositionChanged(int arg1, int arg2);
+
+    void on_pushButton_51_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString *name;
@@ -214,6 +221,7 @@ private:
     QString generate_html_op(QString opcode);
     QString generate_html_all_salary(QString month, QString year);
     void update_flat_color();
+    void update_op_code();
 };
 
 #endif // MAINWINDOW_H

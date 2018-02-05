@@ -33,14 +33,14 @@ void todoornottodo::on_doIt_clicked()
         if(found)
         {
             qry.exec("update `Order` set `Bouns` = 1 where `Order-num` = "+opcode+"");
-            QMessageBox msgBox;
+            QMessageBox msgBox ( this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم الالغاء");
             msgBox.exec();
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox ( this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("لا توجد عملية تسليم بهذا الكود");
             msgBox.exec();
@@ -62,14 +62,14 @@ void todoornottodo::on_doIt_clicked()
         if(found)
         {
             qry.exec("delete from `Order` where `Order-num` = "+opcode+"");
-            QMessageBox msgBox;
+            QMessageBox msgBox ( this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم الحذف");
             msgBox.exec();
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox ( this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("لا توجد عملية تسليم بهذا الكود");
             msgBox.exec();
@@ -92,14 +92,14 @@ void todoornottodo::on_doIt_clicked()
             QSqlQuery qry;
             if(qry.exec("delete from `Admin` where `A-code` = '"+ecode+"'"))//هيحذف ادمن
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox ( this);
                 msgBox.setWindowTitle("تم");
                 msgBox.setText("تم حذف المستخدم بنجاح");
                 msgBox.exec();
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox ( this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText(qry.lastError().text());
                 msgBox.exec();
@@ -108,7 +108,7 @@ void todoornottodo::on_doIt_clicked()
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox ( this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لا يوجد مستخدم بهذا الكود");
             msgBox.exec();
@@ -132,14 +132,14 @@ void todoornottodo::on_doIt_clicked()
                 QSqlQuery qry;
                 if(qry.exec("delete from `Employee` where `Ecode` = '"+ecode+"'"))//حذف موظف
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox ( this);
                     msgBox.setWindowTitle("تم");
                     msgBox.setText("تم حذف موظف");
                     msgBox.exec();
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox ( this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(qry.lastError().text());
                     msgBox.exec();
@@ -148,14 +148,14 @@ void todoornottodo::on_doIt_clicked()
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox ( this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText("هذا الكود غير موجود  الرجاء التاكد من الكود");
                 msgBox.exec();
             }
         }
         else
-        {                QMessageBox msgBox;
+        {                QMessageBox msgBox ( this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(qryf.lastError().text());
             msgBox.exec();
