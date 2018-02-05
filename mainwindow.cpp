@@ -6,7 +6,7 @@
 #include "product.h"
 #include <table.h>
 #include <choose_employee.h>
-//#include <qtrpt.h>
+#include <qtrpt.h>
 #include <QDir>
 #include <settings.h>
 #include <password.h>
@@ -102,7 +102,7 @@ void MainWindow::updatedate()
     ui->clock->setText(timestr);
     ui->date->setText(datestr);
     ui->dealdate->setDate(*curdate);
-    //update_op_code();
+   // update_op_code();
 }
 
 void MainWindow::on_pushButton_18_clicked()//تسليم2
@@ -146,7 +146,7 @@ void MainWindow::on_pushButton_6_clicked()//اضافة موظف
             ,max=QString::number(ui->max->value());
     if(id==""||ename==""||nid==""||phone==""||addressincard==""||birthdate=="")
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("حقول فارغة الرجاء التاكد من ملئ جميع الحقول الزرقاء");
         msgBox.exec();
@@ -187,14 +187,14 @@ void MainWindow::on_pushButton_6_clicked()//اضافة موظف
             {QSqlQuery qry;
                 if(qry.exec("INSERT INTO `JeansCar`.`Employee` (`Ecode`, `Name`, `Nation-id`, `Social-status`, `BirthDate`, `Number`, `Add-nid`, `Add-ano`, `Clear-salary`, `Last_salaray`, `Hours`, `Leave-time`, `Arrive-time`, `Major`, `Year_grad`, `Year_of_job`, `Home_Num`, `Certifcate`, `Curr_job`, `N_of_work_in_years`, `Another_exper`, `Insurance`,`Weakly`,`Note`,`Min`) VALUES ('"+id+"', '"+ename+"', '"+nid+"', '"+state+"', '"+birthdate+"', '"+phone+"','"+addressincard+"','"+ address +"','"+salary+"','"+lastsalary+"','"+numofhouer+"','"+leavetime+"','"+arrivetime+"','"+Major+"','"+cirdate+"','"+yearofjob+"','"+homephone+"','"+cirt+"','"+curjob+"', '"+numofyear+"', '"+antherexp+"', '"+mo2men+"','"+week+"','"+note+"',"+max+");"))
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("تم ");
                     msgBox.setText(" تم اضافة الموظف بنجاح");
                     msgBox.exec();
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(qry.lastError().text());
                     msgBox.exec();
@@ -202,7 +202,7 @@ void MainWindow::on_pushButton_6_clicked()//اضافة موظف
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText("هذا الكود معطي لموظف اخر الرجاء التاكد من الكود");
                 msgBox.exec();
@@ -210,7 +210,7 @@ void MainWindow::on_pushButton_6_clicked()//اضافة موظف
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(qryf.lastError().text());
             msgBox.exec();
@@ -224,7 +224,7 @@ void MainWindow::on_pushButton_8_clicked()//حذف موظف
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -255,14 +255,14 @@ void MainWindow::on_pushButton_23_clicked()//تعديل موظف واظهار ت
             re->show();}
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("هذا الكود غير موجود  الرجاء التاكد من الكود");
             msgBox.exec();
         }
     }
     else
-    {   QMessageBox msgBox;
+    {   QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(qryf.lastError().text());
         msgBox.exec();
@@ -302,7 +302,7 @@ void MainWindow::on_pushButton_24_clicked()//تحضير المرتبات
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(qry.lastError().text());
                     msgBox.exec();
@@ -312,7 +312,7 @@ void MainWindow::on_pushButton_24_clicked()//تحضير المرتبات
             }
             if(!found)
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("تم");
                 msgBox.setText("تم تحضير المرتب");
                 msgBox.exec();
@@ -321,7 +321,7 @@ void MainWindow::on_pushButton_24_clicked()//تحضير المرتبات
 
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(qryf.lastError().text());
             msgBox.exec();
@@ -329,7 +329,7 @@ void MainWindow::on_pushButton_24_clicked()//تحضير المرتبات
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("تم تحضير الشهر من قبل");
         msgBox.exec();
@@ -343,7 +343,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
             ,password2=ui->addpasswordagian->text();
 
     if (priority_check == NULL){
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("الرجاء اختيار الصلاحية");
         msgBox.exec();
@@ -354,7 +354,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
         a[i] = (*priority_check)[i];
     if(ecode==""||password=="")
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("الرجاء ملئ كل الحقول");
         msgBox.exec();
@@ -385,7 +385,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
         }
         if(found2)
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("هذا المستخدم موجود مسبقا");
             msgBox.exec();
@@ -399,7 +399,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
                     QSqlQuery qry;
                     if(qry.exec("INSERT INTO `Admin` (`A-code`, `Pass`, `Add_employee`, `Salary`, `Stock`, `Manager`, `Deliver_salary`, `Custmers`, `Edit_Order`, `Ware`, `Open`, `Accounting`, `Deliver`) VALUES ('"+ecode+"', '"+password+"', '"+a[0]+"', '"+a[1]+"', '"+a[2]+"', '"+a[3]+"', '"+a[4]+"', '"+a[5]+"', '"+a[6]+"', '"+a[7]+"', '"+a[8]+"', '"+a[9]+"', '"+a[10]+"');" ))//هيضيف ادمن
                     {
-                        QMessageBox msgBox;
+                        QMessageBox msgBox (this);
                         msgBox.setWindowTitle("تم");
                         msgBox.setText("تم اضافة المستخدم بنجاح");
                         msgBox.exec();
@@ -407,7 +407,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
                     }
                     else
                     {
-                        QMessageBox msgBox;
+                        QMessageBox msgBox (this);
                         msgBox.setWindowTitle("خطاء");
                         msgBox.setText(qry.lastError().text());
                         msgBox.exec();
@@ -416,7 +416,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(" كلمة السر غير متاطبقة");
                     msgBox.exec();
@@ -424,7 +424,7 @@ void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText(" لا يوجد موظف بهذا الكود");
                 msgBox.exec();
@@ -439,7 +439,7 @@ void MainWindow::on_pushButton_14_clicked()//حذف مستخدم
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -476,7 +476,7 @@ void MainWindow::on_pushButton_3_clicked() //البحث عن مستخدم محد
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يوجد مستخدم بهذا الكود");
         msgBox.exec();
@@ -502,7 +502,7 @@ void MainWindow::on_pushButton_20_clicked()//تعديل مستخدم
         a[i] = (*priority_check)[i];
     if(ecode==""||password2=="")
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("الرجاء ملئ كل الحقول");
         msgBox.exec();
@@ -524,7 +524,7 @@ void MainWindow::on_pushButton_20_clicked()//تعديل مستخدم
         }
         if(!found2)
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("هذا المستخدم غير موجود");
             msgBox.exec();
@@ -533,7 +533,7 @@ void MainWindow::on_pushButton_20_clicked()//تعديل مستخدم
         {
             if(qryf.exec("update `Admin` set `Pass` = '"+password2+"' ,`Add_employee` = '"+a[0]+"', `Salary` = '"+a[1]+"', `Stock`= '"+a[2]+"', `Manager`= '"+a[3]+"', `Deliver_salary` = '"+a[4]+"', `Custmers` = '"+a[5]+"', `Edit_Order` = '"+a[6]+"', `Ware` = '"+a[7]+"', `Open` = '"+a[8]+"', `Accounting` = '"+a[9]+"', `Deliver` = '"+a[10]+"' where `A-code` = '"+ecode+"'"))//تعديل موظف
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("تم");
                 msgBox.setText("تم تعديل بيانات المستخدم");
                 msgBox.exec();
@@ -558,7 +558,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
             ,time=english.toString((*curtime),"hh:mm:ss");
     if((ui->valu5sm->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -600,7 +600,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
                         {
                             if( qry.exec("update `Salary` set `Amount` ="+salarystr+" where `E-code` = '"+ecode+"'  and month(`Date`) = "+month+" and year(`Date`) = "+year+""))//تعديل المرتب
                             {
-                                QMessageBox msgBox;
+                                QMessageBox msgBox (this);
                                 msgBox.setWindowTitle("تم");
                                 msgBox.setText("تم الخصم ");
                                 msgBox.exec();
@@ -614,7 +614,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
                     }
                     else
                     {
-                        QMessageBox msgBox;
+                        QMessageBox msgBox (this);
                         msgBox.setWindowTitle("خطاء");
                         msgBox.setText(" عذرا وصل هذا المرتب للحد الادني");
                         msgBox.exec();
@@ -624,7 +624,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
 
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(" لا يوجد مرتب لهذا الشخص بهذالتاريخ تاكد من تحضير المرتبات");
                     msgBox.exec();
@@ -633,7 +633,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText(" لا يمكن التعديل علي مرتب قد تم صرفه");
                 msgBox.exec();
@@ -642,7 +642,7 @@ void MainWindow::on_pushButton_10_clicked()//خصم
 
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لا يوجد مستخدم بهذا الكود");
             msgBox.exec();
@@ -668,7 +668,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
 
     if((ui->salarys0lfa->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -709,7 +709,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
                         if(qry.exec("update `Salary` set `Amount` ="+salarystr+" where `E-code` = '"+ecode+"'  and month(`Date`) = "+month+" and year(`Date`) = "+year+""))//تعديل المرتب
                         {
 
-                            QMessageBox msgBox;
+                            QMessageBox msgBox (this);
                             msgBox.setWindowTitle("تم");
                             msgBox.setText("تم خصم السلفة");
                             msgBox.exec();
@@ -724,7 +724,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(" عذرا لقد وصل المترب للحد الادني");
                     msgBox.exec();
@@ -732,7 +732,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText(" لا يمكن التعديل علي مرتب قد تم صرفه");
                 msgBox.exec();
@@ -740,7 +740,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لا يوجد مستخدم بهذا الكود");
             msgBox.exec();
@@ -766,7 +766,7 @@ void MainWindow::on_salarys0lfa_editingFinished()//سلفة 1
     double lastsalary=0;
     if((ui->salarys0lfa->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -817,7 +817,7 @@ void MainWindow::on_ecodesolfa_editingFinished()//سلفة2
     double lastsalary=0;
     if((ui->salarys0lfa->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -869,7 +869,7 @@ void MainWindow::on_solfadate_editingFinished()//سلفة3
     double lastsalary=0;
     if((ui->salarys0lfa->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -918,7 +918,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
             ,time=english.toString((*curtime),"hh:mm:ss");
     if((ui->increasevalue->value())<0)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يمكن ادخال قيمة سالبة");
         msgBox.exec();
@@ -955,7 +955,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
                 {
                     if(qry.exec("update `Salary` set `Amount` ="+salarystr+" where `E-code` = '"+ecode+"'  and month(`Date`) = "+month+" and year(`Date`) = "+year+""))//تعديل المرتب
                     {
-                        QMessageBox msgBox;
+                        QMessageBox msgBox (this);
                         msgBox.setWindowTitle("تم");
                         msgBox.setText("تم الزيادة ");
                         msgBox.exec();
@@ -963,7 +963,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
                     }
                     else
                     {
-                        QMessageBox msgBox;
+                        QMessageBox msgBox (this);
                         msgBox.setWindowTitle("خطاء");
                         msgBox.setText(qry.lastError().text());
                         msgBox.exec();
@@ -971,7 +971,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(qry.lastError().text());
                     msgBox.exec();
@@ -979,7 +979,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
 
             }    else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText(" لا يمكن التعديل علي مرتب قد تم صرفه");
                 msgBox.exec();
@@ -987,7 +987,7 @@ void MainWindow::on_pushButton_9_clicked()//زيادة
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لا يوجد مستخدم بهذا الكود");
             msgBox.exec();
@@ -1075,7 +1075,7 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
         }
         if(!found)
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("لقد قمت بادخال هذا من قبل");
             msgBox.exec();
@@ -1083,7 +1083,7 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم بنجاح");
             msgBox.exec();
@@ -1092,7 +1092,7 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText(" لا يوجد مستخدم بهذا الكود");
         msgBox.exec();
@@ -1133,7 +1133,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
             ,customerphone=ui->customerphone->text()
             ,customerid;
     if (customername == "" || customerphone == ""){
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("حقول فارغة");
         mb.exec();
@@ -1162,7 +1162,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
             ui->customercode->setText(customerid);
             model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
             ui->customertable->setModel(model1);
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم اضافة عميل  بنجاح");
             msgBox.exec();
@@ -1175,7 +1175,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
     }
     else          //العميل موجود مسبقا
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("تكرار زيارة");
         msgBox.setText("هذا العميل قام بزيارتنا مسبقا");
         msgBox.exec();
@@ -1202,7 +1202,7 @@ void MainWindow::on_pushButton_17_clicked()//بحث التاريخ
     int x=ui->searchdate->date().dayOfWeek()-1;
     if(x==6)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("يوم الاحد اجازة");
         msgBox.exec();
@@ -1257,20 +1257,20 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
             flat_color = "لا يوجد";
         if(x==6)
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("يوم الاحد اجازة");
             msgBox.exec();
 
         }
         else if (flats == nFlats && flat == "1"){
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطأ");
             msgBox.setText("هذا اليوم عدد الدواسات فيه ممتلئ");
             msgBox.exec();
         }
         else if (wheels == nWheels && wheel == "1") {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطأ");
             msgBox.setText("هذا اليوم عدد الطارات فيه ممتلئ");
             msgBox.exec();
@@ -1455,9 +1455,13 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                         if (print != nullptr)
                             delete print;
                         print = new Print(generate_html_op(opcode));
-                        print->show();
+                        print->show();/*
+                        auto report = new QtRPT(this);
+                        QDir dir(qApp->applicationDirPath());
+                        report->loadReport(dir.absolutePath()+"/order.xml");
+                        report->setSqlQuery("select `Order-num` , `flat` , `wheel` ,`flat_color` , employee.Name as `empname` , customer.Name as `cusname` , customer.Number as `cusnumber` ,`Delvtime` ,`M-Pay`,  `Total-price` ,`Order` from `Order`, `customer` ,`employee`  where `Cnum`= `C-code` and `A-code`=`Ecode`   and  `Order-num` = '"+opcode+"'");
+                        report->printExec(true);*/
                     }
-
                     QMessageBox msgBox(this);
                     msgBox.setWindowTitle("تم");
                     msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
@@ -1465,7 +1469,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                 }
                 else
                 {
-                    QMessageBox msgBox;
+                    QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
                     msgBox.setText(qry.lastError().text());
                     msgBox.exec();
@@ -1474,7 +1478,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
             }
             else
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("خطاء");
                 msgBox.setText("هذا الوقت ممتلئ");
                 msgBox.exec();
@@ -1528,7 +1532,7 @@ void MainWindow::on_pushButton_25_clicked()//حذف عملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1546,7 +1550,7 @@ void MainWindow::on_pushButton_19_clicked()//الغاءعملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1596,14 +1600,14 @@ void MainWindow::on_pushButton_26_clicked()//اضافي
     if(found)
     {
         qry.exec("update `Order` set `Done` = 1 where `Order-num` = "+opcode+"");
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("تم");
         msgBox.setText("تم التسليم");
         msgBox.exec();
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("لا توجد عملية تسليم بهذا الكود");
         msgBox.exec();
@@ -1630,7 +1634,7 @@ void MainWindow::on_pushButton_40_clicked()//اضافةبضاعة
     }
     if(found)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("يوجد مخزون اخر بهذا الكود");
         msgBox.exec();
@@ -1640,7 +1644,7 @@ void MainWindow::on_pushButton_40_clicked()//اضافةبضاعة
         QSqlQuery qry ;
         if(qry.exec("INSERT INTO `JeansCar`.`Ware` (`Ctype`, `Ccolor`, `Name`, `Price`, `Quantity`) VALUES ('"+code+"', '"+color+"', '"+type+"', "+price+","+qty+");"))//بضاعة جديدة مخزن صغير
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم اضافة البضاعة");
             msgBox.exec();
@@ -1698,14 +1702,14 @@ void MainWindow::on_pushButton_4_clicked()//سحب بضاعة
             else
             {
                 qDebug()<<qry.lastError().text();
-            } QMessageBox msgBox;
+            } QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم سحب بضاعة");
             msgBox.exec();
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("كمية غير متاحة المتاح "+QString ::number(curquantity)+"فقط");
             msgBox.exec();
@@ -1713,7 +1717,7 @@ void MainWindow::on_pushButton_4_clicked()//سحب بضاعة
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("لا يوجد اي مخزون بهذا الكود");
         msgBox.exec();
@@ -1731,7 +1735,7 @@ void MainWindow::on_pushButton_28_clicked()//مخزن كبير اضافة
             ,sname=ui->sname->text();
     QSqlQuery qry;
     if( qry.exec("INSERT INTO `Stock` ( `Name`, `Quantity`, `Price`, `Source`, `Date`)VALUES( '"+sname+"', "+sqty+", "+sprice+", '"+scopmany+"', '"+sdate+"');"))
-    {   QMessageBox msgBox;
+    {   QMessageBox msgBox (this);
         msgBox.setWindowTitle("تم");
         msgBox.setText("تم اضافة المخزون");
         msgBox.exec();
@@ -1804,7 +1808,7 @@ void MainWindow::on_pushButton_30_clicked()//سحب مخزن كبير
         else
         {
 
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("كمية غير متاحة المتاح "+QString ::number(qty)+"فقط");
             msgBox.exec();
@@ -1812,7 +1816,7 @@ void MainWindow::on_pushButton_30_clicked()//سحب مخزن كبير
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("لا توجد اي مخزون بهذا الكود");
         msgBox.exec();
@@ -1837,14 +1841,14 @@ void MainWindow::on_pushButton_31_clicked()//اضافة يومية
     QSqlQuery qry;
     if( qry.exec("INSERT INTO `Daily` (`E-code`, `Amount`, `Reason`, `Date`, `Income`, `Done`)VALUES('"+*code+"', "+money+", '"+reson+"', '"+date+" "+time+"', '"+type+"', 'y');"))
     {
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("تم");
         mb.setText("تمت الاإضافة بنجاح.");
         mb.exec();
     }
     else
     {
-        QMessageBox mb(this);
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText(qry.lastError().text());
         mb.exec();
@@ -1936,7 +1940,7 @@ void MainWindow::on_pushButton_34_clicked()
     int x=ui->dateEdit_3->date().dayOfWeek()-1;
     if(x==6)
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("يوم الاحد اجازة");
         msgBox.exec();
@@ -2010,7 +2014,7 @@ void MainWindow::on_pushButton_36_clicked()//تسليم
         if(x=="0")
         { if(qryf.exec("update `Order` set `Done` = 1 where `Order-num` = "+opnum))//انهاء عملية تسليم
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("تم");
                 msgBox.setText("تم التسليم");
                 msgBox.exec();
@@ -2019,7 +2023,7 @@ void MainWindow::on_pushButton_36_clicked()//تسليم
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لقد تم التسليم من قبل");
             msgBox.exec();
@@ -2027,7 +2031,7 @@ void MainWindow::on_pushButton_36_clicked()//تسليم
     }
     else
     {
-        QMessageBox msgBox;
+        QMessageBox msgBox (this);
         msgBox.setWindowTitle("خطاء");
         msgBox.setText("لا توجد عملية تسليم بهذا الكود");
         msgBox.exec();
@@ -2112,7 +2116,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
                 ok=false;
             }
         }
-        QMessageBox mb;
+         QMessageBox mb  (this);
         if (ok && !duplicate){
             switch (time) {
                 case 'a':
@@ -2229,7 +2233,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
     }
     else
     {
-        QMessageBox mb;
+         QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("لايوجد عملية تسليم بهذا الكود");
         mb.exec();
@@ -2432,14 +2436,14 @@ void MainWindow::on_pushButton_48_clicked()// حذف بضاعه مخزن صغي�
 
         if(found){
             qry.exec("delete  from `Ware`  where `Ctype` = '"+gcode+"' and `Ccolor` = '"+color+"' ") ;
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم الحذف");
             msgBox.exec();
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("لا يوجد اي مخزون بهذا الكود");
             msgBox.exec();
@@ -2476,14 +2480,14 @@ void MainWindow::on_pushButton_49_clicked()
 
         if(found){
             qry.exec("delete  from `Stock`  where `Scode` = '"+code+"' ") ;
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم الحذف");
             msgBox.exec();
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText("لا يوجد اي مخزون بهذا الكود");
             msgBox.exec();
@@ -2515,7 +2519,7 @@ void MainWindow::on_delverlist_doubleClicked(const QModelIndex &index)
         if(x=="0")
         { if(qryf.exec("update `Order` set `Done` = 1 where `Order-num` = "+opnum))//انهاء عملية تسليم
             {
-                QMessageBox msgBox;
+                QMessageBox msgBox (this);
                 msgBox.setWindowTitle("تم");
                 msgBox.setText("تم التسليم");
                 msgBox.exec();
@@ -2524,7 +2528,7 @@ void MainWindow::on_delverlist_doubleClicked(const QModelIndex &index)
         }
         else
         {
-            QMessageBox msgBox;
+            QMessageBox msgBox (this);
             msgBox.setWindowTitle("خطاء");
             msgBox.setText(" لقد تم التسليم من قبل");
             msgBox.exec();
@@ -2581,7 +2585,7 @@ void MainWindow::on_pushButton_53_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if(!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد عميل بهذا الرقم");
@@ -2680,7 +2684,7 @@ void MainWindow::on_pushButton_54_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -2717,7 +2721,7 @@ void MainWindow::on_pushButton_55_clicked()
             break;
         }
     }
-    QMessageBox mb(this);
+     QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -2776,7 +2780,7 @@ void MainWindow::on_pushButton_56_clicked()
 
 void MainWindow::on_salaryReportPrint_clicked()
 {
-    /*
+
     QString  month=english.toString(ui->salaryReportdate->date(),"MM")
             ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
     auto report = new QtRPT(this);
@@ -2784,11 +2788,11 @@ void MainWindow::on_salaryReportPrint_clicked()
     report->loadReport(dir.absolutePath()+"/reporall.xml");
     report->setSqlQuery("select e.`Ecode` as ecode, m.month , e.`Name`, e.`Clear-salary`, ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis, ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa, ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary' from `employee` as e , `month`as m where m.id="+month);
     report->printExec(true);
-    */
+    /*
     QString  month=english.toString(ui->salaryReportdate->date(),"MM")
             ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
     print = new Print(generate_html_all_salary(month, year));
-    print->exec();
+    print->exec();*/
 }
 QString MainWindow::generate_html_all_salary(QString month, QString year){
     QString sql = "select e.`Ecode` as ecode, e.`Name`, e.`Clear-salary`,"
@@ -3035,6 +3039,14 @@ QString MainWindow::generate_html_op(QString opcode){
 
 void MainWindow::on_print_op_clicked()
 {
+    /*
+    QString  opcode=ui->op_code_print->text();
+    auto report = new QtRPT(this);
+    QDir dir(qApp->applicationDirPath());
+    report->loadReport(dir.absolutePath()+"/order.xml");
+    report->setSqlQuery("select `Order-num` , `flat` , `wheel` ,`flat_color` , employee.Name as `empname` , customer.Name as `cusname` , customer.Number as `cusnumber` ,`Delvtime` ,`M-Pay`,  `Total-price` ,`Order` from `Order`, `customer` ,`employee`  where `Cnum`= `C-code` and `A-code`=`Ecode`   and  `Order-num` = '"+opcode+"'");
+    report->printExec(true);
+    */
     print = new Print(generate_html_op(ui->op_code_print->text()));
     print->exec();
 }
@@ -3043,7 +3055,11 @@ void MainWindow::on_delete_cus_clicked()
 {
     QString cphone, title, ques, sql;
     cphone = ui->cphone_edit->text();
+<<<<<<< HEAD
     QMessageBox mb(this);
+=======
+     QMessageBox mb  (this);
+>>>>>>> origin/test0.0
     bool found = 0;
     title = "رسالة تأكيد";
         ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
@@ -3071,6 +3087,7 @@ void MainWindow::on_delete_cus_clicked()
                 mb.exec();
             }
         }
+<<<<<<< HEAD
 
 }
 QString MainWindow::generate_html_delevers(QString date){
@@ -3118,8 +3135,9 @@ QString MainWindow::generate_html_delevers(QString date){
    */       return html;
 
 
+=======
+>>>>>>> origin/test0.0
 }
-
 void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
 {
     QString cphone;
@@ -3147,6 +3165,7 @@ void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_pushButton_51_clicked()
 {
+<<<<<<< HEAD
     print = new Print(generate_html_delevers(english.toString(ui->delverdatenew->date())));
     print->exec();
 }
@@ -3254,4 +3273,13 @@ void MainWindow::on_sign_out_clicked()
     password p(0, this, &name,&code,&pass,&pirorty,mydata);
     this->hide();
     p.show();
+=======
+
+    QString  date=english.toString(ui->delverdatenew->date(),"yyyy-MM-dd");
+    auto report = new QtRPT(this);
+    QDir dir(qApp->applicationDirPath());
+    report->loadReport(dir.absolutePath()+"/delever.xml");
+    report->setSqlQuery("select `Order-num` , `Order`, `flat`,`wheel`,`flat_color` , `Name` , `Number` ,`Delvtime`  from `Order`, `customer` where `Cnum`= `C-code`    and `Delvtime` = '"+date+"'");
+    report->printExec(true);
+>>>>>>> origin/test0.0
 }

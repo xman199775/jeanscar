@@ -3,8 +3,17 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
-//#include <qtrpt.h>
+#include <qtrpt.h>
 #include <QDir>
+#include <QVector>
+struct row
+{
+  QString date="";
+  double  borrow=0;
+  double  discount=0;
+  int attendes=0;
+};
+QVector <row> rows;
 Taqrer_salar::Taqrer_salar(QWidget *parent, QString ecode, QString month, QString year) :
     QMainWindow(parent),
     ui(new Ui::Taqrer_salar)
@@ -28,17 +37,17 @@ Taqrer_salar::Taqrer_salar(QWidget *parent, QString ecode, QString month, QStrin
 
 void Taqrer_salar::setModel5asm(){
 
-        QSqlQueryModel *model1 = new QSqlQueryModel;
-        QString x;
-        QSqlQuery qry;
-        ui->table->setModel(model1);
-        model1->setQuery("SELECT m.`A-code` as 'كود المشرف', e1.`Name` as 'اسم المشرف', m.`E-code` as 'كود الموظف', e2.`Name` as 'الاسم', m.`Amount` as 'الكمية', m.`New_salary` as 'المرتب الجديد', m.`Date` as 'التاريخ', m.`Notes` as 'الملاحظات' FROM `Modify-salary` as m, `Employee` as e1 , `Employee` as e2 where m.`E-code` = e2.`Ecode` and m.`A-code` = e1.`Ecode` and m.`E-code` = '"+ecode+"' and month(`Date`)  = "+month+" and year(`Date`) = "+year+" and m.`Type` = 'd'");/*الخصم*/
-        if(qry.exec("select sum(`Amount`) from `Modify-salary` where `E-code` = '"+ecode+"' and `Type` = 'd'      and month(`Date`) = "+month+" and year(`Date`) = "+year+"")){
-            qry.first();
-            ui->sumlabel->setText(qry.value(0).toString());
-        }
-        else
-            ui->sumlabel->setText("0");
+    QSqlQueryModel *model1 = new QSqlQueryModel;
+    QString x;
+    QSqlQuery qry;
+    ui->table->setModel(model1);
+    model1->setQuery("SELECT m.`A-code` as 'كود المشرف', e1.`Name` as 'اسم المشرف', m.`E-code` as 'كود الموظف', e2.`Name` as 'الاسم', m.`Amount` as 'الكمية', m.`New_salary` as 'المرتب الجديد', m.`Date` as 'التاريخ', m.`Notes` as 'الملاحظات' FROM `Modify-salary` as m, `Employee` as e1 , `Employee` as e2 where m.`E-code` = e2.`Ecode` and m.`A-code` = e1.`Ecode` and m.`E-code` = '"+ecode+"' and month(`Date`)  = "+month+" and year(`Date`) = "+year+" and m.`Type` = 'd'");/*الخصم*/
+    if(qry.exec("select sum(`Amount`) from `Modify-salary` where `E-code` = '"+ecode+"' and `Type` = 'd'      and month(`Date`) = "+month+" and year(`Date`) = "+year+"")){
+        qry.first();
+        ui->sumlabel->setText(qry.value(0).toString());
+    }
+    else
+        ui->sumlabel->setText("0");
 }
 
 void Taqrer_salar::setRest(){
@@ -169,7 +178,7 @@ void Taqrer_salar::on_taqretype_currentIndexChanged(const QString &arg1)
         setModelTa5eer();
     }
     else if (arg1 == "ملاحظات") {
-       setModelNotes();
+        setModelNotes();
     }
     else{
         setModelGyab();
@@ -195,7 +204,7 @@ void Taqrer_salar::on_taqrerdate_editingFinished()
         setModelTa5eer();
     }
     else if (arg1 == "ملاحظات") {
-       setModelNotes();
+        setModelNotes();
     }
     else{
         setModelGyab();
@@ -203,13 +212,86 @@ void Taqrer_salar::on_taqrerdate_editingFinished()
     setRest();
 }
 
+void Taqrer_salar::setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage)
+{
+
+    QLocale  Arabic = QLocale(QLocale::Arabic, QLocale::Egypt);
+    Q_UNUSED(reportPage);
+    if (paramName == "month")
+    {
+        paramValue = Arabic.toString(ui->taqrerdate->date(),"MMMM");
+    }
+    if (paramName == "year")
+    {
+        paramValue = Arabic.toString(ui->taqrerdate->date(),"yyyy");
+    }
+    if (paramName == "name")
+    {
+        QSqlQuery qry;
+        qry.exec("Select `Name` from employee where Ecode = '"+ecode+"' ");
+        qry.first();
+        paramValue =qry.value(0).toString();
+    }
+    if (paramName == "salary")
+    {
+        QSqlQuery qry;
+        qry.exec("Select `Clear-salary` from employee where Ecode = '"+ecode+"' ");
+        qry.first();
+        paramValue =qry.value(0).toString();
+    }
+    if (paramName == "borrow")
+    {
+        paramValue =rows.at(recNo).borrow;
+    }
+    if (paramName == "date")
+    {
+        paramValue =rows.at(recNo).date;
+    }
+    if (paramName == "attends")
+    {
+        paramValue =rows.at(recNo).attendes;
+    }
+    if (paramName == "discount")
+    {
+        paramValue =rows.at(recNo).discount;
+    }
+
+}
+
 void Taqrer_salar::on_pushButton_2_clicked()
 {
-  /*  auto report = new QtRPT(this);
+    rows.clear();
+    QSqlQuery qry;
+    qry.exec("SELECT `Amount` ,`Date` FROM jeanscar.`modify-salary` where `Type` = 'd' and `E-code`= '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+";");
+    while(qry.next())
+    {
+        row temp;
+        temp.discount=qry.value(0).toDouble();
+        temp.date=qry.value(1).toString();
+        rows.append(temp);
+    }
+    qry.exec("SELECT `Amount` ,`Date` FROM jeanscar.`modify-salary` where `Type` = 's' and `E-code`= '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+";");
+    while(qry.next())
+    {
+        row temp;
+        temp.borrow=qry.value(0).toDouble();
+        temp.date=qry.value(1).toString();
+        rows.append(temp);
+    }
+    qry.exec("SELECT `Date` FROM jeanscar.`attendence` where `E-code`= '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year);
+    while(qry.next())
+    {
+        row temp;
+        temp.attendes=1;
+        temp.date=qry.value(0).toString();
+        rows.append(temp);
+    }
+    auto report = new QtRPT(this);
     QDir dir(qApp->applicationDirPath());
     report->loadReport(dir.absolutePath()+"/reportwithdetails.xml");
-   // report->setSqlQuery("select e.`Ecode` as ecode, m.month , e.`Name`, e.`Clear-salary`, ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis, ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa, ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary' from `employee` as e , `month`as m where m.id="+month);
+    report->recordCount << rows.size();
+    QObject::connect(report, SIGNAL(setValue(const int, const QString, QVariant&, const int)),
+                     this, SLOT(setValue(const int, const QString, QVariant&, const int)));
+    //report->setSqlQuery("select e.`Ecode` as ecode, m.month , e.`Name`, e.`Clear-salary`, ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis, ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa, ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary' from `employee` as e , `month`as m where m.id="+month);
     report->printExec(true);
-*/
-
 }

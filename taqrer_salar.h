@@ -21,6 +21,8 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage);
+
 private:
     Ui::Taqrer_salar *ui;
     QString ecode, month, year;
