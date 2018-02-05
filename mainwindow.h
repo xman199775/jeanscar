@@ -18,6 +18,7 @@
 #include "priority.h"
 #include "accounting.h"
 #include <print.h>
+#include <QLineEdit>
 namespace Ui {
 class MainWindow;
 }
@@ -198,6 +199,24 @@ private slots:
 
     void on_pushButton_51_clicked();
 
+    void on_pushButton_51_clicked();
+
+    void on_customername_cursorPositionChanged(int arg1, int arg2);
+
+    void on_customerphone_cursorPositionChanged(int arg1, int arg2);
+
+    void on_opcode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_delevercode1_cursorPositionChanged(int arg1, int arg2);
+
+    void on_deleteopcode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_op_code_print_cursorPositionChanged(int arg1, int arg2);
+
+    void on_delevercode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_sign_out_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString *name;
@@ -222,6 +241,7 @@ private:
     QString generate_html_all_salary(QString month, QString year);
     void update_flat_color();
     void update_op_code();
+    void search_for_up(QString opcode, QLineEdit *le);
 };
 
 #endif // MAINWINDOW_H
