@@ -198,6 +198,22 @@ private slots:
 
     void on_pushButton_51_clicked();
 
+    void on_opcode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_delevercode1_cursorPositionChanged(int arg1, int arg2);
+
+    void on_deleteopcode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_op_code_print_cursorPositionChanged(int arg1, int arg2);
+
+    void on_delevercode_cursorPositionChanged(int arg1, int arg2);
+
+    void on_delevercode_2_cursorPositionChanged(int arg1, int arg2);
+
+    void on_pushButton_57_clicked();
+
+    void on_enter_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString *name;
@@ -218,10 +234,13 @@ private:
     Priority *pri;
     Accounting *a;
     Print *print;
+    QWidget** widgets;
+    QString* widgets_names;
     QString generate_html_op(QString opcode);
     QString generate_html_all_salary(QString month, QString year);
     void update_flat_color();
     void update_op_code();
+    void search_for_up(QString opcode, QLineEdit *le);
 };
 
 #endif // MAINWINDOW_H

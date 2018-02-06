@@ -32,6 +32,56 @@ background-color: rgb(170, 170, 170);
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_33">
         <item>
+         <widget class="QPushButton" name="pushButton_57">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+          </property>
+          <property name="text">
+           <string>تسجيل الخروج</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="username">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="placeholderText">
+           <string>ادخل كود الموظف ..</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="password">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="echoMode">
+           <enum>QLineEdit::Password</enum>
+          </property>
+          <property name="placeholderText">
+           <string>ادخل كلمة السر ...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="enter">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+          </property>
+          <property name="text">
+           <string>دخول</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="clock">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -222,7 +272,7 @@ background-color: rgb(170, 170, 170);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3463,8 +3513,8 @@ background-color: rgb(108, 108, 108);
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1398</width>
-             <height>699</height>
+             <width>1386</width>
+             <height>693</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">

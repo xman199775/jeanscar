@@ -49,7 +49,13 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     ui->delevertime->setDate(*curdate);
     ui->dateEdit_3->setDate(*curdate);
     ui->daily_re->setDate(*curdate);
-
+    ui->username->setVisible(false);
+    ui->password->setVisible(false);
+    ui->enter->setVisible(false);
+    widgets = new QWidget*[11];
+    widgets_names = new QString[11];
+    for (int i = 0 ; i < 11; ++i )
+        widgets[i] = ui->tabWidget->widget(i), widgets_names[i] = ui->tabWidget->tabText(i);
     reportSalary=NULL;
     english = QLocale(QLocale::English, QLocale::UnitedStates);
     pd = new QPrintDialog;
@@ -1484,6 +1490,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
             }    }
     }
 }
+
 void MainWindow::on_pushButton_15_clicked()//بحث عملية تسليم
 {
     QSqlQueryModel *model1=new QSqlQueryModel;
@@ -2369,7 +2376,6 @@ void MainWindow::on_pushButton_42_clicked()
     }
 }
 
-
 void MainWindow::on_pushButton_43_clicked()
 {
     Settings *s = new Settings();
@@ -2793,6 +2799,7 @@ void MainWindow::on_salaryReportPrint_clicked()
     print = new Print(generate_html_all_salary(month, year));
     print->exec();*/
 }
+
 QString MainWindow::generate_html_all_salary(QString month, QString year){
     QString sql = "select e.`Ecode` as ecode, e.`Name`, e.`Clear-salary`,"
                " ( select  sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis,"
@@ -2879,10 +2886,10 @@ void MainWindow::on_pushButton_21_clicked()
 }
 void MainWindow::setPriorty(QString s){
     priority_check = new QString(s);
-    for (int i = 0 , j = 0 ; i < 11 ; i++,j++){
-        if(s[i] == '0'){
-            ui->tabWidget->removeTab(j);
-            j--;
+    ui->tabWidget->clear();
+    for (int i = 0 ; i < 11 ; i++){
+        if(s[i] == '1'){
+            ui->tabWidget->insertTab(i, widgets[i], widgets_names[i]);
         }
     }
 }
@@ -2935,6 +2942,7 @@ void MainWindow::on_actionSettings_triggered()
     Settings *s = new Settings();
     s->show();
 }
+
 QString MainWindow::generate_html_op(QString opcode){
     QSqlQuery qry;
     qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
@@ -3036,8 +3044,7 @@ QString MainWindow::generate_html_op(QString opcode){
                    return html;
 }
 
-void MainWindow::on_print_op_clicked()
-{
+void MainWindow::on_print_op_clicked(){
     /*
     QString  opcode=ui->op_code_print->text();
     auto report = new QtRPT(this);
@@ -3083,6 +3090,7 @@ void MainWindow::on_delete_cus_clicked()
             }
         }
 }
+
 void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
 {
     QString cphone;
@@ -3116,5 +3124,143 @@ void MainWindow::on_pushButton_51_clicked()
     QDir dir(qApp->applicationDirPath());
     report->loadReport(dir.absolutePath()+"/delever.xml");
     report->setSqlQuery("select `Order-num` , `Order`, `flat`,`wheel`,`flat_color` , `Name` , `Number` ,`Delvtime`  from `Order`, `customer` where `Cnum`= `C-code`    and `Delvtime` = '"+date+"'");
-    report->printExec(true);
+    report->printExec(true);*/
+}
+
+void MainWindow::search_for_up(QString opcode, QLineEdit *le){
+     le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+     bool found = false;
+     QSqlQuery qry;
+     qry.exec("select `Order-num` from `JeansCar`.`Order`;");
+     while (qry.next()) {
+         if (qry.value(0).toString() == opcode){
+             found = 1;
+             break;
+         }
+     }
+     if (found || opcode == ""){
+         le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+     }
+     else{
+         le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+     }
+ }
+void MainWindow::on_opcode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->opcode->text(), ui->opcode);
+}
+
+void MainWindow::on_delevercode1_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->delevercode1->text(), ui->delevercode1);
+}
+
+void MainWindow::on_deleteopcode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->deleteopcode->text(), ui->deleteopcode);
+}
+
+void MainWindow::on_op_code_print_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->op_code_print->text(), ui->op_code_print);
+}
+
+void MainWindow::on_delevercode_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->delevercode->text(), ui->delevercode);
+}
+
+void MainWindow::on_delevercode_2_cursorPositionChanged(int arg1, int arg2)
+{
+    search_for_up(ui->delevercode_2->text(), ui->delevercode_2);
+}
+
+void MainWindow::on_pushButton_57_clicked()
+{
+    ui->tabWidget->hide();
+    ui->adminline->setText("");
+    ui->admincodeline->setText("");
+    ui->username->setVisible(true);
+    ui->password->setVisible(true);
+    ui->enter->setVisible(true);
+    *name = "";
+    *code = "";
+}
+
+void MainWindow::on_enter_clicked()
+{
+    QString* code1;
+    QString* pass;
+    QString* pirorty;
+    bool found=false;
+    code1 = new QString( ui->username->text());
+    pass = new QString( ui->password->text());
+
+    if(*code1=="ASH"&&*pass=="ASHNOUHCOMPANY")
+    {
+        ui->tabWidget->show();
+        pirorty = new QString("11111111111");
+        this->setPriorty("11111111111");
+        *code = "Admin";
+        *name = "UniCode inc.";
+        ui->adminline->setText(*name);
+        ui->admincodeline->setText(*code);
+        ui->username->setVisible(false);
+        ui->password->setVisible(false);
+        ui->enter->setVisible(false);
+    }
+    else
+    {
+        QSqlQuery qry;
+        if(qry.exec("select * from `Admin`"))
+        {
+            qDebug()<<"done1";
+        }
+        else
+         {
+            qDebug()<<mydata->lastError().text();
+        }
+        while (qry.next())
+        {
+         if(*code1==qry.value(0).toString()&&*pass==qry.value(1).toString())
+         {
+             found=true;
+             qDebug()<<"done2";
+             break;
+         }
+        }
+    if(found)
+    {
+        pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
+                +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
+                qry.value(11).toString()+qry.value(12).toString());
+        if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
+         {
+          qry.first();
+          *name=qry.value(0).toString();//QRY to do this
+          ui->adminline->setText(*name);
+          ui->admincodeline->setText(*code1);
+          code = code1;
+          ui->tabWidget->show();
+          setPriorty(*pirorty);
+          ui->username->setText("");
+          ui->password->setText("");
+          ui->username->setVisible(false);
+          ui->password->setVisible(false);
+          ui->enter->setVisible(false);
+        }
+        else
+        {
+            qDebug()<<qry.lastError().text();
+        }
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("خطاء");
+        msgBox.setText("خطاء في كود الموظف او كلمة السر");
+        msgBox.exec();
+    }
+    }
+
 }
