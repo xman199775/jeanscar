@@ -193,6 +193,24 @@ void MainWindow::on_pushButton_6_clicked()//اضافة موظف
             {QSqlQuery qry;
                 if(qry.exec("INSERT INTO `JeansCar`.`Employee` (`Ecode`, `Name`, `Nation-id`, `Social-status`, `BirthDate`, `Number`, `Add-nid`, `Add-ano`, `Clear-salary`, `Last_salaray`, `Hours`, `Leave-time`, `Arrive-time`, `Major`, `Year_grad`, `Year_of_job`, `Home_Num`, `Certifcate`, `Curr_job`, `N_of_work_in_years`, `Another_exper`, `Insurance`,`Weakly`,`Note`,`Min`) VALUES ('"+id+"', '"+ename+"', '"+nid+"', '"+state+"', '"+birthdate+"', '"+phone+"','"+addressincard+"','"+ address +"','"+salary+"','"+lastsalary+"','"+numofhouer+"','"+leavetime+"','"+arrivetime+"','"+Major+"','"+cirdate+"','"+yearofjob+"','"+homephone+"','"+cirt+"','"+curjob+"', '"+numofyear+"', '"+antherexp+"', '"+mo2men+"','"+week+"','"+note+"',"+max+");"))
                 {
+                    ui->employeecode->setText("");
+                    ui->emplyeename->setText("");
+                    ui->employeeid->setText("");
+                    ui->statuse->setText("");
+                    ui->phone->setText("");
+                    ui->homephone->setText("");
+                    ui->adressinidcard->setText("");
+                    ui->adress->setText("");
+                    ui->depart->setText("");
+                    ui->cirtficate->setText("");
+                    ui->currentjob->setText("");
+                    ui->anotherexp->setText("");
+                    ui->notes->setText("");
+                    ui->salary->setValue(0);
+                    ui->lastsalary->setValue(0);
+                    ui->numofhour->setValue(0);
+                    ui->numofyearworking->setValue(0);
+                    ui->max->setValue(0);
                     QMessageBox msgBox (this);
                     msgBox.setWindowTitle("تم ");
                     msgBox.setText(" تم اضافة الموظف بنجاح");
@@ -477,7 +495,7 @@ void MainWindow::on_pushButton_3_clicked() //البحث عن مستخدم محد
     }
     if(found)
     {
-        model1->setQuery("select `Drag`.`E-code` as 'كود الموظف', `Employee`.`Name` as 'اسم الموظف', `Admin`.`Pass` as 'كلمة السر', `Admin`.`Priorty` as 'الصلاحية', `Drag`.`C-type` as 'كود البضاعة', `Drag`.`C-color` as 'لون البضاعة', `Drag`.`Price` as 'سعر السحب', `Drag`.`Quantity` as 'كمية السحب', `Drag`.`Notes` as 'سبب السحب', `Drag`.`Date` as 'تاريخ السحب' from `Drag` , `Admin` , `Employee` where  `Ecode` = `E-code` and `Ecode` = `A-code` and `Ecode` = '"+ecode+"'  and month(`Date`) = "+month+" and year(`Date`) = "+year+"  ");
+        model1->setQuery("select `Drag`.`E-code` as 'كود الموظف', `Employee`.`Name` as 'اسم الموظف', `Admin`.`Pass` as 'كلمة السر', `Admin`.`Add_employee` as 'إضافه موظف', `Admin`.`Salary` as '    الموظفين /الراتب    ',`Admin`.`Stock` as 'مخزن رئيسي',`Admin`.`Manager` as 'مدير النظام',`Admin`.`Deliver_salary` as 'توزيع الرواتب',`Admin`.`Custmers` as 'العملاء',`Admin`.`Edit_Order` as 'تعديل عملية شراء',`Admin`.`Ware` as 'المخزن',`Admin`.`Open` as 'التشغيل',`Admin`.`Accounting` as 'الحسابات',`Admin`.`Deliver` as 'تسليم' ,`Drag`.`C-type` as 'كود البضاعة', `Drag`.`C-color` as 'لون البضاعة', `Drag`.`Price` as 'سعر السحب', `Drag`.`Quantity` as 'كمية السحب', `Drag`.`Notes` as 'سبب السحب', `Drag`.`Date` as 'تاريخ السحب' from `Drag` , `Admin` , `Employee` where  `Ecode` = `E-code` and `Ecode` = `A-code` and `Ecode` = '"+ecode+"'  and month(`Date`) = "+month+" and year(`Date`) = "+year+"  ");
         ui->admintable->setModel(model1);
     }
     else
@@ -1844,12 +1862,20 @@ void MainWindow::on_pushButton_31_clicked()//اضافة يومية
     {
         type="y";
     }
+    if (reson == "" || money == 0){
+        QMessageBox mb  (this);
+       mb.setWindowTitle("خطأ");
+       mb.setText("حقول فارغة!");
+       mb.exec();
+       return;
+    }
     QSqlQuery qry;
     if( qry.exec("INSERT INTO `Daily` (`E-code`, `Amount`, `Reason`, `Date`, `Income`, `Done`)VALUES('"+*code+"', "+money+", '"+reson+"', '"+date+" "+time+"', '"+type+"', 'y');"))
     {
          QMessageBox mb  (this);
+         ui->dailyreason->setText("");
         mb.setWindowTitle("تم");
-        mb.setText("تمت الاإضافة بنجاح.");
+        mb.setText("تمت الإضافة بنجاح.");
         mb.exec();
     }
     else
@@ -3183,8 +3209,13 @@ void MainWindow::on_pushButton_57_clicked()
     ui->username->setVisible(true);
     ui->password->setVisible(true);
     ui->enter->setVisible(true);
+    ui->admincodeline->setVisible(0);
+    ui->adminline->setVisible(0);
+    ui->label_68->setVisible(0);
+    ui->label_67->setVisible(0);
     *name = "";
     *code = "";
+    ui->pushButton_57->setVisible(0);
 }
 
 void MainWindow::on_enter_clicked()
@@ -3208,6 +3239,11 @@ void MainWindow::on_enter_clicked()
         ui->username->setVisible(false);
         ui->password->setVisible(false);
         ui->enter->setVisible(false);
+        ui->admincodeline->setVisible(1);
+        ui->adminline->setVisible(1);
+        ui->label_68->setVisible(1);
+        ui->label_67->setVisible(1);
+        ui->pushButton_57->setVisible(1);
     }
     else
     {
@@ -3248,6 +3284,11 @@ void MainWindow::on_enter_clicked()
           ui->username->setVisible(false);
           ui->password->setVisible(false);
           ui->enter->setVisible(false);
+          ui->admincodeline->setVisible(1);
+          ui->adminline->setVisible(1);
+          ui->label_68->setVisible(1);
+          ui->label_67->setVisible(1);
+          ui->pushButton_57->setVisible(1);
         }
         else
         {
@@ -3263,4 +3304,145 @@ void MainWindow::on_enter_clicked()
     }
     }
 
+}
+
+QString MainWindow::generate_html_running(QString Date){
+    QSqlQuery qry;
+    qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', ' طاره : نعم ', ' طاره : لا يوجد '), if(`flat` = '1' ,CONCAT('أرضيه :', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'a';");
+
+    QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+             "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
+             "p, li { white-space: pre-wrap; }\n"
+             "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">تشغيل يوم"  " "+ Date + "</span></p>\n"
+             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
+             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ١١ صباحا ل ٥ مساء</span></p>\n";
+    if(qry.next()){
+                html += "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+                 "<tr>\n"
+                  "<td >\n"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+                  "<td >\n"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+                  "<td >\n"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+                  "<td >\n"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+                  "<td>"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+                  "<td  >\n"
+                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+        int i = 1;
+        qry.previous();
+        while (qry.next()) {
+            html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + qry.value(5).toString() + qry.value(6).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
+        }
+    }else{
+        html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+    }
+        html += "</table><p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٢ مساء ل ٨ مساء</span></p>\n";
+        qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'b';");
+
+        if(qry.next()){
+            html +="<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+            "<tr>\n"
+             "<td >\n"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+             "<td >\n"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+             "<td >\n"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+             "<td >\n"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+             "<td>"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+             "<td  >\n"
+             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+            int i = 1;
+            qry.previous();
+            while (qry.next()) {
+            html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
+            }
+        }else{
+            html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+        }
+
+        html += "</table>";
+        qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'ذ';");
+
+        html += "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٥ مساء ل ١١ مساء</span></p>\n";
+        if(qry.next()){
+        html +=
+            "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+        "<tr>\n"
+         "<td >\n"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+         "<td >\n"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+         "<td >\n"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+         "<td >\n"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+         "<td>"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+         "<td  >\n"
+         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+        int i = 1;
+        qry.previous();
+        while (qry.next()) {
+        html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
+        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
+        }
+    }else{
+            html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+        }
+        html += "</table></body></html>";
+        return html;
+}
+
+void MainWindow::on_print_tash8el_clicked()
+{
+    print = new Print(generate_html_running(QDate::currentDate().toString("yyyy-MM-dd")));
+    print->exec();
+}
+
+void MainWindow::on_pushButton_58_clicked()
+{
+    ui->admintable->setModel(nullptr);
+}
+
+void MainWindow::on_s7bcolor_cursorPositionChanged(int arg1, int arg2)
+{
+    QString goodcode, goodcolor;
+    goodcode = ui->s7bcode->text();
+    goodcolor = ui->s7bcolor->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Ware`.`Name` FROM `JeansCar`.`Ware` where  `Ware`.`Ctype` = '"+goodcode+"' and  `Ware`.`Ccolor` = '"+goodcolor+"'");
+    qry.first();
+    ui->s7btype->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_s7bcode_cursorPositionChanged(int arg1, int arg2)
+{
+    QString goodcode, goodcolor;
+    goodcode = ui->s7bcode->text();
+    goodcolor = ui->s7bcolor->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Ware`.`Name` FROM `JeansCar`.`Ware` where  `Ware`.`Ctype` = '"+goodcode+"' and  `Ware`.`Ccolor` = '"+goodcolor+"'");
+    qry.first();
+    ui->s7btype->setText(qry.value(0).toString());
 }

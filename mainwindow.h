@@ -214,6 +214,14 @@ private slots:
 
     void on_enter_clicked();
 
+    void on_print_tash8el_clicked();
+
+    void on_pushButton_58_clicked();
+
+    void on_s7bcolor_cursorPositionChanged(int arg1, int arg2);
+
+    void on_s7bcode_cursorPositionChanged(int arg1, int arg2);
+
 private:
     Ui::MainWindow *ui;
     QString *name;
@@ -238,6 +246,7 @@ private:
     QString* widgets_names;
     QString generate_html_op(QString opcode);
     QString generate_html_all_salary(QString month, QString year);
+    QString generate_html_running(QString Date);
     void update_flat_color();
     void update_op_code();
     void search_for_up(QString opcode, QLineEdit *le);

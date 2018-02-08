@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1436</width>
-    <height>827</height>
+    <height>837</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,27 +32,14 @@ background-color: rgb(170, 170, 170);
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_33">
         <item>
-         <widget class="QPushButton" name="pushButton_57">
-          <property name="cursor">
-           <cursorShape>PointingHandCursor</cursorShape>
-          </property>
+         <widget class="QPushButton" name="enter">
           <property name="styleSheet">
            <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
           </property>
           <property name="text">
-           <string>تسجيل الخروج</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="username">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="placeholderText">
-           <string>ادخل كود الموظف ..</string>
+           <string>دخول</string>
           </property>
          </widget>
         </item>
@@ -65,19 +52,17 @@ background-color: rgb(108, 108, 108);
            <enum>QLineEdit::Password</enum>
           </property>
           <property name="placeholderText">
-           <string>ادخل كلمة السر ...</string>
+           <string>...ادخل كلمة السر </string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="enter">
+         <widget class="QLineEdit" name="username">
           <property name="styleSheet">
-           <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
-          <property name="text">
-           <string>دخول</string>
+          <property name="placeholderText">
+           <string>.. ادخل كود الموظف</string>
           </property>
          </widget>
         </item>
@@ -237,6 +222,21 @@ background-color: rgb(108, 108, 108);
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_57">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+          </property>
+          <property name="text">
+           <string>تسجيل الخروج</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -272,7 +272,7 @@ background-color: rgb(108, 108, 108);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>10</number>
+       <number>7</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3514,7 +3514,7 @@ background-color: rgb(108, 108, 108);
              <x>0</x>
              <y>0</y>
              <width>1386</width>
-             <height>693</height>
+             <height>703</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">
@@ -3929,6 +3929,24 @@ background-color: rgb(108, 108, 108);
                     <weight>75</weight>
                     <bold>true</bold>
                    </font>
+                  </property>
+                  <property name="textElideMode">
+                   <enum>Qt::ElideMiddle</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_58">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>إزالة</string>
                   </property>
                  </widget>
                 </item>
@@ -8266,6 +8284,21 @@ background-color: rgb(108, 108, 108);
         </item>
         <item row="0" column="0" colspan="3">
          <layout class="QHBoxLayout" name="horizontalLayout_17">
+          <item>
+           <widget class="QPushButton" name="print_tash8el">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+            </property>
+            <property name="text">
+             <string>طباعة</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QPushButton" name="pushButton_34">
             <property name="font">

@@ -2240,7 +2240,7 @@ void table::on_comboBox_currentIndexChanged(const QString &arg1)
     else{
         set5to11(date);
     }
-    set_curr(date);
+    //set_curr(date);
 }
 
 void table::on_pushButton_clicked()//prev
