@@ -272,7 +272,7 @@ background-color: rgb(108, 108, 108);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>7</number>
+       <number>10</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3513,8 +3513,8 @@ background-color: rgb(108, 108, 108);
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1386</width>
-             <height>703</height>
+             <width>1398</width>
+             <height>709</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">
@@ -8286,6 +8286,13 @@ background-color: rgb(108, 108, 108);
          <layout class="QHBoxLayout" name="horizontalLayout_17">
           <item>
            <widget class="QPushButton" name="print_tash8el">
+            <property name="font">
+             <font>
+              <pointsize>13</pointsize>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
