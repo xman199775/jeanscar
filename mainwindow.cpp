@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     print = nullptr;
     a = NULL;
     update_flat_color();
+    pri=NULL;
 }
 void MainWindow::update_flat_color(){
     QSqlQuery qry;
@@ -77,6 +78,7 @@ void MainWindow::update_flat_color(){
     while (qry.next()) {
         ui->flat_color->addItem(qry.value(0).toString());
     }
+
 }
 
 MainWindow::~MainWindow()
@@ -91,6 +93,7 @@ void MainWindow::refresh()
 {
     ui->adminline->setText(*name);
     ui->admincodeline->setText(*code);
+    ui->dealdate->setDate(*curdate);
 }
 void MainWindow::update_op_code(){
     QSqlQuery qry;
@@ -106,8 +109,7 @@ void MainWindow::updatedate()
     datestr =curdate->toString("dd-MM-yyyy");
     ui->clock->setText(timestr);
     ui->date->setText(datestr);
-    ui->dealdate->setDate(*curdate);
-   // update_op_code();
+
 }
 
 void MainWindow::on_pushButton_18_clicked()//تسليم2
@@ -248,7 +250,7 @@ void MainWindow::on_pushButton_8_clicked()//حذف موظف
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -463,7 +465,7 @@ void MainWindow::on_pushButton_14_clicked()//حذف مستخدم
     if(todo != NULL)
         todo->close();
     if (ecode == ""){
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -520,7 +522,6 @@ void MainWindow::on_pushButton_20_clicked()//تعديل مستخدم
     QString ecode=ui->editecode->text()
             ,password2=ui->newpassword->text();
 
-    char p;
     QString a[11];
     for(int i = 0 ; i < 11 ; ++i)
         a[i] = (*priority_check)[i];
@@ -1153,70 +1154,71 @@ void MainWindow::on_recived_editingFinished()//عملية شراء4
 void MainWindow::on_pushButton_2_clicked()//اضافة عميل
 {
     update_op_code();
+    update_flat_color();
     QString customername=ui->customername->text()
             ,customerphone=ui->customerphone->text()
             ,customerid;
     if (customername == "" || customerphone == ""){
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("حقول فارغة");
         mb.exec();
     }
     else{
-    QSqlQueryModel *model1=new QSqlQueryModel;
-    bool found = false;
-    QSqlQuery qry;
-    qry.exec("select `Number` from `JeansCar`.`Customer`");//هاتلي كل ارقام التليفون المتسجلة
-    while(qry.next())
-    {
-        if(customerphone==qry.value(0).toString())
+        QSqlQueryModel *model1=new QSqlQueryModel;
+        bool found = false;
+        QSqlQuery qry;
+        qry.exec("select `Number` from `JeansCar`.`Customer`");//هاتلي كل ارقام التليفون المتسجلة
+        while(qry.next())
         {
-            found=true;
+            if(customerphone==qry.value(0).toString())
+            {
+                found=true;
+            }
         }
-    }
 
-    if(!found)
-    {
-        if(qry.exec("INSERT INTO `Customer` (`Name`,`Number`)VALUES('"+customername+"', '"+customerphone+"');"))//اضافة عميل
+        if(!found)
         {
+            if(qry.exec("INSERT INTO `Customer` (`Name`,`Number`)VALUES('"+customername+"', '"+customerphone+"');"))//اضافة عميل
+            {
+                qry.exec("select `Cnum` from `JeansCar`.`Customer` where `Number` = '"+customerphone+"'");//هات الكودالرقم تيلفونه فوق
+                qry.first();
+                customerid=qry.value(0).toString();
+                ui->customercode->setText(customerid);
+                model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
+                ui->customertable->setModel(model1);
+                QMessageBox msgBox (this);
+                msgBox.setWindowTitle("تم");
+                msgBox.setText("تم اضافة عميل  بنجاح");
+                msgBox.exec();
+            }
+            else
+            {
+
+            }
+
+        }
+        else          //العميل موجود مسبقا
+        {
+            QMessageBox msgBox (this);
+            msgBox.setWindowTitle("تكرار زيارة");
+            msgBox.setText("هذا العميل قام بزيارتنا مسبقا");
+            msgBox.exec();
+            qry.exec("select `Name` from `JeansCar`.`Customer` where `Number` = '"+customerphone+"'");//الاسم
+            qry.first();
+            customername=qry.value(0).toString();
+            ui->customername->setText(customername);
             qry.exec("select `Cnum` from `JeansCar`.`Customer` where `Number` = '"+customerphone+"'");//هات الكودالرقم تيلفونه فوق
             qry.first();
             customerid=qry.value(0).toString();
             ui->customercode->setText(customerid);
             model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
             ui->customertable->setModel(model1);
-            QMessageBox msgBox (this);
-            msgBox.setWindowTitle("تم");
-            msgBox.setText("تم اضافة عميل  بنجاح");
-            msgBox.exec();
-        }
-        else
-        {
 
         }
-
-    }
-    else          //العميل موجود مسبقا
-    {
-        QMessageBox msgBox (this);
-        msgBox.setWindowTitle("تكرار زيارة");
-        msgBox.setText("هذا العميل قام بزيارتنا مسبقا");
-        msgBox.exec();
-        qry.exec("select `Name` from `JeansCar`.`Customer` where `Number` = '"+customerphone+"'");//الاسم
+        qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
         qry.first();
-        customername=qry.value(0).toString();
-        ui->customername->setText(customername);
-        qry.exec("select `Cnum` from `JeansCar`.`Customer` where `Number` = '"+customerphone+"'");//هات الكودالرقم تيلفونه فوق
-        qry.first();
-        customerid=qry.value(0).toString();
-        ui->customercode->setText(customerid);
-        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
-        ui->customertable->setModel(model1);
-
-    }
-    qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
-    qry.first();
-    ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
+        ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
     }
 }
 
@@ -1240,7 +1242,7 @@ void MainWindow::on_pushButton_17_clicked()//بحث التاريخ
 
 void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
 {
-    update_op_code();
+
     QMessageBox::StandardButton x;
     x=QMessageBox::question(this,"اضافة العملية","سيتم اضافة العملية",QMessageBox::Ok|QMessageBox::Cancel);
     if(x==QMessageBox::Ok)
@@ -1268,244 +1270,256 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
         recievedstr=QString::number(recieved);
         remainstr=QString::number(remain);
         QSqlQuery qry;
-        bool ok=true;
-        int x=ui->dealdate->date().dayOfWeek()-1;
-        qry.exec("select sum(`flat`), sum(`wheel`)from `Order`where `Delvtime` = '"+deleverdate+"';");
-        qry.first();
-        int flats = qry.value(0).toInt(), wheels = qry.value(1).toInt();
-        qry.exec("select `Flats`, `Wheels` from `Settings`;");
-        qry.first();
-        int nFlats = qry.value(0).toInt(), nWheels = qry.value(1).toInt();
-        if(flat == "0")
-            flat_color = "لا يوجد";
-        if(x==6)
+        if(!qry.exec("select `Order-num` from `Order` where `Order-num` = '"+opcode+"';"))
         {
-            QMessageBox msgBox (this);
-            msgBox.setWindowTitle("خطاء");
-            msgBox.setText("يوم الاحد اجازة");
-            msgBox.exec();
-
-        }
-        else if (flats == nFlats && flat == "1"){
-            QMessageBox msgBox (this);
-            msgBox.setWindowTitle("خطأ");
-            msgBox.setText("هذا اليوم عدد الدواسات فيه ممتلئ");
-            msgBox.exec();
-        }
-        else if (wheels == nWheels && wheel == "1") {
-            QMessageBox msgBox (this);
-            msgBox.setWindowTitle("خطأ");
-            msgBox.setText("هذا اليوم عدد الطارات فيه ممتلئ");
-            msgBox.exec();
-        }
-        else
-        {
-            if(ui->comboBox->currentText()=="5:11")
+            bool ok=true;
+            int x=ui->dealdate->date().dayOfWeek()-1;
+            qry.exec("select sum(`flat`), sum(`wheel`)from `Order`where `Delvtime` = '"+deleverdate+"';");
+            qry.first();
+            int flats = qry.value(0).toInt(), wheels = qry.value(1).toInt();
+            qry.exec("select `Flats`, `Wheels` from `Settings`;");
+            qry.first();
+            int nFlats = qry.value(0).toInt(), nWheels = qry.value(1).toInt();
+            if(flat == "0")
+                flat_color = "لا يوجد";
+            if(x==6)
             {
-                time="a";
-                if(qry.exec("select `H11`,`H11a`,`H11b` , `H11c` , `H11d` , `H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                QMessageBox msgBox (this);
+                msgBox.setWindowTitle("خطاء");
+                msgBox.setText("يوم الاحد اجازة");
+                msgBox.exec();
+
+            }
+            else if (flats == nFlats && flat == "1"){
+                QMessageBox msgBox (this);
+                msgBox.setWindowTitle("خطأ");
+                msgBox.setText("هذا اليوم عدد الدواسات فيه ممتلئ");
+                msgBox.exec();
+            }
+            else if (wheels == nWheels && wheel == "1") {
+                QMessageBox msgBox (this);
+                msgBox.setWindowTitle("خطأ");
+                msgBox.setText("هذا اليوم عدد الطارات فيه ممتلئ");
+                msgBox.exec();
+            }
+            else
+            {
+                if(ui->comboBox->currentText()=="5:11")
                 {
-                    qry.first();
-                    if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                    time="a";
+                    if(qry.exec("select `H11`,`H11a`,`H11b` , `H11c` , `H11d` , `H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                    {
+                        qry.first();
+                        if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                        {
+                            ok=false;
+                        }
+
+                    }
+                    else
                     {
                         ok=false;
                     }
+                }
+                else if(ui->comboBox->currentText()=="8:2")
+                {
+                    time="b";
+                    if(qry.exec("select `H2`,`H2a`,`H2b` , `H2c` , `H2d` , `H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                    {
+                        qry.first();
+                        if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                        {
+                            ok=false;
+                        }
 
-                }
-                else
-                {
-                    ok=false;
-                }
-            }
-            else if(ui->comboBox->currentText()=="8:2")
-            {
-                time="b";
-                if(qry.exec("select `H2`,`H2a`,`H2b` , `H2c` , `H2d` , `H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
-                {
-                    qry.first();
-                    if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                    }
+                    else
                     {
                         ok=false;
                     }
+                }
+                else if(ui->comboBox->currentText()=="11:5")
+                {
+                    time="c";
+                    if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` , `H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                    {
+                        qry.first();
+                        if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                        {
+                            ok=false;
+                        }
 
-                }
-                else
-                {
-                    ok=false;
-                }
-            }
-            else if(ui->comboBox->currentText()=="11:5")
-            {
-                time="c";
-                if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` , `H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
-                {
-                    qry.first();
-                    if(qry.value(0).toInt() != 0 && qry.value(1).toInt() != 0 && qry.value(2).toInt()!= 0 && qry.value(3).toInt() != 0 && qry.value(4).toInt() != 0 && qry.value(5).toInt()!= 0)
+                    }
+                    else
                     {
                         ok=false;
                     }
-
                 }
-                else
+
+                if(ok)
                 {
-                    ok=false;
-                }
-            }
-
-            if(ok)
-            {
-                if(qry.exec("INSERT INTO `Order` ( `A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`)VALUES( '"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+");"))//ضيف عملية شراء
-                {
-                    if(ui->comboBox->currentText()=="5:11")
+                    if(qry.exec("INSERT INTO `Order` ( `A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`)VALUES( '"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+");"))//ضيف عملية شراء
                     {
-                        if(qry.exec("select `H11`,`H11a`,`H11b` , `H11c` , `H11d` , `H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                        if(ui->comboBox->currentText()=="5:11")
                         {
-                            qry.first();
-                            if(qry.value(0).toInt()==0)
+                            if(qry.exec("select `H11`,`H11a`,`H11b` , `H11c` , `H11d` , `H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
                             {
-                                qry.exec("insert into `Sec` (`Date` , `H11`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11` = "+opcode+" ;");
+                                qry.first();
+                                if(qry.value(0).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11` = "+opcode+" ;");
+                                }
+                                else if(qry.value(1).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11a` = "+opcode+" ;");
+                                }
+                                else if(qry.value(2).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11b` = "+opcode+" ;");
+                                }
+                                else if(qry.value(3).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11c` = "+opcode+" ;");
+                                }
+                                else if(qry.value(4).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11d` = "+opcode+" ;");
+                                }
+                                else if(qry.value(5).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H11e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11e` = "+opcode+" ;");
+                                }
                             }
-                            else if(qry.value(1).toInt()==0)
+
+
+                        }
+                        else if(ui->comboBox->currentText()=="8:2")
+                        {
+                            if(qry.exec("select `H2`,`H2a`,`H2b` , `H2c` , `H2d` , `H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
                             {
-                                qry.exec("insert into `Sec` (`Date` , `H11a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11a` = "+opcode+" ;");
-                            }
-                            else if(qry.value(2).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H11b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11b` = "+opcode+" ;");
-                            }
-                            else if(qry.value(3).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H11c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11c` = "+opcode+" ;");
-                            }
-                            else if(qry.value(4).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H11d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11d` = "+opcode+" ;");
-                            }
-                            else if(qry.value(5).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H11e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11e` = "+opcode+" ;");
+                                qry.first();
+                                if(qry.value(0).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2` = "+opcode+" ;");
+                                }
+                                else if(qry.value(1).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2a` = "+opcode+" ;");
+                                }
+                                else if(qry.value(2).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2b` = "+opcode+" ;");
+                                }
+                                else if(qry.value(3).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2c` = "+opcode+" ;");
+                                }
+                                else if(qry.value(4).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2d` = "+opcode+" ;");
+                                }
+                                else if(qry.value(5).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H2e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2e` = "+opcode+" ;");
+                                }
                             }
                         }
-
-
-                    }
-                    else if(ui->comboBox->currentText()=="8:2")
-                    {
-                        if(qry.exec("select `H2`,`H2a`,`H2b` , `H2c` , `H2d` , `H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                        else if(ui->comboBox->currentText()=="11:5")
                         {
-                            qry.first();
-                            if(qry.value(0).toInt()==0)
+                            if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` , `H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
                             {
-                                qry.exec("insert into `Sec` (`Date` , `H2`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2` = "+opcode+" ;");
-                            }
-                            else if(qry.value(1).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H2a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2a` = "+opcode+" ;");
-                            }
-                            else if(qry.value(2).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H2b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2b` = "+opcode+" ;");
-                            }
-                            else if(qry.value(3).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H2c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2c` = "+opcode+" ;");
-                            }
-                            else if(qry.value(4).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H2d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2d` = "+opcode+" ;");
-                            }
-                            else if(qry.value(5).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H2e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2e` = "+opcode+" ;");
+                                qry.first();
+                                if(qry.value(0).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5` = "+opcode+" ;");
+                                }
+                                else if(qry.value(1).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5a` = "+opcode+" ;");
+                                }
+                                else if(qry.value(2).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5b` = "+opcode+" ;");
+                                }
+                                else if(qry.value(3).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5c` = "+opcode+" ;");
+                                }
+                                else if(qry.value(4).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5d` = "+opcode+" ;");
+                                }
+                                else if(qry.value(5).toInt()==0)
+                                {
+                                    qry.exec("insert into `Sec` (`Date` , `H5e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5e` = "+opcode+" ;");
+                                }
                             }
                         }
-                    }
-                    else if(ui->comboBox->currentText()=="11:5")
-                    {
-                        if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` , `H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
-                        {
-                            qry.first();
-                            if(qry.value(0).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5` = "+opcode+" ;");
-                            }
-                            else if(qry.value(1).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5a` = "+opcode+" ;");
-                            }
-                            else if(qry.value(2).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5b` = "+opcode+" ;");
-                            }
-                            else if(qry.value(3).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5c` = "+opcode+" ;");
-                            }
-                            else if(qry.value(4).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5d` = "+opcode+" ;");
-                            }
-                            else if(qry.value(5).toInt()==0)
-                            {
-                                qry.exec("insert into `Sec` (`Date` , `H5e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5e` = "+opcode+" ;");
-                            }
-                        }
-                    }
-                    ui->customercode->setText("");
-                    ui->customername->setText("");
-                    ui->customerphone->setText("");
-                    ui->opreationcode->setText("");
-                    ui->cartype->setText("");
-                    ui->carmodel->setText("");
-                    ui->stamp->setText("");
-                    ui->order1->setText("");
-                    ui->order2->setText("");
-                    ui->order3->setText("");
-                    ui->price1->setValue(0);
-                    ui->price2->setValue(0);
-                    ui->price3->setValue(0);
-                    ui->el5edcolor->setText("");
-                    ui->el5edtype->setText("");
-                    ui->recived->setValue(0);
-                    ui->remain->setValue(0);
-                    ui->totalprice->setValue(0);
-                    ui->flat->setCheckState(Qt::CheckState::Unchecked);
-                    ui->wheel->setCheckState(Qt::CheckState::Unchecked);
+                        ui->customercode->setText("");
+                        ui->customername->setText("");
+                        ui->customerphone->setText("");
+                        ui->opreationcode->setText("");
+                        ui->cartype->setText("");
+                        ui->carmodel->setText("");
+                        ui->stamp->setText("");
+                        ui->order1->setText("");
+                        ui->order2->setText("");
+                        ui->order3->setText("");
+                        ui->price1->setValue(0);
+                        ui->price2->setValue(0);
+                        ui->price3->setValue(0);
+                        ui->el5edcolor->setText("");
+                        ui->el5edtype->setText("");
+                        ui->recived->setValue(0);
+                        ui->remain->setValue(0);
+                        ui->totalprice->setValue(0);
+                        ui->flat->setCheckState(Qt::CheckState::Unchecked);
+                        ui->wheel->setCheckState(Qt::CheckState::Unchecked);
 
-                    QMessageBox::StandardButton y;
-                    y = QMessageBox::question(this, "طباعة العملية" , "هل تريد طباعة هذه العملية ؟" , QMessageBox::Ok|QMessageBox::Cancel);
-                    if (y == QMessageBox::Ok){
-                        if (print != nullptr)
-                            delete print;
-                        print = new Print(generate_html_op(opcode));
-                        print->show();/*
+                        QMessageBox::StandardButton y;
+                        y = QMessageBox::question(this, "طباعة العملية" , "هل تريد طباعة هذه العملية ؟" , QMessageBox::Ok|QMessageBox::Cancel);
+                        if (y == QMessageBox::Ok){
+                            if (print != nullptr)
+                                delete print;
+                            print = new Print(generate_html_op(opcode));
+                            print->show();/*
                         auto report = new QtRPT(this);
                         QDir dir(qApp->applicationDirPath());
                         report->loadReport(dir.absolutePath()+"/order.xml");
                         report->setSqlQuery("select `Order-num` , `flat` , `wheel` ,`flat_color` , employee.Name as `empname` , customer.Name as `cusname` , customer.Number as `cusnumber` ,`Delvtime` ,`M-Pay`,  `Total-price` ,`Order` from `Order`, `customer` ,`employee`  where `Cnum`= `C-code` and `A-code`=`Ecode`   and  `Order-num` = '"+opcode+"'");
                         report->printExec(true);*/
+                        }
+                        QMessageBox msgBox(this);
+                        msgBox.setWindowTitle("تم");
+                        msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
+                        msgBox.exec();
                     }
-                    QMessageBox msgBox(this);
-                    msgBox.setWindowTitle("تم");
-                    msgBox.setText("تم حفظ العملية "+ opcode + "بنجاح");
-                    msgBox.exec();
+                    else
+                    {
+                        QMessageBox msgBox (this);
+                        msgBox.setWindowTitle("خطاء");
+                        msgBox.setText(qry.lastError().text());
+                        msgBox.exec();
+                        qDebug()<<qry.lastError().text();
+                    }
                 }
                 else
                 {
                     QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
-                    msgBox.setText(qry.lastError().text());
+                    msgBox.setText("هذا الوقت ممتلئ");
                     msgBox.exec();
-                    qDebug()<<qry.lastError().text();
-                }
-            }
-            else
-            {
-                QMessageBox msgBox (this);
-                msgBox.setWindowTitle("خطاء");
-                msgBox.setText("هذا الوقت ممتلئ");
-                msgBox.exec();
-            }    }
+                }    }
+            update_op_code();
+        }
+        else
+        {
+            QMessageBox msgBox (this);
+            msgBox.setWindowTitle("خطاء");
+            msgBox.setText("كود العملية مستخدم من قبل");
+            msgBox.exec();
+        }
+
     }
 }
 
@@ -1556,7 +1570,7 @@ void MainWindow::on_pushButton_25_clicked()//حذف عملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1574,7 +1588,7 @@ void MainWindow::on_pushButton_19_clicked()//الغاءعملية تسليم
     if(todo != NULL)
         todo->close();
     if (opcode == ""){
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("الرجاء إدخال بيانات للمتابعه");
         mb.exec();
@@ -1864,23 +1878,23 @@ void MainWindow::on_pushButton_31_clicked()//اضافة يومية
     }
     if (reson == "" || money == 0){
         QMessageBox mb  (this);
-       mb.setWindowTitle("خطأ");
-       mb.setText("حقول فارغة!");
-       mb.exec();
-       return;
+        mb.setWindowTitle("خطأ");
+        mb.setText("حقول فارغة!");
+        mb.exec();
+        return;
     }
     QSqlQuery qry;
     if( qry.exec("INSERT INTO `Daily` (`E-code`, `Amount`, `Reason`, `Date`, `Income`, `Done`)VALUES('"+*code+"', "+money+", '"+reson+"', '"+date+" "+time+"', '"+type+"', 'y');"))
     {
-         QMessageBox mb  (this);
-         ui->dailyreason->setText("");
+        QMessageBox mb  (this);
+        ui->dailyreason->setText("");
         mb.setWindowTitle("تم");
         mb.setText("تمت الإضافة بنجاح.");
         mb.exec();
     }
     else
     {
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText(qry.lastError().text());
         mb.exec();
@@ -2075,7 +2089,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
     QString deleverdate = english.toString(ui->deldate->date(),"yyyy-MM-dd") ;
     char time;
     QString dcode = ui->opcode->text()
-    ,opcode = ui->opcode->text();
+            ,opcode = ui->opcode->text();
     bool found = false;
     QSqlQuery qryf;
     qryf.exec("select `Order-num` from `JeansCar`.`Order`");//اكواد عمليات الشراء
@@ -2101,7 +2115,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
                 {
                     ok=false;
                 } else if(qry.value(0).toString() == opcode || qry.value(1).toString() == opcode || qry.value(2).toString() == opcode
-                        || qry.value(3).toString() == opcode || qry.value(4).toString() == opcode || qry.value(5).toString() == opcode)
+                          || qry.value(3).toString() == opcode || qry.value(4).toString() == opcode || qry.value(5).toString() == opcode)
                     duplicate = true;
 
             }
@@ -2148,105 +2162,105 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
                 ok=false;
             }
         }
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         if (ok && !duplicate){
             switch (time) {
-                case 'a':
-                    if(qry.exec("select `H11`,`H11a`,`H11b` ,`H11c` ,`H11d` ,`H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
+            case 'a':
+                if(qry.exec("select `H11`,`H11a`,`H11b` ,`H11c` ,`H11d` ,`H11e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                {
+                    qry.first();
+                    if(qry.value(0).toInt()==0)
                     {
-                        qry.first();
-                        if(qry.value(0).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11` = "+opcode+" ;");
-                        }
-                        else if(qry.value(1).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11a` = "+opcode+" ;");
-                        }
-                        else if(qry.value(2).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11b` = "+opcode+" ;");
-                        }
-                        else if(qry.value(3).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11c` = "+opcode+" ;");
-                        }
-                        else if(qry.value(4).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11d` = "+opcode+" ;");
-                        }
-                        else if(qry.value(5).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H11e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11e` = "+opcode+" ;");
-                        }
-                        qry.exec("update `Order` set `Moagal` = 1 , `time`='a' where `Order-num` = "+dcode+";");
+                        qry.exec("insert into `Sec` (`Date` , `H11`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11` = "+opcode+" ;");
                     }
-                    break;
-                case 'b':
-                    if(qry.exec("select `H2`,`H2a`,`H2b` ,`H2c` ,`H2d` ,`H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                    else if(qry.value(1).toInt()==0)
                     {
-                        qry.first();
-                        if(qry.value(0).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2` = "+opcode+" ;");
-                        }
-                        else if(qry.value(1).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2a` = "+opcode+" ;");
-                        }
-                        else if(qry.value(2).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2b` = "+opcode+" ;");
-                        }
-                        else if(qry.value(3).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2c` = "+opcode+" ;");
-                        }
-                        else if(qry.value(4).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2d` = "+opcode+" ;");
-                        }
-                        else if(qry.value(5).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H2e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2e` = "+opcode+" ;");
-                        }
-                        qry.exec("update `Order` set `Moagal` = 1 , `time`='b' where `Order-num` = "+dcode+";");
+                        qry.exec("insert into `Sec` (`Date` , `H11a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11a` = "+opcode+" ;");
                     }
-                    break;
-                case 'c':
-                    if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` ,`H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                    else if(qry.value(2).toInt()==0)
                     {
-                        qry.first();
-                        if(qry.value(0).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5` = "+opcode+" ;");
-                        }
-                        else if(qry.value(1).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5a` = "+opcode+" ;");
-                        }
-                        else if(qry.value(2).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5b` = "+opcode+" ;");
-                        }
-                        else if(qry.value(3).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5c` = "+opcode+" ;");
-                        }
-                        else if(qry.value(4).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5d` = "+opcode+" ;");
-                        }
-                        else if(qry.value(5).toInt()==0)
-                        {
-                            qry.exec("insert into `Sec` (`Date` , `H5e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5e` = "+opcode+" ;");
-                        }
-                        qry.exec("update `Order` set `Moagal` = 1 , `time`='c' where `Order-num` = "+dcode+";");
+                        qry.exec("insert into `Sec` (`Date` , `H11b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11b` = "+opcode+" ;");
+                    }
+                    else if(qry.value(3).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H11c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11c` = "+opcode+" ;");
+                    }
+                    else if(qry.value(4).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H11d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11d` = "+opcode+" ;");
+                    }
+                    else if(qry.value(5).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H11e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H11e` = "+opcode+" ;");
+                    }
+                    qry.exec("update `Order` set `Moagal` = 1 , `time`='a' where `Order-num` = "+dcode+";");
+                }
+                break;
+            case 'b':
+                if(qry.exec("select `H2`,`H2a`,`H2b` ,`H2c` ,`H2d` ,`H2e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                {
+                    qry.first();
+                    if(qry.value(0).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2` = "+opcode+" ;");
+                    }
+                    else if(qry.value(1).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2a` = "+opcode+" ;");
+                    }
+                    else if(qry.value(2).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2b` = "+opcode+" ;");
+                    }
+                    else if(qry.value(3).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2c` = "+opcode+" ;");
+                    }
+                    else if(qry.value(4).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2d` = "+opcode+" ;");
+                    }
+                    else if(qry.value(5).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H2e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H2e` = "+opcode+" ;");
+                    }
+                    qry.exec("update `Order` set `Moagal` = 1 , `time`='b' where `Order-num` = "+dcode+";");
+                }
+                break;
+            case 'c':
+                if(qry.exec("select `H5`,`H5a`,`H5b` ,`H5c` ,`H5d` ,`H5e` from `Sec` where `Date` = '"+deleverdate+"'"))
+                {
+                    qry.first();
+                    if(qry.value(0).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5` = "+opcode+" ;");
+                    }
+                    else if(qry.value(1).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5a`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5a` = "+opcode+" ;");
+                    }
+                    else if(qry.value(2).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5b`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5b` = "+opcode+" ;");
+                    }
+                    else if(qry.value(3).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5c`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5c` = "+opcode+" ;");
+                    }
+                    else if(qry.value(4).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5d`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5d` = "+opcode+" ;");
+                    }
+                    else if(qry.value(5).toInt()==0)
+                    {
+                        qry.exec("insert into `Sec` (`Date` , `H5e`) values('"+deleverdate+"' , "+opcode+" ) on duplicate key update `H5e` = "+opcode+" ;");
+                    }
+                    qry.exec("update `Order` set `Moagal` = 1 , `time`='c' where `Order-num` = "+dcode+";");
 
-                    }
-                    break;
-                default:
-                    break;
+                }
+                break;
+            default:
+                break;
             }
             qry.exec("update `Order` set `Delvtime` = '"+deleverdate+"' where `Order-num` = "+dcode+";");
             mb.setWindowTitle("تم ");
@@ -2265,7 +2279,7 @@ void MainWindow::on_pushButton_37_clicked() // update delv time
     }
     else
     {
-         QMessageBox mb  (this);
+        QMessageBox mb  (this);
         mb.setWindowTitle("خطأ");
         mb.setText("لايوجد عملية تسليم بهذا الكود");
         mb.exec();
@@ -2616,7 +2630,7 @@ void MainWindow::on_pushButton_53_clicked()
             break;
         }
     }
-     QMessageBox mb  (this);
+    QMessageBox mb  (this);
     if(!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد عميل بهذا الرقم");
@@ -2715,7 +2729,7 @@ void MainWindow::on_pushButton_54_clicked()
             break;
         }
     }
-     QMessageBox mb  (this);
+    QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -2752,7 +2766,7 @@ void MainWindow::on_pushButton_55_clicked()
             break;
         }
     }
-     QMessageBox mb  (this);
+    QMessageBox mb  (this);
     if (!found){
         mb.setWindowTitle("خطأ");
         mb.setText("لا يوجد بضاعه بهذا الكود ");
@@ -2828,11 +2842,11 @@ void MainWindow::on_salaryReportPrint_clicked()
 
 QString MainWindow::generate_html_all_salary(QString month, QString year){
     QString sql = "select e.`Ecode` as ecode, e.`Name`, e.`Clear-salary`,"
-               " ( select  sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis,"
-               " ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa,"
-               " ( select  sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada ,"
-               " ( select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary'"
-               " from `employee` as e ";
+                  " ( select  sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis,"
+                                                                                                                                                           " ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa,"
+                                                                                                                                                                                                                                                                                                       " ( select  sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada ,"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                  " ( select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary'"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        " from `employee` as e ";
     QSqlQuery qry;
     qry.exec(sql);
     QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
@@ -2840,46 +2854,46 @@ QString MainWindow::generate_html_all_salary(QString month, QString year){
                    "p, li { white-space: pre-wrap; }\n"
                    "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">تقرير مرتبات   "+ QString::number(month.toInt()) +" / "+ QString::number(year.toInt()) +"</span></p>\n"
-                   "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
-                   "<table  width=\"750\" align=\"center\" border=\"0.5\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;\" cellspacing=\"2\" cellpadding=\"0\">\n"
-                   "<tr>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">المرتب المستحق</span></p></td>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار الزياده</span> </p></td>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار السلفه</span> </p></td>\n"
-                   "<td  >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار الخصم</span> </p></td>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">المرتب الأساسي </span></p></td>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسم الموظف</span></p></td>\n"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">كود الموظف </span></p></td>"
-                   "<td >\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n"
-                   ;
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
+                                                                                                                                                                                                                                                                                                          "<table  width=\"750\" align=\"center\" border=\"0.5\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px;\" cellspacing=\"2\" cellpadding=\"0\">\n"
+                                                                                                                                                                                                                                                                                                          "<tr>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">المرتب المستحق</span></p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار الزياده</span> </p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار السلفه</span> </p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td  >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">مقدار الخصم</span> </p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">المرتب الأساسي </span></p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسم الموظف</span></p></td>\n"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">كود الموظف </span></p></td>"
+                                                                                                                                                                                                                                                                                                          "<td >\n"
+                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n"
+            ;
     int i = 1;
     while(qry.next()){
         html += "<tr>\n"
                 "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
                 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(5).toString()+" </p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(4).toString()+" </p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(3).toString()+"</p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(2).toString()+" </p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(1).toString()+"</p></td>\n"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(0).toString()+" </p></td>"
-                "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
-                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+QString::number(i++)+" </p></td>"
-                "</tr>";
+                                                                                                                                                                                     "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                     "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(5).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                          "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(4).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(3).toString()+"</p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(2).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(1).toString()+"</p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(0).toString()+" </p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td style=\" padding-left:5; padding-right:5; padding-top:5; padding-bottom:5;\">\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+QString::number(i++)+" </p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     "</tr>";
     }
     html += "</table></body></html>";
     return html;
@@ -2973,7 +2987,7 @@ QString MainWindow::generate_html_op(QString opcode){
     QSqlQuery qry;
     qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
     qry.first();
-          QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
                    "p, li { white-space: pre-wrap; }\n"
                    "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
@@ -2983,91 +2997,91 @@ QString MainWindow::generate_html_op(QString opcode){
                    "<tr>\n"
                    "<td>\n"
                    "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+opcode+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">رقم العملية </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(0).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">اسم العميل </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(1).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">اسم المتعاقد </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(2).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">تاريخ التعاقد </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(3).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">تاريخ التسليم </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n";
-          QString time;
-          if(qry.value(4).toString() == "a"){
-              time = "من ١١ صباحا إالى ٥ مساء";
-          }
-          else if (qry.value(4).toString() == "b")
-              time = "من ٢ مساء إلى ٨ مساء ";
-          else
-              time = "من ٥ مساء إلى ١١ مساء ";
-          html+=
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+time+"</p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">وقت التسليم </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(5).toString()+"</p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">مواصفات السيارة </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(9).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الضمان بالسنوات </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الطلب </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n";
-          QString flat;
-          if (qry.value(10).toString() == "1")
-              flat = qry.value(7).toString();
-          else
-              flat = "لا يوجد";
-          html+=
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+flat+"</p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دواسة </p></td></tr>\n"
-                   "<tr>\n"
-                   "<td>\n";
-                   QString wheel;
-                   if (qry.value(8).toString() == "1")
-                       wheel = "نعم";
-                   else
-                       wheel = "لا يوجد";
-                   html +=
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+wheel+" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td>"
-                   "</tr>\n"
-                   "<tr>\n"
-                   "<td>\n"
-                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
-                   "<td>\n"
-                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دفع مسبق </p></td>"
-                   "</tr></table>"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">٣٠ شارع زهير صبري متفرع من شارع الطيران خلف حي مدينة نصر</span> </p>"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">للتواصل : 01020977790</span> </p>"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.jeanscar.com  او زورو موقعنا على </span> </p>"
-                   "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.facebook.com/jeanscar62  او زورو صفحتنا على </span> </p>";
-                   return html;
+                                                                                                                                                                       "<td>\n"
+                                                                                                                                                                       "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">رقم العملية </p></td></tr>\n"
+                                                                                                                                                                       "<tr>\n"
+                                                                                                                                                                       "<td>\n"
+                                                                                                                                                                       "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(0).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                            "<td>\n"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">اسم العميل </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                            "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                            "<td>\n"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(1).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">اسم المتعاقد </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(2).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">تاريخ التعاقد </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(3).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">تاريخ التسليم </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "<td>\n";
+    QString time;
+    if(qry.value(4).toString() == "a"){
+        time = "من ١١ صباحا إالى ٥ مساء";
+    }
+    else if (qry.value(4).toString() == "b")
+        time = "من ٢ مساء إلى ٨ مساء ";
+    else
+        time = "من ٥ مساء إلى ١١ مساء ";
+    html+=
+            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+time+"</p></td>\n"
+                                                                                                                                                              "<td>\n"
+                                                                                                                                                              "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">وقت التسليم </p></td></tr>\n"
+                                                                                                                                                              "<tr>\n"
+                                                                                                                                                              "<td>\n"
+                                                                                                                                                              "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(5).toString()+"</p></td>\n"
+                                                                                                                                                                                                                                                                                                                                   "<td>\n"
+                                                                                                                                                                                                                                                                                                                                   "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">مواصفات السيارة </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                   "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                   "<td>\n"
+                                                                                                                                                                                                                                                                                                                                   "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(9).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الضمان بالسنوات </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الطلب </p></td></tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<tr>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<td>\n";
+    QString flat;
+    if (qry.value(10).toString() == "1")
+        flat = qry.value(7).toString();
+    else
+        flat = "لا يوجد";
+    html+=
+            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+flat+"</p></td>\n"
+                                                                                                                                                              "<td>\n"
+                                                                                                                                                              "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دواسة </p></td></tr>\n"
+                                                                                                                                                              "<tr>\n"
+                                                                                                                                                              "<td>\n";
+    QString wheel;
+    if (qry.value(8).toString() == "1")
+        wheel = "نعم";
+    else
+        wheel = "لا يوجد";
+    html +=
+            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+wheel+" </p></td>\n"
+                                                                                                                                                               "<td>\n"
+                                                                                                                                                               "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td>"
+                                                                                                                                                               "</tr>\n"
+                                                                                                                                                               "<tr>\n"
+                                                                                                                                                               "<td>\n"
+                                                                                                                                                               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                            "<td>\n"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دفع مسبق </p></td>"
+                                                                                                                                                                                                                                                                                                                                            "</tr></table>"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">٣٠ شارع زهير صبري متفرع من شارع الطيران خلف حي مدينة نصر</span> </p>"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">للتواصل : 01020977790</span> </p>"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.jeanscar.com  او زورو موقعنا على </span> </p>"
+                                                                                                                                                                                                                                                                                                                                            "<p align=\"center\" style=\" margin-top:12px; margin-bottom:4px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:small; font-weight:600;\">  www.facebook.com/jeanscar62  او زورو صفحتنا على </span> </p>";
+    return html;
 }
 
 void MainWindow::on_print_op_clicked(){
@@ -3087,34 +3101,34 @@ void MainWindow::on_delete_cus_clicked()
 {
     QString cphone, title, ques, sql;
     cphone = ui->cphone_edit->text();
-     QMessageBox mb  (this);
+    QMessageBox mb  (this);
     bool found = 0;
     title = "رسالة تأكيد";
-        ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
-        QMessageBox::StandardButton msg;
-        msg=QMessageBox::question(this, title, ques, QMessageBox::Ok|QMessageBox::Cancel);
-        if(msg == QMessageBox::Ok){
-            QSqlQuery qry;
-            qry.exec("select `Number` from `Customer`;");
-            while (qry.next()) {
-                if (cphone == qry.value(0).toString()){
-                    found = 1;
-                    break;
-                }
-            }
-            sql = "delete from `Customer` where `Number` = '"+cphone+"';";
-            bool done = qry.exec(sql);
-            if(done && found){
-                mb.setWindowTitle("تم");
-                mb.setText("تم حذف العميل بنجاح.");
-                mb.exec();
-            }
-            else{
-                mb.setWindowTitle("خطأ");
-                mb.setText("لا يوجد عميل بهذا الرقم!");
-                mb.exec();
+    ques = "هل انت متأكد انك تريد حذف العمليل" + cphone + "؟";
+    QMessageBox::StandardButton msg;
+    msg=QMessageBox::question(this, title, ques, QMessageBox::Ok|QMessageBox::Cancel);
+    if(msg == QMessageBox::Ok){
+        QSqlQuery qry;
+        qry.exec("select `Number` from `Customer`;");
+        while (qry.next()) {
+            if (cphone == qry.value(0).toString()){
+                found = 1;
+                break;
             }
         }
+        sql = "delete from `Customer` where `Number` = '"+cphone+"';";
+        bool done = qry.exec(sql);
+        if(done && found){
+            mb.setWindowTitle("تم");
+            mb.setText("تم حذف العميل بنجاح.");
+            mb.exec();
+        }
+        else{
+            mb.setWindowTitle("خطأ");
+            mb.setText("لا يوجد عميل بهذا الرقم!");
+            mb.exec();
+        }
+    }
 }
 
 void MainWindow::on_cphone_edit_cursorPositionChanged(int arg1, int arg2)
@@ -3150,27 +3164,27 @@ void MainWindow::on_pushButton_51_clicked()
     QDir dir(qApp->applicationDirPath());
     report->loadReport(dir.absolutePath()+"/delever.xml");
     report->setSqlQuery("select `Order-num` , `Order`, `flat`,`wheel`,`flat_color` , `Name` , `Number` ,`Delvtime`  from `Order`, `customer` where `Cnum`= `C-code`    and `Delvtime` = '"+date+"'");
-    report->printExec(true);*/
+    report->printExec(true);
 }
 
 void MainWindow::search_for_up(QString opcode, QLineEdit *le){
-     le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
-     bool found = false;
-     QSqlQuery qry;
-     qry.exec("select `Order-num` from `JeansCar`.`Order`;");
-     while (qry.next()) {
-         if (qry.value(0).toString() == opcode){
-             found = 1;
-             break;
-         }
-     }
-     if (found || opcode == ""){
-         le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
-     }
-     else{
-         le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
-     }
- }
+    le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    bool found = false;
+    QSqlQuery qry;
+    qry.exec("select `Order-num` from `JeansCar`.`Order`;");
+    while (qry.next()) {
+        if (qry.value(0).toString() == opcode){
+            found = 1;
+            break;
+        }
+    }
+    if (found || opcode == ""){
+        le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);");
+    }
+    else{
+        le->setStyleSheet("background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);");
+    }
+}
 void MainWindow::on_opcode_cursorPositionChanged(int arg1, int arg2)
 {
     search_for_up(ui->opcode->text(), ui->opcode);
@@ -3253,55 +3267,55 @@ void MainWindow::on_enter_clicked()
             qDebug()<<"done1";
         }
         else
-         {
+        {
             qDebug()<<mydata->lastError().text();
         }
         while (qry.next())
         {
-         if(*code1==qry.value(0).toString()&&*pass==qry.value(1).toString())
-         {
-             found=true;
-             qDebug()<<"done2";
-             break;
-         }
+            if(*code1==qry.value(0).toString()&&*pass==qry.value(1).toString())
+            {
+                found=true;
+                qDebug()<<"done2";
+                break;
+            }
         }
-    if(found)
-    {
-        pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
-                +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
-                qry.value(11).toString()+qry.value(12).toString());
-        if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
-         {
-          qry.first();
-          *name=qry.value(0).toString();//QRY to do this
-          ui->adminline->setText(*name);
-          ui->admincodeline->setText(*code1);
-          code = code1;
-          ui->tabWidget->show();
-          setPriorty(*pirorty);
-          ui->username->setText("");
-          ui->password->setText("");
-          ui->username->setVisible(false);
-          ui->password->setVisible(false);
-          ui->enter->setVisible(false);
-          ui->admincodeline->setVisible(1);
-          ui->adminline->setVisible(1);
-          ui->label_68->setVisible(1);
-          ui->label_67->setVisible(1);
-          ui->pushButton_57->setVisible(1);
+        if(found)
+        {
+            pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
+                                    +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
+                                    qry.value(11).toString()+qry.value(12).toString());
+            if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
+            {
+                qry.first();
+                *name=qry.value(0).toString();//QRY to do this
+                ui->adminline->setText(*name);
+                ui->admincodeline->setText(*code1);
+                code = code1;
+                ui->tabWidget->show();
+                setPriorty(*pirorty);
+                ui->username->setText("");
+                ui->password->setText("");
+                ui->username->setVisible(false);
+                ui->password->setVisible(false);
+                ui->enter->setVisible(false);
+                ui->admincodeline->setVisible(1);
+                ui->adminline->setVisible(1);
+                ui->label_68->setVisible(1);
+                ui->label_67->setVisible(1);
+                ui->pushButton_57->setVisible(1);
+            }
+            else
+            {
+                qDebug()<<qry.lastError().text();
+            }
         }
         else
         {
-            qDebug()<<qry.lastError().text();
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("خطاء");
+            msgBox.setText("خطاء في كود الموظف او كلمة السر");
+            msgBox.exec();
         }
-    }
-    else
-    {
-        QMessageBox msgBox;
-        msgBox.setWindowTitle("خطاء");
-        msgBox.setText("خطاء في كود الموظف او كلمة السر");
-        msgBox.exec();
-    }
     }
 
 }
@@ -3311,112 +3325,112 @@ QString MainWindow::generate_html_running(QString Date){
     qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', ' طاره : نعم ', ' طاره : لا يوجد '), if(`flat` = '1' ,CONCAT('أرضيه :', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'a';");
 
     QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-             "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
-             "p, li { white-space: pre-wrap; }\n"
-             "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">تشغيل يوم"  " "+ Date + "</span></p>\n"
-             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
-             "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ١١ صباحا ل ٥ مساء</span></p>\n";
+                   "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
+                   "p, li { white-space: pre-wrap; }\n"
+                   "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
+                   "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">تشغيل يوم"  " "+ Date + "</span></p>\n"
+                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
+                                                                                                                                                                                                                                          "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ١١ صباحا ل ٥ مساء</span></p>\n";
     if(qry.next()){
-                html += "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
-                 "<tr>\n"
-                  "<td >\n"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
-                  "<td >\n"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
-                  "<td >\n"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
-                  "<td >\n"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
-                  "<td>"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
-                  "<td  >\n"
-                  "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+        html += "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+                "<tr>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+                "<td>"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+                "<td  >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
         int i = 1;
         qry.previous();
         while (qry.next()) {
             html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + qry.value(5).toString() + qry.value(6).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
+                                                                                                                                                                                                                                                                                         "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
         }
     }else{
         html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
     }
-        html += "</table><p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٢ مساء ل ٨ مساء</span></p>\n";
-        qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'b';");
+    html += "</table><p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٢ مساء ل ٨ مساء</span></p>\n";
+    qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'b';");
 
-        if(qry.next()){
-            html +="<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
-            "<tr>\n"
-             "<td >\n"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
-             "<td >\n"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
-             "<td >\n"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
-             "<td >\n"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
-             "<td>"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
-             "<td  >\n"
-             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
-            int i = 1;
-            qry.previous();
-            while (qry.next()) {
-            html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
-            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
-            }
-        }else{
-            html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
-        }
-
-        html += "</table>";
-        qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'ذ';");
-
-        html += "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٥ مساء ل ١١ مساء</span></p>\n";
-        if(qry.next()){
-        html +=
-            "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
-        "<tr>\n"
-         "<td >\n"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
-         "<td >\n"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
-         "<td >\n"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
-         "<td >\n"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
-         "<td>"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
-         "<td  >\n"
-         "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+    if(qry.next()){
+        html +="<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+               "<tr>\n"
+               "<td >\n"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+               "<td >\n"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+               "<td >\n"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+               "<td >\n"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+               "<td>"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+               "<td  >\n"
+               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
         int i = 1;
         qry.previous();
         while (qry.next()) {
-        html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
-        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
-        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
-        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
-        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
-        "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
+            html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                     "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
         }
     }else{
-            html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+        html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+    }
+
+    html += "</table>";
+    qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'ذ';");
+
+    html += "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٥ مساء ل ١١ مساء</span></p>\n";
+    if(qry.next()){
+        html +=
+                "<table width=\"750\" border=\"0.2\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
+                "<tr>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">الطلب</span> </p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">أسم البائع </span></p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">إسطمبة</span></p></td>\n"
+                "<td >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">موديل السيارة</span></p></td>"
+                "<td>"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:'-webkit-standard'; font-size:medium; font-weight:600; color:#000000;\">رقم العملية</span> </p></td>\n"
+                "<td  >\n"
+                "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">م</span></p></td></tr>\n";
+        int i = 1;
+        qry.previous();
+        while (qry.next()) {
+            html += "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(4).toString() + " " + qry.value(5).toString() + " " + qry.value(6).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                     "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(1).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(3).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(2).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ qry.value(0).toString() +"</span></p></td>"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">"+ QString::number(i++)    +"</span></p></td></tr>";
         }
-        html += "</table></body></html>";
-        return html;
+    }else{
+        html += "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:600;\">لا يوجد</span></p>";
+    }
+    html += "</table></body></html>";
+    return html;
 }
 
 void MainWindow::on_print_tash8el_clicked()
 {
-    print = new Print(generate_html_running(QDate::currentDate().toString("yyyy-MM-dd")));
+    print = new Print(generate_html_running(english.toString(ui->dateEdit_3->date(),"yyyy-MM-dd")));
     print->exec();
 }
 

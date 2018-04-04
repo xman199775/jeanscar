@@ -3,7 +3,7 @@
 #include <QTextBrowser>
 #include <QLayout>
 #include <QSqlQuery>
-
+#include <QDebug>
 //background-color: rgb(255, 128, 0);
 
 void table::clear_all(){
@@ -63,12 +63,15 @@ void table::set_curr(QDate date1){
     QLocale english(QLocale::English, QLocale::UnitedStates);
     QString cur = english.toString(date1,"dd-MM-yyyy");
     QString mon, tue, wed, thu, fri, sat;
-    mon = ui->monday->text();
-    tue = ui->tuesday->text();
-    wed = ui->wedensday->text();
-    thu = ui->thursday->text();
-    fri = ui->friday->text();
-    sat = ui->saturday->text();
+
+    mon = english.toString(QDate::fromString(ui->monday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+    tue = english.toString(QDate::fromString(ui->tuesday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+    wed = english.toString(QDate::fromString(ui->wedensday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+    thu = english.toString(QDate::fromString(ui->thursday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+    fri = english.toString(QDate::fromString(ui->friday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+    sat = english.toString(QDate::fromString(ui->saturday->text(),"dd-MM-yyyy"),"dd-MM-yyyy");
+
+
     if (cur == mon){
         ui->monday->setStyleSheet("background-color: rgb(255, 128, 0);");
         ui->monday_2->setStyleSheet("background-color: rgb(255, 128, 0);");
