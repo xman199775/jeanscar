@@ -1270,8 +1270,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
         recievedstr=QString::number(recieved);
         remainstr=QString::number(remain);
         QSqlQuery qry;
-        qry.exec("select `Order-num` from `Order` where `Order-num` = '"+opcode+"';");
-        if(!qry.next())
+        if(!qry.exec("select `Order-num` from `Order` where `Order-num` = '"+opcode+"';"))
         {
             bool ok=true;
             int x=ui->dealdate->date().dayOfWeek()-1;
