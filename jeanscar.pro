@@ -8,6 +8,7 @@ QT       += core gui printsupport
 QT       += sql
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+
 TARGET = jeanscar
 TEMPLATE = app
 
@@ -28,7 +29,7 @@ SOURCES += main.cpp\
     priority.cpp \
     accounting.cpp \
     settings.cpp \
-    print.cpp
+    print.cpp \
 
 HEADERS  += mainwindow.h \
     password.h \

@@ -1216,10 +1216,8 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
             ui->customertable->setModel(model1);
 
         }
-        qry.exec("SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES where   TABLE_NAME   = 'Order';");
-        qry.first();
-        ui->opreationcode->setText(QString::number(qry.value(0).toInt()));
     }
+    update_op_code();
 }
 
 void MainWindow::on_pushButton_17_clicked()//بحث التاريخ
@@ -1270,8 +1268,10 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
         recievedstr=QString::number(recieved);
         remainstr=QString::number(remain);
         QSqlQuery qry;
-        if(!qry.exec("select `Order-num` from `Order` where `Order-num` = '"+opcode+"';"))
+        qry.exec("select `Order-num` from `Order` where `Order-num` = '"+opcode+"';");
+        if(!qry.next())
         {
+
             bool ok=true;
             int x=ui->dealdate->date().dayOfWeek()-1;
             qry.exec("select sum(`flat`), sum(`wheel`)from `Order`where `Delvtime` = '"+deleverdate+"';");
@@ -1358,7 +1358,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
 
                 if(ok)
                 {
-                    if(qry.exec("INSERT INTO `Order` ( `A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`)VALUES( '"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+");"))//ضيف عملية شراء
+                    if(qry.exec("INSERT INTO `Order` ( `Order-num`,`A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`)VALUES( "+opcode+",'"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+");"))//ضيف عملية شراء
                     {
                         if(ui->comboBox->currentText()=="5:11")
                         {
@@ -1455,6 +1455,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                                 }
                             }
                         }
+                        qDebug()<<opcode;
                         ui->customercode->setText("");
                         ui->customername->setText("");
                         ui->customerphone->setText("");
