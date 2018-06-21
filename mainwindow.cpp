@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     ui->delevertime->setDate(*curdate);
     ui->dateEdit_3->setDate(*curdate);
     ui->daily_re->setDate(*curdate);
+    ui->orderDate->setDate(*curdate);
     ui->username->setVisible(false);
     ui->password->setVisible(false);
     ui->enter->setVisible(false);
@@ -3231,6 +3232,9 @@ void MainWindow::on_pushButton_57_clicked()
     *name = "";
     *code = "";
     ui->pushButton_57->setVisible(0);
+    ui->enter->setAutoDefault(1);
+    ui->enter->setDefault(1);
+    this->setMaximumSize(300, 250);
 }
 
 void MainWindow::on_enter_clicked()
@@ -3259,6 +3263,8 @@ void MainWindow::on_enter_clicked()
         ui->label_68->setVisible(1);
         ui->label_67->setVisible(1);
         ui->pushButton_57->setVisible(1);
+
+        this->setWindowState(Qt::WindowActive);
     }
     else
     {
@@ -3310,6 +3316,32 @@ void MainWindow::on_enter_clicked()
                 qDebug()<<qry.lastError().text();
             }
         }
+    if(found)
+    {
+        pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
+                +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
+                qry.value(11).toString()+qry.value(12).toString());
+        if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
+         {
+          qry.first();
+          *name=qry.value(0).toString();//QRY to do this
+          ui->adminline->setText(*name);
+          ui->admincodeline->setText(*code1);
+          code = code1;
+          ui->tabWidget->show();
+          setPriorty(*pirorty);
+          ui->username->setText("");
+          ui->password->setText("");
+          ui->username->setVisible(false);
+          ui->password->setVisible(false);
+          ui->enter->setVisible(false);
+          ui->admincodeline->setVisible(1);
+          ui->adminline->setVisible(1);
+          ui->label_68->setVisible(1);
+          ui->label_67->setVisible(1);
+          ui->pushButton_57->setVisible(1);
+          this->setMaximumSize(16777215, 16777215);
+        }
         else
         {
             QMessageBox msgBox;
@@ -3319,6 +3351,7 @@ void MainWindow::on_enter_clicked()
         }
     }
 
+}
 }
 
 QString MainWindow::generate_html_running(QString Date){
@@ -3460,4 +3493,150 @@ void MainWindow::on_s7bcode_cursorPositionChanged(int arg1, int arg2)
     qry.exec("SELECT `Ware`.`Name` FROM `JeansCar`.`Ware` where  `Ware`.`Ctype` = '"+goodcode+"' and  `Ware`.`Ccolor` = '"+goodcolor+"'");
     qry.first();
     ui->s7btype->setText(qry.value(0).toString());
+}
+
+
+void MainWindow::on_pushButton_235_clicked()
+{
+    QString num = ui->cusnumber->text();
+    QString name = ui->cusname->text();
+    QSqlQuery qry;
+    bool done = qry.exec("INSERT INTO `JeansCar`.`Customer` (`Name`,`Number`) VALUES ( '"+ name +"', '"+num +"');");
+    QMessageBox mb(this);
+    if (done){
+        mb.setWindowTitle("تم");
+        mb.setText("تم اضافة العميل بنجاح.");
+    }
+    else{
+        mb.setWindowTitle("خطأ");
+        mb.setText(qry.lastError().text());
+    }
+    mb.exec();
+}
+
+
+void MainWindow::on_orderpay_valueChanged(double arg1)
+{
+    double total = arg1;
+    total += ui->orderremain->value();
+    ui->ordertotal->setValue(total);
+}
+
+void MainWindow::on_orderremain_editingFinished()
+{
+
+}
+
+void MainWindow::on_orderremain_valueChanged(double arg1)
+{
+    double total = arg1;
+    total += ui->orderpay->value();
+    ui->ordertotal->setValue(total);
+}
+
+void MainWindow::on_pushButton_234_clicked()
+{
+    QString code = ui->ordernum->text(), car, date,ccode, cname, cnum, ecode, ename, order;
+    double pay, remain, total;
+    car = ui->car_detail->text();
+    date = english.toString(ui->orderDate->date(),"yyyy-MM-dd");
+    cname = ui->cusname->text();
+    cnum = ui->cusnumber->text();
+    ecode = ui->lineEdit->text();
+    order = ui->orderdetail->text();
+    pay = ui->orderpay->value();
+    remain = ui->orderremain->value();
+    total = ui->ordertotal->value();
+    ename = ui->orderdeal->text();
+
+    QSqlQuery qry;
+    qry.exec("SELECT `Cnum` FROM `Customer` where  `Number` = '"+cnum+"' and `Name` = '"+ cname +"' ;");
+    qry.first();
+    QMessageBox mb(this);
+    ccode = qry.value(0).toString();
+    if (ccode == ""){
+        qry.exec("INSERT INTO `JeansCar`.`Customer` (`Name`,`Number`) VALUES ( '"+ cname +"', '"+ cnum +"');");
+        qry.exec("SELECT `Cnum` FROM `Customer` where  `Number` = '"+cnum+"' and `Name` = '"+ cname +"' ;");
+        qry.first();
+        ccode = qry.value(0).toString();
+    }
+
+    qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+ecode+"' ;");
+    qry.first();
+    if (qry.value(0).toString() != ename){
+        mb.setWindowTitle("خطأ");
+        mb.setText("لا يوجد مستخدم بهذا الكود");
+        mb.exec();
+        return;
+    }
+
+    code += ( "_"  + date);
+    bool done = qry.exec("INSERT INTO `JeansCar`.`Arch`"
+             "(`Code`,"
+             "`Date`,"
+             "`carDetail`,"
+             "`ecode`,"
+             "`ename`,"
+             "`ccode`,"
+             "`cname`,"
+             "`cnum`,"
+             "`order`,"
+             "`pay`,"
+             "`remain`,"
+             "`total`)"
+             "VALUES ('"+code+"', '"+date+"', '"+car+"', '"+ ecode +"', '"+ename+"', '"+ccode+"', '"+cname+"' ,'"+cnum+"' , '"+order+"', '"+QString::number(pay)+"', '"+ QString::number( remain) +"', '"+QString::number(total)+"'  );");
+    if (done){
+        mb.setWindowTitle("تم");
+        mb.setText("تم اضافة عملية الارشيف بنجاح");
+        ui->orderdeal->setText("");
+        ui->orderdetail->setText("");
+        ui->lineEdit->setText("");
+        ui->car_detail->setText("");
+        ui->cusname->setText("");
+        ui->cusnumber->setText("");
+        ui->orderpay->setValue(0);
+        ui->orderremain->setValue(0);
+        ui->ordertotal->setValue(0);
+    }
+    else{
+        mb.setWindowTitle("خطأ");
+        mb.setText("لم تتم الاضافة ");
+    }
+    mb.exec();
+}
+
+void MainWindow::on_lineEdit_returnPressed()
+{
+    QString code = ui->lineEdit->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+code+"';");
+    qry.first();
+    ui->orderdeal->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_cusnumber_returnPressed()
+{
+    QString num = ui->cusnumber->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
+    qry.first();
+    ui->cusname->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_cusnumber_editingFinished()
+{
+    QString num = ui->cusnumber->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
+    qry.first();
+    ui->cusname->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_lineEdit_editingFinished()
+{
+    QString code = ui->lineEdit->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+code+"';");
+    qry.first();
+    ui->orderdeal->setText(qry.value(0).toString());
 }

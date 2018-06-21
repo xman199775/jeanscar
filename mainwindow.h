@@ -222,6 +222,24 @@ private slots:
 
     void on_s7bcode_cursorPositionChanged(int arg1, int arg2);
 
+    void on_pushButton_235_clicked();
+
+    void on_orderpay_valueChanged(double arg1);
+
+    void on_orderremain_editingFinished();
+
+    void on_orderremain_valueChanged(double arg1);
+
+    void on_pushButton_234_clicked();
+
+    void on_lineEdit_returnPressed();
+
+    void on_cusnumber_returnPressed();
+
+    void on_cusnumber_editingFinished();
+
+    void on_lineEdit_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     QString *name;

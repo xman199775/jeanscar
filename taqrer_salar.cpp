@@ -3,7 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QMessageBox>
-#include <qtrpt.h>
+//#include <qtrpt.h>
 #include <QDir>
 #include <QVector>
 struct row
@@ -286,7 +286,7 @@ void Taqrer_salar::on_pushButton_2_clicked()
         temp.date=qry.value(0).toString();
         rows.append(temp);
     }
-    auto report = new QtRPT(this);
+    /*auto report = new QtRPT(this);
     QDir dir(qApp->applicationDirPath());
     report->loadReport(dir.absolutePath()+"/reportwithdetails.xml");
     report->recordCount << rows.size();
@@ -294,4 +294,4 @@ void Taqrer_salar::on_pushButton_2_clicked()
                      this, SLOT(setValue(const int, const QString, QVariant&, const int)));
     //report->setSqlQuery("select e.`Ecode` as ecode, m.month , e.`Name`, e.`Clear-salary`, ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as dis, ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as solfa, ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as zyada , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'salary' from `employee` as e , `month`as m where m.id="+month);
     report->printExec(true);
-}
+*/}
