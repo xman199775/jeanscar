@@ -3597,6 +3597,7 @@ void MainWindow::on_pushButton_234_clicked()
         ui->orderpay->setValue(0);
         ui->orderremain->setValue(0);
         ui->ordertotal->setValue(0);
+        ui->ordernum->setValue(ui->ordernum->value() + 1);
     }
     else{
         mb.setWindowTitle("خطأ");
