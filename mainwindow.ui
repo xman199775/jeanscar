@@ -241,6 +241,12 @@ background-color: rgb(108, 108, 108);
         <property name="text">
          <string>دخول</string>
         </property>
+        <property name="autoDefault">
+         <bool>true</bool>
+        </property>
+        <property name="default">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
      </layout>
@@ -276,7 +282,7 @@ background-color: rgb(108, 108, 108);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>10</number>
+       <number>7</number>
       </property>
       <property name="iconSize">
        <size>
@@ -1468,7 +1474,7 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>    الموظفين /الراتب    </string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_120">
+       <layout class="QVBoxLayout" name="verticalLayout_50">
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_95">
           <item>
@@ -1958,7 +1964,7 @@ background-color: rgb(108, 108, 108);
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_94">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_50">
+           <layout class="QVBoxLayout" name="verticalLayout_49">
             <item>
              <widget class="QLabel" name="label_81">
               <property name="font">
@@ -1973,171 +1979,49 @@ background-color: rgb(108, 108, 108);
              </widget>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_49">
+             <layout class="QHBoxLayout" name="horizontalLayout_93">
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_93">
+               <layout class="QVBoxLayout" name="verticalLayout_48">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_48">
+                 <layout class="QHBoxLayout" name="horizontalLayout_26">
                   <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_26">
-                    <item>
-                     <widget class="QComboBox" name="label_choose">
-                      <property name="font">
-                       <font>
-                        <weight>50</weight>
-                        <italic>false</italic>
-                        <bold>false</bold>
-                        <underline>false</underline>
-                        <strikeout>false</strikeout>
-                       </font>
-                      </property>
-                      <item>
-                       <property name="text">
-                        <string>احوال يومية</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>خصم</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>سلفه</string>
-                       </property>
-                      </item>
-                      <item>
-                       <property name="text">
-                        <string>زيادة</string>
-                       </property>
-                      </item>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QPushButton" name="pushButton_50">
-                      <property name="font">
-                       <font>
-                        <pointsize>12</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-                      </property>
-                      <property name="text">
-                       <string>اختار موظف</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLineEdit" name="employeecodea7wal">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <pointsize>10</pointsize>
-                        <weight>75</weight>
-                        <bold>true</bold>
-                       </font>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">background-color: rgb(255, 255, 255);</string>
-                      </property>
-                      <property name="clearButtonEnabled">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <widget class="QSpinBox" name="numofhourlate">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
+                   <widget class="QComboBox" name="label_choose">
                     <property name="font">
                      <font>
-                      <pointsize>10</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
+                      <weight>50</weight>
+                      <italic>false</italic>
+                      <bold>false</bold>
+                      <underline>false</underline>
+                      <strikeout>false</strikeout>
                      </font>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="maximum">
-                     <number>999999999</number>
-                    </property>
+                    <item>
+                     <property name="text">
+                      <string>احوال يومية</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>خصم</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>سلفه</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>زيادة</string>
+                     </property>
+                    </item>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDateEdit" name="dayreportdate">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
+                   <widget class="QPushButton" name="pushButton_50">
                     <property name="font">
                      <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="displayFormat">
-                     <string>dd-MM-yyyy</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QDoubleSpinBox" name="prouduce">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="maximum">
-                     <double>999999999999999945575230987042816.000000000000000</double>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QCheckBox" name="attends">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
+                      <pointsize>12</pointsize>
                       <weight>75</weight>
                       <bold>true</bold>
                      </font>
@@ -2145,123 +2029,52 @@ background-color: rgb(108, 108, 108);
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
+                    <property name="styleSheet">
+                     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                    </property>
                     <property name="text">
-                     <string/>
+                     <string>اختار موظف</string>
                     </property>
-                    <property name="iconSize">
-                     <size>
-                      <width>16</width>
-                      <height>16</height>
-                     </size>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="employeecodea7wal">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
                     </property>
-                    <property name="checked">
-                     <bool>false</bool>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                      <weight>75</weight>
+                      <bold>true</bold>
+                     </font>
                     </property>
-                    <property name="autoExclusive">
-                     <bool>false</bool>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 255);</string>
                     </property>
-                    <property name="tristate">
-                     <bool>false</bool>
+                    <property name="clearButtonEnabled">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
                  </layout>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_32">
-                  <item>
-                   <widget class="QLabel" name="label_63">
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>كود الموظف :</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_65">
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>عدد ساعات التاخير :</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_89">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>التاريخ :   </string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_66">
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>انتاج :</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_99">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>غياب :</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QDoubleSpinBox" name="numofhourlate">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
                 </item>
-               </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_29">
                 <item>
-                 <widget class="QLineEdit" name="daleynote">
+                 <widget class="QDateEdit" name="dayreportdate">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -2275,13 +2088,84 @@ background-color: rgb(108, 108, 108);
                   <property name="styleSheet">
                    <string notr="true">background-color: rgb(255, 255, 255);</string>
                   </property>
-                  <property name="clearButtonEnabled">
-                   <bool>true</bool>
+                  <property name="displayFormat">
+                   <string>dd-MM-yyyy</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_64">
+                 <widget class="QDoubleSpinBox" name="prouduce">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="maximum">
+                   <double>999999999999999945575230987042816.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QCheckBox" name="attends">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>16</width>
+                    <height>16</height>
+                   </size>
+                  </property>
+                  <property name="checked">
+                   <bool>false</bool>
+                  </property>
+                  <property name="autoExclusive">
+                   <bool>false</bool>
+                  </property>
+                  <property name="tristate">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="overtime">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_32">
+                <item>
+                 <widget class="QLabel" name="label_63">
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
@@ -2293,11 +2177,136 @@ background-color: rgb(108, 108, 108);
                    <enum>QFrame::Box</enum>
                   </property>
                   <property name="text">
-                   <string>ملاحظات يومية :</string>
+                   <string>كود الموظف :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_65">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>عدد ساعات التاخير :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_89">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>التاريخ :   </string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_66">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>انتاج :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_99">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>غياب :</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_111">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>ساعات اضافيه:</string>
                   </property>
                  </widget>
                 </item>
                </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_29">
+              <item>
+               <widget class="QLineEdit" name="daleynote">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_64">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="text">
+                 <string>ملاحظات يومية :</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>
@@ -4474,115 +4483,258 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>توزيع الرواتب</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_6">
-        <item row="0" column="0" rowspan="2">
+       <layout class="QHBoxLayout" name="horizontalLayout_100">
+        <item>
          <widget class="QTableView" name="salaryReportTable">
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <layout class="QVBoxLayout" name="verticalLayout_136">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_141">
           <item>
-           <widget class="QLabel" name="label_174">
-            <property name="font">
-             <font>
-              <family>Bell MT</family>
-              <pointsize>16</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>تاريخ التقرير</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QDateEdit" name="salaryReportdate">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="displayFormat">
-             <string>MM-yyyy</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_56">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
+           <layout class="QVBoxLayout" name="verticalLayout_136">
+            <item>
+             <widget class="QLabel" name="label_174">
+              <property name="font">
+               <font>
+                <family>Bell MT</family>
+                <pointsize>16</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Box</enum>
+              </property>
+              <property name="text">
+               <string>تاريخ التقرير</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="margin">
+               <number>2</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDateEdit" name="salaryReportdate">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+              <property name="displayFormat">
+               <string>MM-yyyy</string>
+              </property>
+              <property name="calendarPopup">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_56">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-            </property>
-            <property name="text">
-             <string>تنشيط</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="salaryReportPrint">
-            <property name="font">
-             <font>
-              <pointsize>12</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: rgb(255, 255, 255);
+              </property>
+              <property name="text">
+               <string>تنشيط</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="salaryReportPrint">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
 background-color: rgb(108, 108, 108);
 </string>
-            </property>
-            <property name="text">
-             <string>طباعة</string>
-            </property>
-           </widget>
+              </property>
+              <property name="text">
+               <string>طباعة</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_64">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+              </property>
+              <property name="text">
+               <string>نسخ الى الحافظه</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>500</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
           <item>
-           <spacer name="horizontalSpacer_3">
+           <spacer name="verticalSpacer">
             <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
+             <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>500</width>
-              <height>20</height>
+              <width>20</width>
+              <height>158</height>
              </size>
             </property>
            </spacer>
           </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_140">
+            <item>
+             <widget class="QLabel" name="label_112">
+              <property name="frameShape">
+               <enum>QFrame::Box</enum>
+              </property>
+              <property name="text">
+               <string>تقرير الساعات الاضافيه</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+              <property name="margin">
+               <number>6</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_99">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_120">
+                <item>
+                 <widget class="QDateEdit" name="from">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="calendarPopup">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDateEdit" name="to">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="calendarPopup">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_108">
+                <item>
+                 <widget class="QLabel" name="label_114">
+                  <property name="frameShape">
+                   <enum>QFrame::WinPanel</enum>
+                  </property>
+                  <property name="text">
+                   <string>من:</string>
+                  </property>
+                  <property name="margin">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_178">
+                  <property name="frameShape">
+                   <enum>QFrame::WinPanel</enum>
+                  </property>
+                  <property name="text">
+                   <string>إلى:</string>
+                  </property>
+                  <property name="margin">
+                   <number>5</number>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_63">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+              </property>
+              <property name="text">
+               <string>إظهار</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton_65">
+              <property name="font">
+               <font>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+              </property>
+              <property name="text">
+               <string>نسخ الى الحافظه</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
          </layout>
-        </item>
-        <item row="1" column="1">
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>625</height>
-           </size>
-          </property>
-         </spacer>
         </item>
        </layout>
       </widget>
@@ -5221,7 +5373,7 @@ background-color: rgb(108, 108, 108);
                  <enum>QFrame::Box</enum>
                 </property>
                 <property name="text">
-                 <string>لون الخيط :</string>
+                 <string>لون الخيط :   </string>
                 </property>
                </widget>
               </item>
@@ -5267,7 +5419,7 @@ background-color: rgb(108, 108, 108);
                  <enum>QFrame::Box</enum>
                 </property>
                 <property name="text">
-                 <string>لون الدواسة:</string>
+                 <string>لون الدواسة:                                      </string>
                 </property>
                </widget>
               </item>
@@ -5313,7 +5465,7 @@ background-color: rgb(108, 108, 108);
                  <enum>QFrame::Box</enum>
                 </property>
                 <property name="text">
-                 <string>القيمة الكلية :</string>
+                 <string>القيمة الكلية :                        </string>
                 </property>
                </widget>
               </item>
@@ -5368,7 +5520,7 @@ background-color: rgb(108, 108, 108);
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_101">
+           <layout class="QVBoxLayout" name="verticalLayout_139">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_80">
               <item>
@@ -5683,6 +5835,32 @@ background-color: rgb(108, 108, 108);
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_35">
                 <item>
+                 <widget class="QLineEdit" name="time2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>10</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="readOnly">
+                   <bool>false</bool>
+                  </property>
+                  <property name="clearButtonEnabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QLineEdit" name="cartype">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -5749,6 +5927,23 @@ background-color: rgb(108, 108, 108);
               </item>
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_34">
+                <item>
+                 <widget class="QLabel" name="label_177">
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>وقت التسليم:</string>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QLabel" name="label_9">
                   <property name="font">
@@ -5845,11 +6040,11 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>تعديل عملية شراء</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_77">
+       <layout class="QVBoxLayout" name="verticalLayout_138">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_59">
+         <layout class="QHBoxLayout" name="horizontalLayout_97">
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_61">
+           <layout class="QVBoxLayout" name="verticalLayout_127">
             <item>
              <layout class="QGridLayout" name="gridLayout">
               <item row="1" column="0">
@@ -5982,6 +6177,379 @@ background-color: rgb(108, 108, 108);
              </layout>
             </item>
             <item>
+             <layout class="QVBoxLayout" name="verticalLayout_122">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_124">
+                <item>
+                 <widget class="QLabel" name="label_102">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>بحث الأرشيف</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_59">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_125">
+                    <item>
+                     <widget class="QLineEdit" name="archcode">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="archcuscode">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="archcuname">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="archcusnum">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="archcar">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_126">
+                    <item>
+                     <widget class="QLabel" name="label_105">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود العملية :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_106">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود العميل :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_107">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>اسم العميل :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_108">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>رقم الهاتف :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_109">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>مواصفات السياره:</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_96">
+                <item>
+                 <widget class="QPushButton" name="pushButton_60">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>بحث</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_61">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>إظهار السنه</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDateEdit" name="archdate">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="displayFormat">
+                   <string>yyyy</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_137">
+            <item>
              <layout class="QVBoxLayout" name="verticalLayout_58">
               <item>
                <widget class="QLabel" name="label_339">
@@ -6095,235 +6663,287 @@ background-color: rgb(108, 108, 108);
              </layout>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_221">
+             <layout class="QVBoxLayout" name="verticalLayout_77">
               <item>
-               <widget class="QLabel" name="label">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <pointsize>12</pointsize>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-                <property name="text">
-                 <string>بحث عن عملية</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="margin">
-                 <number>2</number>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_32">
+               <layout class="QVBoxLayout" name="verticalLayout_61">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_14">
-                  <item>
-                   <widget class="QLineEdit" name="delevercode">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="delevercustomer">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="delevercustomername">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLineEdit" name="delevercustomerphone">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(255, 255, 255);</string>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
+                 <widget class="QLabel" name="label">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>بحث عن عملية</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="margin">
+                   <number>2</number>
+                  </property>
+                 </widget>
                 </item>
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                 <layout class="QHBoxLayout" name="horizontalLayout_32">
                   <item>
-                   <widget class="QLabel" name="label_3">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>كود العملية :</string>
-                    </property>
-                    <property name="margin">
-                     <number>2</number>
-                    </property>
-                   </widget>
+                   <layout class="QVBoxLayout" name="verticalLayout_14">
+                    <item>
+                     <widget class="QLineEdit" name="delevercode">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="delevercustomer">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="delevercustomername">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="delevercustomerphone">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="delevercardetail">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: rgb(255, 255, 255);</string>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
                   <item>
-                   <widget class="QLabel" name="label_24">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>كود العميل :</string>
-                    </property>
-                    <property name="margin">
-                     <number>2</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_92">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>اسم العميل :</string>
-                    </property>
-                    <property name="margin">
-                     <number>2</number>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_93">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>12</pointsize>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="frameShape">
-                     <enum>QFrame::Box</enum>
-                    </property>
-                    <property name="text">
-                     <string>رقم الهاتف :</string>
-                    </property>
-                    <property name="margin">
-                     <number>2</number>
-                    </property>
-                   </widget>
+                   <layout class="QVBoxLayout" name="verticalLayout_9">
+                    <item>
+                     <widget class="QLabel" name="label_3">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود العملية :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_24">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>كود العميل :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_92">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>اسم العميل :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_93">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>رقم الهاتف :</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_91">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>12</pointsize>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::Box</enum>
+                      </property>
+                      <property name="text">
+                       <string>مواصفات السياره:</string>
+                      </property>
+                      <property name="margin">
+                       <number>2</number>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
                  </layout>
                 </item>
@@ -6356,6 +6976,34 @@ background-color: rgb(108, 108, 108);
                   </property>
                   <property name="text">
                    <string>بحث</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_59">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <pointsize>12</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>إظهار الكل</string>
                   </property>
                  </widget>
                 </item>
@@ -8393,9 +9041,9 @@ background-color: rgb(108, 108, 108);
        <attribute name="title">
         <string>  حسابات   </string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout_108">
+       <layout class="QVBoxLayout" name="verticalLayout_102">
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_54">
+         <layout class="QHBoxLayout" name="horizontalLayout_98">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_96">
             <item>
@@ -8721,189 +9369,45 @@ background-color: rgb(108, 108, 108);
            </layout>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_102">
+           <layout class="QVBoxLayout" name="verticalLayout_101">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_83">
+             <layout class="QHBoxLayout" name="horizontalLayout_54">
               <item>
-               <layout class="QVBoxLayout" name="verticalLayout_82">
+               <layout class="QVBoxLayout" name="verticalLayout_74">
                 <item>
-                 <layout class="QVBoxLayout" name="verticalLayout_81">
-                  <item>
-                   <widget class="QLabel" name="label_131">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="text">
-                     <string>يومية</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_67">
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_76">
-                      <item>
-                       <widget class="QDoubleSpinBox" name="money">
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgb(255, 255, 255);</string>
-                        </property>
-                        <property name="maximum">
-                         <double>999999999.990000009536743</double>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLineEdit" name="dailyreason">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">background-color: rgb(255, 255, 255);</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <layout class="QVBoxLayout" name="verticalLayout_75">
-                      <item>
-                       <widget class="QLabel" name="label_132">
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="frameShape">
-                         <enum>QFrame::Box</enum>
-                        </property>
-                        <property name="text">
-                         <string>  المبلغ :</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_133">
-                        <property name="sizePolicy">
-                         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                         </sizepolicy>
-                        </property>
-                        <property name="font">
-                         <font>
-                          <weight>75</weight>
-                          <bold>true</bold>
-                         </font>
-                        </property>
-                        <property name="frameShape">
-                         <enum>QFrame::Box</enum>
-                        </property>
-                        <property name="text">
-                         <string>  السبب :           </string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_66">
-                  <item>
-                   <widget class="QRadioButton" name="radioButton_2">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="text">
-                     <string>داخل</string>
-                    </property>
-                    <property name="checked">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QRadioButton" name="radioButton">
-                    <property name="font">
-                     <font>
-                      <weight>75</weight>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="text">
-                     <string>خارج</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QPushButton" name="pushButton_31">
-                <property name="font">
-                 <font>
-                  <weight>75</weight>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(108, 108, 108);
-</string>
-                </property>
-                <property name="text">
-                 <string>ادخال</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_74">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_49">
-                <item>
-                 <widget class="QPushButton" name="pushButton_32">
+                 <widget class="QLabel" name="label_110">
                   <property name="font">
                    <font>
-                    <pointsize>12</pointsize>
+                    <pointsize>13</pointsize>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="text">
+                   <string>حذف اليوميه</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLineEdit" name="deletedailycode">
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(255, 255, 255);</string>
+                  </property>
+                  <property name="placeholderText">
+                   <string>كود اليوميه...</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_62">
+                  <property name="font">
+                   <font>
                     <weight>75</weight>
                     <bold>true</bold>
                    </font>
@@ -8917,38 +9421,191 @@ background-color: rgb(108, 108, 108);
 </string>
                   </property>
                   <property name="text">
-                   <string>تنشيط</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QDateEdit" name="daily_re">
-                  <property name="styleSheet">
-                   <string notr="true">background-color: rgb(255, 255, 255);</string>
-                  </property>
-                  <property name="displayFormat">
-                   <string>dd-MM-yyyy</string>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QLabel" name="label_134">
-                  <property name="font">
-                   <font>
-                    <pointsize>12</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                   </font>
-                  </property>
-                  <property name="text">
-                   <string>مراجعة اليومية :</string>
+                   <string>حذف</string>
                   </property>
                  </widget>
                 </item>
                </layout>
               </item>
               <item>
-               <widget class="QTableView" name="dailymtable">
+               <layout class="QVBoxLayout" name="verticalLayout_83">
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout_82">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_81">
+                    <item>
+                     <widget class="QLabel" name="label_131">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>يومية</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_67">
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_76">
+                        <item>
+                         <widget class="QDoubleSpinBox" name="money">
+                          <property name="font">
+                           <font>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">background-color: rgb(255, 255, 255);</string>
+                          </property>
+                          <property name="maximum">
+                           <double>999999999.990000009536743</double>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLineEdit" name="dailyreason">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">background-color: rgb(255, 255, 255);</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QVBoxLayout" name="verticalLayout_75">
+                        <item>
+                         <widget class="QLabel" name="label_132">
+                          <property name="font">
+                           <font>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::Box</enum>
+                          </property>
+                          <property name="text">
+                           <string>  المبلغ :</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="label_133">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <weight>75</weight>
+                            <bold>true</bold>
+                           </font>
+                          </property>
+                          <property name="frameShape">
+                           <enum>QFrame::Box</enum>
+                          </property>
+                          <property name="text">
+                           <string>  السبب :           </string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_66">
+                    <item>
+                     <widget class="QRadioButton" name="radioButton_2">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="text">
+                       <string>داخل</string>
+                      </property>
+                      <property name="checked">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QRadioButton" name="radioButton">
+                      <property name="font">
+                       <font>
+                        <weight>75</weight>
+                        <bold>true</bold>
+                       </font>
+                      </property>
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="text">
+                       <string>خارج</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButton_31">
+                  <property name="font">
+                   <font>
+                    <weight>75</weight>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                  </property>
+                  <property name="text">
+                   <string>ادخال</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_49">
+              <item>
+               <widget class="QPushButton" name="pushButton_32">
                 <property name="font">
                  <font>
                   <pointsize>12</pointsize>
@@ -8956,9 +9613,55 @@ background-color: rgb(108, 108, 108);
                   <bold>true</bold>
                  </font>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(108, 108, 108);
+</string>
+                </property>
+                <property name="text">
+                 <string>تنشيط</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QDateEdit" name="daily_re">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+                </property>
+                <property name="displayFormat">
+                 <string>dd-MM-yyyy</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_134">
+                <property name="font">
+                 <font>
+                  <pointsize>12</pointsize>
+                  <weight>75</weight>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>مراجعة اليومية :</string>
+                </property>
                </widget>
               </item>
              </layout>
+            </item>
+            <item>
+             <widget class="QTableView" name="dailymtable">
+              <property name="font">
+               <font>
+                <pointsize>12</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -9711,6 +10414,9 @@ background-color: rgb(108, 108, 108);
                 <property name="displayFormat">
                  <string>dd/MM/yyyy</string>
                 </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
                </widget>
               </item>
               <item>
@@ -10090,8 +10796,6 @@ background-color: rgb(108, 108, 108);
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>admincodeline</tabstop>
-  <tabstop>adminline</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>employeecode</tabstop>
   <tabstop>emplyeename</tabstop>
@@ -10129,7 +10833,6 @@ background-color: rgb(108, 108, 108);
   <tabstop>reson5sm</tabstop>
   <tabstop>pushButton_10</tabstop>
   <tabstop>employeecodea7wal</tabstop>
-  <tabstop>numofhourlate</tabstop>
   <tabstop>dayreportdate</tabstop>
   <tabstop>prouduce</tabstop>
   <tabstop>attends</tabstop>
@@ -10141,7 +10844,6 @@ background-color: rgb(108, 108, 108);
   <tabstop>allsolfa</tabstop>
   <tabstop>solfanotes</tabstop>
   <tabstop>pushButton_7</tabstop>
-  <tabstop>deleteecode</tabstop>
   <tabstop>pushButton_8</tabstop>
   <tabstop>addecode</tabstop>
   <tabstop>addpassword</tabstop>
@@ -10167,11 +10869,11 @@ background-color: rgb(108, 108, 108);
   <tabstop>price1</tabstop>
   <tabstop>price2</tabstop>
   <tabstop>price3</tabstop>
-  <tabstop>el5edcolor</tabstop>
-  <tabstop>el5edtype</tabstop>
-  <tabstop>order1</tabstop>
-  <tabstop>order2</tabstop>
-  <tabstop>order3</tabstop>
+  <tabstop>s7bcode</tabstop>
+  <tabstop>s7bcolor</tabstop>
+  <tabstop>goodtabel</tabstop>
+  <tabstop>goodcolor</tabstop>
+  <tabstop>pushButton_5</tabstop>
   <tabstop>totalprice</tabstop>
   <tabstop>recived</tabstop>
   <tabstop>remain</tabstop>
@@ -10179,15 +10881,17 @@ background-color: rgb(108, 108, 108);
   <tabstop>opreationcode</tabstop>
   <tabstop>dealdate</tabstop>
   <tabstop>pushButton_17</tabstop>
+  <tabstop>time2</tabstop>
   <tabstop>cartype</tabstop>
   <tabstop>carmodel</tabstop>
+  <tabstop>stamp</tabstop>
+  <tabstop>order1</tabstop>
+  <tabstop>order2</tabstop>
+  <tabstop>order3</tabstop>
+  <tabstop>el5edcolor</tabstop>
+  <tabstop>el5edtype</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>goodtabel</tabstop>
   <tabstop>goodcode</tabstop>
-  <tabstop>goodcolor</tabstop>
-  <tabstop>pushButton_5</tabstop>
-  <tabstop>s7bcode</tabstop>
-  <tabstop>s7bcolor</tabstop>
   <tabstop>quantity</tabstop>
   <tabstop>s7btype</tabstop>
   <tabstop>s7breason</tabstop>
@@ -10222,6 +10926,143 @@ background-color: rgb(108, 108, 108);
   <tabstop>pushButton_35</tabstop>
   <tabstop>dayout</tabstop>
   <tabstop>dayin</tabstop>
+  <tabstop>pushButton_57</tabstop>
+  <tabstop>username</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>enter</tabstop>
+  <tabstop>max</tabstop>
+  <tabstop>label_choose</tabstop>
+  <tabstop>pushButton_50</tabstop>
+  <tabstop>edit_scode</tabstop>
+  <tabstop>edit_sname</tabstop>
+  <tabstop>edit_sqty</tabstop>
+  <tabstop>edit_sprice</tabstop>
+  <tabstop>edit_sdate</tabstop>
+  <tabstop>edit_scompany</tabstop>
+  <tabstop>pushButton_55</tabstop>
+  <tabstop>pushButton_47</tabstop>
+  <tabstop>ssscod_delete</tabstop>
+  <tabstop>pushButton_49</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>pushButton_43</tabstop>
+  <tabstop>Accounting</tabstop>
+  <tabstop>pushButton_52</tabstop>
+  <tabstop>curr_edit</tabstop>
+  <tabstop>pushButton_42</tabstop>
+  <tabstop>admintable</tabstop>
+  <tabstop>pushButton_58</tabstop>
+  <tabstop>pushButton_21</tabstop>
+  <tabstop>pushButton_22</tabstop>
+  <tabstop>salaryReportTable</tabstop>
+  <tabstop>salaryReportdate</tabstop>
+  <tabstop>pushButton_56</tabstop>
+  <tabstop>salaryReportPrint</tabstop>
+  <tabstop>pushButton_44</tabstop>
+  <tabstop>wheel</tabstop>
+  <tabstop>flat</tabstop>
+  <tabstop>flat_color</tabstop>
+  <tabstop>warin</tabstop>
+  <tabstop>pushButton_45</tabstop>
+  <tabstop>searchdate</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>delevertime</tabstop>
+  <tabstop>admincodeline</tabstop>
+  <tabstop>delevercode1</tabstop>
+  <tabstop>pushButton_89</tabstop>
+  <tabstop>pushButton_16</tabstop>
+  <tabstop>op_code_print</tabstop>
+  <tabstop>print_op</tabstop>
+  <tabstop>delevercode</tabstop>
+  <tabstop>delevercustomer</tabstop>
+  <tabstop>delevercustomername</tabstop>
+  <tabstop>delevercustomerphone</tabstop>
+  <tabstop>delevercardetail</tabstop>
+  <tabstop>pushButton_15</tabstop>
+  <tabstop>opcode</tabstop>
+  <tabstop>deltime</tabstop>
+  <tabstop>deldate</tabstop>
+  <tabstop>pushButton_37</tabstop>
+  <tabstop>pushButton_19</tabstop>
+  <tabstop>pushButton_25</tabstop>
+  <tabstop>deleteopcode</tabstop>
+  <tabstop>cphone_edit</tabstop>
+  <tabstop>cname_new</tabstop>
+  <tabstop>delete_cus</tabstop>
+  <tabstop>pushButton_53</tabstop>
+  <tabstop>delevertable</tabstop>
+  <tabstop>pushButton_46</tabstop>
+  <tabstop>goodcode_2</tabstop>
+  <tabstop>goodcolor_2</tabstop>
+  <tabstop>pushButton_48</tabstop>
+  <tabstop>editgoodcode</tabstop>
+  <tabstop>editgoodcolor</tabstop>
+  <tabstop>editquantatity</tabstop>
+  <tabstop>editprice</tabstop>
+  <tabstop>edittype</tabstop>
+  <tabstop>pushButton_54</tabstop>
+  <tabstop>addgoodcode</tabstop>
+  <tabstop>addgoodcolor</tabstop>
+  <tabstop>addquantatity</tabstop>
+  <tabstop>addprice</tabstop>
+  <tabstop>addtype</tabstop>
+  <tabstop>pushButton_40</tabstop>
+  <tabstop>f115</tabstop>
+  <tabstop>f82</tabstop>
+  <tabstop>f511</tabstop>
+  <tabstop>print_tash8el</tabstop>
+  <tabstop>pushButton_34</tabstop>
+  <tabstop>pushButton_38</tabstop>
+  <tabstop>dateEdit_3</tabstop>
+  <tabstop>pushButton_39</tabstop>
+  <tabstop>money</tabstop>
+  <tabstop>dailyreason</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>pushButton_31</tabstop>
+  <tabstop>daily_re</tabstop>
+  <tabstop>pushButton_41</tabstop>
+  <tabstop>delverdatenew</tabstop>
+  <tabstop>pushButton_18</tabstop>
+  <tabstop>delverlist</tabstop>
+  <tabstop>delevercode_2</tabstop>
+  <tabstop>delevername</tabstop>
+  <tabstop>total</tabstop>
+  <tabstop>pay</tabstop>
+  <tabstop>remain_2</tabstop>
+  <tabstop>pushButton_36</tabstop>
+  <tabstop>pushButton_51</tabstop>
+  <tabstop>ordernum</tabstop>
+  <tabstop>orderDate</tabstop>
+  <tabstop>cusnumber</tabstop>
+  <tabstop>cusname</tabstop>
+  <tabstop>car_detail</tabstop>
+  <tabstop>orderdetail</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>orderdeal</tabstop>
+  <tabstop>orderpay</tabstop>
+  <tabstop>orderremain</tabstop>
+  <tabstop>ordertotal</tabstop>
+  <tabstop>pushButton_234</tabstop>
+  <tabstop>numofhourlate</tabstop>
+  <tabstop>overtime</tabstop>
+  <tabstop>from</tabstop>
+  <tabstop>to</tabstop>
+  <tabstop>pushButton_63</tabstop>
+  <tabstop>adminline</tabstop>
+  <tabstop>archcode</tabstop>
+  <tabstop>archcuscode</tabstop>
+  <tabstop>archcuname</tabstop>
+  <tabstop>archcusnum</tabstop>
+  <tabstop>archcar</tabstop>
+  <tabstop>pushButton_60</tabstop>
+  <tabstop>pushButton_61</tabstop>
+  <tabstop>archdate</tabstop>
+  <tabstop>deleteecode</tabstop>
+  <tabstop>pushButton_59</tabstop>
+  <tabstop>deletedailycode</tabstop>
+  <tabstop>pushButton_62</tabstop>
+  <tabstop>pushButton_64</tabstop>
+  <tabstop>pushButton_65</tabstop>
  </tabstops>
  <resources>
   <include location="logo.qrc"/>

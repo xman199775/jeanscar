@@ -240,6 +240,20 @@ private slots:
 
     void on_lineEdit_editingFinished();
 
+    void on_pushButton_59_clicked();
+
+    void on_pushButton_60_clicked();
+
+    void on_pushButton_61_clicked();
+
+    void on_pushButton_62_clicked();
+
+    void on_pushButton_63_clicked();
+
+    void on_pushButton_64_clicked();
+
+    void on_pushButton_65_clicked();
+
 private:
     Ui::MainWindow *ui;
     QString *name;

@@ -127,7 +127,7 @@ void Taqrer_salar::setModelTa5eer(){
     QSqlQueryModel *model1 = new QSqlQueryModel;
     QString x;
     QSqlQuery qry;
-    model1->setQuery("select `E-code` as 'كود الموظف' , `Name` as 'الاسم', `Amount` as 'المبلغ' , `Date` as 'التاريخ'  from `Delay-time` , `Employee` where `E-code` = `Ecode` and `E-code` = '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+""); // التأخير
+    model1->setQuery("select `E-code` as 'كود الموظف' , `Name` as 'الاسم', `Amount` as 'الساعات' , `Date` as 'التاريخ'  from `Delay-time` , `Employee` where `E-code` = `Ecode` and `E-code` = '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+""); // التأخير
     ui->table->setModel(model1);
     if(qry.exec("select sum(`Amount`)  from  `Delay-time` where `E-code` = '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+"")) // عدد ساعات التأخير
     {
@@ -158,6 +158,24 @@ void Taqrer_salar::setModelZyada(){
     }
 }
 
+void Taqrer_salar::setModelOver(){
+    QSqlQueryModel *model1 = new QSqlQueryModel;
+    QString x;
+    QSqlQuery qry;
+    model1->setQuery("select o.`Ecode` as 'كود الموظف' , e.`Name` as 'الاسم', `Amount` as 'الساعات' , o.`Date` as 'التاريخ'  from `OverTime` as o , `Employee` as e where o.`Ecode` = e.`Ecode` and o.`Ecode` = '"+ecode+"' and month(o.`Date`) = "+month+" and year(o.`Date`) = "+year+""); // التأخير
+    ui->table->setModel(model1);
+    if(qry.exec("select sum(`Amount`)  from  `OverTime` where `Ecode` = '"+ecode+"' and month(`Date`) = "+month+" and year(`Date`) = "+year+"")) // عدد ساعات التأخير
+    {
+        qry.first();
+        x = qry.value(0).toString();
+        ui->sumlabel->setText(x);
+    }
+    else
+    {
+        ui->sumlabel->setText("0");
+    }
+}
+
 Taqrer_salar::~Taqrer_salar()
 {
     delete ui;
@@ -179,6 +197,9 @@ void Taqrer_salar::on_taqretype_currentIndexChanged(const QString &arg1)
     }
     else if (arg1 == "ملاحظات") {
         setModelNotes();
+    }
+    else if (arg1 == "ساعات إضافيه"){
+        setModelOver();
     }
     else{
         setModelGyab();
@@ -205,6 +226,9 @@ void Taqrer_salar::on_taqrerdate_editingFinished()
     }
     else if (arg1 == "ملاحظات") {
         setModelNotes();
+    }
+    else if (arg1 == "ساعات إضافيه"){
+        setModelOver();
     }
     else{
         setModelGyab();

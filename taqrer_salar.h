@@ -32,6 +32,7 @@ private:
     void setModelGyab();
     void setModelNotes();
     void setModelTa5eer();
+    void setModelOver();
     void setRest();
 };
 

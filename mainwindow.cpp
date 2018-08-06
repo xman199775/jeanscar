@@ -50,6 +50,9 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     ui->dateEdit_3->setDate(*curdate);
     ui->daily_re->setDate(*curdate);
     ui->orderDate->setDate(*curdate);
+    ui->archdate->setDate(*curdate);
+    ui->from->setDate(*curdate);
+    ui->to->setDate(*curdate);
     ui->username->setVisible(false);
     ui->password->setVisible(false);
     ui->enter->setVisible(false);
@@ -68,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent, QString *n, QString *c, QString *pa,QStr
     print = nullptr;
     a = NULL;
     update_flat_color();
-    pri=NULL;
+    qDebug() << this->height() << " " << this->width() << endl;
 }
 void MainWindow::update_flat_color(){
     QSqlQuery qry;
@@ -752,7 +755,7 @@ void MainWindow::on_pushButton_7_clicked()//سلفة
                 {
                     QMessageBox msgBox (this);
                     msgBox.setWindowTitle("خطاء");
-                    msgBox.setText(" عذرا لقد وصل المترب للحد الادني");
+                    msgBox.setText(" عذرا لقد وصل المرتب للحد الادني");
                     msgBox.exec();
                 }
             }
@@ -1031,6 +1034,7 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
             ,year=english.toString(ui->dayreportdate->date(),"yyyy")
             ,time=english.toString((*curtime),"hh:mm:ss")
             ,note=ui->daleynote->text()
+            ,overtime = QString::number(ui->overtime->value())
             ,salarystr;
     bool found=false;
     double salary,newsalary;
@@ -1045,7 +1049,8 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
         }
     }
     if(found)
-    {if(ui->prouduce->value()!=0)
+    {
+        if(ui->prouduce->value()!=0)
         {
             if(qryf.exec("INSERT INTO `Produce` (`A-code`, `E-code`, `Amount`, `Date`) VALUES ('"+*code+"', '"+ecode+"',  "+prdouce+" , '"+date+" "+time+"');"))//انتاج
             {
@@ -1099,6 +1104,10 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
                 found=false;
             }
         }
+        if(ui->overtime->value() != 0){
+            if (!qryf.exec("insert into `OverTime` (`Ecode`, `Amount`, `Date`) VALUES ('"+ecode+"', "+overtime+" , '"+date+"');"))
+                found = 0;
+        }
         if(!found)
         {
             QMessageBox msgBox (this);
@@ -1113,6 +1122,11 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
             msgBox.setWindowTitle("تم");
             msgBox.setText("تم بنجاح");
             msgBox.exec();
+            ui->overtime->setValue(0);
+            ui->numofhourlate->setValue(0);
+            ui->prouduce->setValue(0);
+            ui->daleynote->setText("");
+            ui->employeecodea7wal->setText("");
         }
 
     }
@@ -1123,7 +1137,6 @@ void MainWindow::on_pushButton_11_clicked()//ملاحظات يومية
         msgBox.setText(" لا يوجد مستخدم بهذا الكود");
         msgBox.exec();
     }
-
 }
 
 void MainWindow::on_price1_editingFinished()//عملية شراء1
@@ -1186,7 +1199,7 @@ void MainWindow::on_pushButton_2_clicked()//اضافة عميل
                 qry.first();
                 customerid=qry.value(0).toString();
                 ui->customercode->setText(customerid);
-                model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
+                model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم', `Order`.`Time2` as 'وقت التسليم' ,`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف'  from `JeansCar`.`Customer` , `JeansCar`.`Order` where `Cnum` = `C-code` and `Cnum` = '"+customerid+"'");//تقريركامل تماما عنه
                 ui->customertable->setModel(model1);
                 QMessageBox msgBox (this);
                 msgBox.setWindowTitle("تم");
@@ -1359,7 +1372,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
 
                 if(ok)
                 {
-                    if(qry.exec("INSERT INTO `Order` ( `Order-num`,`A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`)VALUES( "+opcode+",'"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+");"))//ضيف عملية شراء
+                    if(qry.exec("INSERT INTO `Order` ( `Order-num`,`A-code`, `C-code`, `Car-det`, `Total-price`, `M-Pay`, `M-Remain`, `Order-time`, `Delvtime`, `Order`, `Done`,`time`,`stamp`, `flat`, `wheel`, `flat_color`, `Warn`, `Time2`)VALUES( "+opcode+",'"+*code+"', '"+customerid+"', '"+carmodel+"', '"+totalstr+"' , '"+recievedstr+"', '"+remainstr+"', '"+dealdate+"', '"+deleverdate+"',  '"+order+"', 0 ,'"+time+"','"+stamp+"', '"+flat+"', '"+wheel+"', '"+flat_color+"', "+QString::number(ui->warin->value())+" , '"+ui->time2->text()+"');"))//ضيف عملية شراء
                     {
                         if(ui->comboBox->currentText()=="5:11")
                         {
@@ -1464,7 +1477,7 @@ void MainWindow::on_pushButton_clicked()//اضافه عملية شراء
                         ui->cartype->setText("");
                         ui->carmodel->setText("");
                         ui->stamp->setText("");
-                        ui->order1->setText("");
+                        ui->order1->setText("فرش");
                         ui->order2->setText("");
                         ui->order3->setText("");
                         ui->price1->setValue(0);
@@ -1531,28 +1544,34 @@ void MainWindow::on_pushButton_15_clicked()//بحث عملية تسليم
     QString opcode=ui->delevercode->text()
             ,customercode=ui->delevercustomer->text()
             ,customename=ui->delevercustomername->text()
-            ,customerphone=ui->delevercustomerphone->text();
+            ,customerphone=ui->delevercustomerphone->text(),
+            cardetail = ui->delevercardetail->text();
 
     if(opcode!="")
     {
-        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان' from `Customer` ,`Order` where `Order-num` =  "+opcode+" and `C-code` = `Cnum`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة', `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان' from `Customer` ,`Order` where `Order-num` =  "+opcode+" and `C-code` = `Cnum`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customerphone!="")
     {
-        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Number` = '"+customerphone+"' and `C-code` = `Cnum`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة', `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Number` = '"+customerphone+"' and `C-code` = `Cnum`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customename!="")
     {
-        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Name` like '%"+customename+"%' and `C-code` = `Cnum` ");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',  `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Name` like '%"+customename+"%' and `C-code` = `Cnum` ");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customercode!="")
     {
-        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Cnum` = '"+customercode+"' and `Cnum` = `C-code`  ");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة',  `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان'   from `Customer` , `Order` where `Cnum` = '"+customercode+"' and `Cnum` = `C-code`  ");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
 
+    }
+    else if(cardetail!="")
+    {
+        model1->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة', `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان' from `Customer` ,`Order` where `Order`.`Car-det` like  '%"+cardetail+"%' and `C-code` = `Cnum`");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
     }
 
 }
@@ -1915,9 +1934,9 @@ void MainWindow::on_pushButton_32_clicked()//اليومية
     table->setHeaderData(0, Qt::Horizontal, tr("كود اليومية"));
     table->setHeaderData(1, Qt::Horizontal, tr("كود المستخدم"));
     table->setHeaderData(2, Qt::Horizontal, tr("القيمة"));
-    table->setHeaderData(3, Qt::Horizontal, tr("السبب"));
-    table->setHeaderData(4, Qt::Horizontal, tr("التاريخ"));
-    table->setHeaderData(5, Qt::Horizontal, tr("داخل"));
+    table->setHeaderData(3, Qt::Horizontal, tr("التاريخ"));
+    table->setHeaderData(4, Qt::Horizontal, tr("داخل"));
+    table->setHeaderData(5, Qt::Horizontal, tr("السبب"));
     table->setHeaderData(6, Qt::Horizontal, tr("حسابات شركة"));
     ui->dailymtable->setModel(table);
 }
@@ -2821,7 +2840,7 @@ void MainWindow::on_pushButton_56_clicked()
             ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
 
     QSqlQueryModel *model=new  QSqlQueryModel();
-    model->setQuery("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' from `employee` as e");
+    model->setQuery("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' ,(select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' from `employee` as e");
     ui->salaryReportTable->setModel(model);
 }
 
@@ -2987,13 +3006,21 @@ void MainWindow::on_actionSettings_triggered()
 
 QString MainWindow::generate_html_op(QString opcode){
     QSqlQuery qry;
-    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `time`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
+    qry.exec("select `Customer`.`Name`, `employee`.`Name` ,  `Order-time`, `Delvtime`, `Time2`, `Car-det`, `Order`,  `flat_color`, `wheel` , `Warn`, `flat`,`M-Pay` from `Order`,`Customer`, `employee` where `Order-num` = "+opcode+" and `A-code` = `Ecode` and `C-code` = `Cnum`;");
     qry.first();
-    QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+    QString order = qry.value(6).toString();
+    QString flat;
+    if (qry.value(10).toString() == "1")
+        order += " ارضيه :  " + qry.value("flat_color").toString();
+            QString wheel;
+    if (qry.value(8).toString() == "1")
+        order += " طاره: نعم  ";
+    order += "";
+            QString html = "\uFEFF<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                    "<html><head><meta name=\"qrichtext\" content=\"1\" /><title>Jeans Car</title><style type=\"text/css\">\n"
                    "p, li { white-space: pre-wrap; }\n"
                    "</style></head><body style=\" font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
-                   "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">عمليه شراء</span></p>\n"
+                   "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\"></span></p>\n"
                    "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><img src=\":/logo/logo23.png\" width=\"100\" height=\"100\" /> </p>\n"
                    "<table border=\"1\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:70px;\" align=\"center\" cellspacing=\"2\" cellpadding=\"0\">\n"
                    "<tr>\n"
@@ -3023,17 +3050,10 @@ QString MainWindow::generate_html_op(QString opcode){
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">تاريخ التسليم </p></td></tr>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "<tr>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            "<td>\n";
-    QString time;
-    if(qry.value(4).toString() == "a"){
-        time = "من ١١ صباحا إالى ٥ مساء";
-    }
-    else if (qry.value(4).toString() == "b")
-        time = "من ٢ مساء إلى ٨ مساء ";
-    else
-        time = "من ٥ مساء إلى ١١ مساء ";
+    QString time = qry.value(4).toString();
     html+=
             "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+time+"</p></td>\n"
-                                                                                                                                                              "<td>\n"
+                                                                                                                                                         "<td>\n"
                                                                                                                                                               "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">وقت التسليم </p></td></tr>\n"
                                                                                                                                                               "<tr>\n"
                                                                                                                                                               "<td>\n"
@@ -3047,35 +3067,11 @@ QString MainWindow::generate_html_op(QString opcode){
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الضمان بالسنوات </p></td></tr>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<tr>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         "<td>\n"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+qry.value(6).toString()+" </p></td>\n"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+order+" </p></td>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              "<td>\n"
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">الطلب </p></td></tr>\n"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<tr>\n"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             "<td>\n";
-    QString flat;
-    if (qry.value(10).toString() == "1")
-        flat = qry.value(7).toString();
-    else
-        flat = "لا يوجد";
-    html+=
-            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+flat+"</p></td>\n"
-                                                                                                                                                              "<td>\n"
-                                                                                                                                                              "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دواسة </p></td></tr>\n"
-                                                                                                                                                              "<tr>\n"
-                                                                                                                                                              "<td>\n";
-    QString wheel;
-    if (qry.value(8).toString() == "1")
-        wheel = "نعم";
-    else
-        wheel = "لا يوجد";
-    html +=
-            "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+wheel+" </p></td>\n"
-                                                                                                                                                               "<td>\n"
-                                                                                                                                                               "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">طاره </p></td>"
-                                                                                                                                                               "</tr>\n"
-                                                                                                                                                               "<tr>\n"
-                                                                                                                                                               "<td>\n"
-                                                                                                                                                               "<p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
+
+                                                                                                                                                                   "<tr><td><p align=\"center\" style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">"+ qry.value("M-Pay").toString() +" </p></td>\n"
                                                                                                                                                                                                                                                                                                                                             "<td>\n"
                                                                                                                                                                                                                                                                                                                                             "<p align=\"right\" style=\" margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">دفع مسبق </p></td>"
                                                                                                                                                                                                                                                                                                                                             "</tr></table>"
@@ -3286,42 +3282,12 @@ void MainWindow::on_enter_clicked()
                 break;
             }
         }
-        if(found)
-        {
-            pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
-                                    +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
-                                    qry.value(11).toString()+qry.value(12).toString());
-            if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
-            {
-                qry.first();
-                *name=qry.value(0).toString();//QRY to do this
-                ui->adminline->setText(*name);
-                ui->admincodeline->setText(*code1);
-                code = code1;
-                ui->tabWidget->show();
-                setPriorty(*pirorty);
-                ui->username->setText("");
-                ui->password->setText("");
-                ui->username->setVisible(false);
-                ui->password->setVisible(false);
-                ui->enter->setVisible(false);
-                ui->admincodeline->setVisible(1);
-                ui->adminline->setVisible(1);
-                ui->label_68->setVisible(1);
-                ui->label_67->setVisible(1);
-                ui->pushButton_57->setVisible(1);
-            }
-            else
-            {
-                qDebug()<<qry.lastError().text();
-            }
-        }
-    if(found)
+           if(found)
     {
         pirorty =  new QString( qry.value(2).toString()+qry.value(3).toString()+qry.value(4).toString()+qry.value(5).toString()+qry.value(6).toString()
                 +qry.value(7).toString()+qry.value(8).toString()+qry.value(9).toString()+qry.value(10).toString()+
                 qry.value(11).toString()+qry.value(12).toString());
-        if(qry.exec("select E.`Name` from `Employee` as E , `Admin` as A where E.`Ecode` = A.`A-code` and E.`Ecode` ='"+*code1+"'"))
+        if(qry.exec("select E.`Name` from `Employee` as E  where E.`Ecode` = '"+*code1+"'"))
          {
           qry.first();
           *name=qry.value(0).toString();//QRY to do this
@@ -3329,7 +3295,7 @@ void MainWindow::on_enter_clicked()
           ui->admincodeline->setText(*code1);
           code = code1;
           ui->tabWidget->show();
-          setPriorty(*pirorty);
+          this->setPriorty(*pirorty);
           ui->username->setText("");
           ui->password->setText("");
           ui->username->setVisible(false);
@@ -3340,6 +3306,7 @@ void MainWindow::on_enter_clicked()
           ui->label_68->setVisible(1);
           ui->label_67->setVisible(1);
           ui->pushButton_57->setVisible(1);
+          this->showMaximized();
           this->setMaximumSize(16777215, 16777215);
         }
         else
@@ -3426,7 +3393,7 @@ QString MainWindow::generate_html_running(QString Date){
     }
 
     html += "</table>";
-    qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'ذ';");
+    qry.exec("select `Order-num`, `Name`, `Car-det`, `stamp`, `order`, IF(`wheel` = '1', 'طاره : نعم', 'طاره : لا يوجد'), if(`flat` = '1' ,CONCAT('أرضيه:', `flat_color`), 'أرضيه : لا يوجد') from `Order`, `employee` where `A-code` = `Ecode` and `Delvtime` = '"+ Date +"' and `time` = 'c';");
 
     html += "<p align=\"center\" style=\" margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:18pt; font-weight:600;\">من ٥ مساء ل ١١ مساء</span></p>\n";
     if(qry.next()){
@@ -3495,7 +3462,6 @@ void MainWindow::on_s7bcode_cursorPositionChanged(int arg1, int arg2)
     ui->s7btype->setText(qry.value(0).toString());
 }
 
-
 void MainWindow::on_pushButton_235_clicked()
 {
     QString num = ui->cusnumber->text();
@@ -3513,7 +3479,6 @@ void MainWindow::on_pushButton_235_clicked()
     }
     mb.exec();
 }
-
 
 void MainWindow::on_orderpay_valueChanged(double arg1)
 {
@@ -3576,15 +3541,12 @@ void MainWindow::on_pushButton_234_clicked()
              "`Date`,"
              "`carDetail`,"
              "`ecode`,"
-             "`ename`,"
              "`ccode`,"
-             "`cname`,"
-             "`cnum`,"
              "`order`,"
              "`pay`,"
              "`remain`,"
              "`total`)"
-             "VALUES ('"+code+"', '"+date+"', '"+car+"', '"+ ecode +"', '"+ename+"', '"+ccode+"', '"+cname+"' ,'"+cnum+"' , '"+order+"', '"+QString::number(pay)+"', '"+ QString::number( remain) +"', '"+QString::number(total)+"'  );");
+             "VALUES ('"+code+"', '"+date+"', '"+car+"', '"+ ecode +"',  '"+ccode+"',  '"+order+"', '"+QString::number(pay)+"', '"+ QString::number( remain) +"', '"+QString::number(total)+"'  );");
     if (done){
         mb.setWindowTitle("تم");
         mb.setText("تم اضافة عملية الارشيف بنجاح");
@@ -3613,6 +3575,136 @@ void MainWindow::on_lineEdit_returnPressed()
     qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+code+"';");
     qry.first();
     ui->orderdeal->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_pushButton_59_clicked()
+{
+    QSqlQueryModel* qry = new QSqlQueryModel;
+    qry->setQuery("select `Order`.`Order-num` as 'كود العملية',`Order`.`A-code` as 'كود المستخدم',`Order`.`C-code` as 'كود العميل', `Order`.`Car-det` as 'تفاصيل السيارة', `Order`.`stamp` as 'كود الاسطمبه',`Order`.`Total-price` as 'السعر الكلي' ,`Order`.`M-Pay` as 'دفع' , `Order`.`M-Remain` as 'المتبقي' ,`Order`.`Order-time` as 'وقت الطلب', `Order`.`Delvtime` as 'تاريخ التسليم',`Order`.`Time2` as 'وقت التسليم',`Order`.`Order` as 'الطلب /السعر مفصل',`Order`.`Done` as 'تم التسليم',`Order`.`Bouns` as 'اضافية',`Customer`.`Cnum` as 'كودالعميل', `Customer`.`Name` as 'اسم العميل',`Customer`.`Number` as 'رقم الهاتف',`Order`.`flat` as 'دواسة' , `wheel` as 'طارة' , `flat_color` as 'لون الدواسة' , `Warn` as 'الضمان' from `Customer` ,`Order` where `C-code` = `Cnum`;");
+    ui->delevertable->setModel(qry);
+}
+
+void MainWindow::on_pushButton_60_clicked()
+{
+    QSqlQueryModel *model1=new QSqlQueryModel;
+    QString opcode=ui->archcode->text()
+            ,customercode=ui->archcuscode->text()
+            ,customename=ui->archcuname->text()
+            ,customerphone=ui->archcusnum->text(),
+            cardetail = ui->archcar->text();
+
+    if(opcode!="")
+    {
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where a.`code` like  '"+opcode+"%' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
+    }
+    else if(customerphone!="")
+    {
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum`as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Number` = '"+customerphone+"' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
+    }
+    else if(customename!="")
+    {
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Name` like '%"+customename+"%' and e.`Ecode` = a.`ecode` ");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
+    }
+    else if(customercode!="")
+    {
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Cnum` = '"+customercode+"'  and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
+
+    }
+    else if(cardetail!="")
+    {
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and a.`carDetail` like  '%"+cardetail+"%' and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        ui->delevertable->setModel(model1);
+    }
+
+}
+
+void MainWindow::on_pushButton_61_clicked()
+{
+    QSqlQueryModel *model1=new QSqlQueryModel;
+    QString opcode= ui->archdate->date().toString("yyyy");
+    model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and e.`Ecode` = a.`ecode` and year(a.`Date`) = "+ opcode +" ");//معلومات كاملة عن عملية الشراء
+    ui->delevertable->setModel(model1);
+}
+
+void MainWindow::on_pushButton_62_clicked()
+{
+    QString code = ui->deletedailycode->text();
+    QSqlQuery qry;
+    qry.exec("select * from `daily` where `Dcode` = "+code+"");
+    qry.first();
+    QMessageBox mb(this);
+    if (qry.value(0).toString() != code ){
+        mb.setWindowTitle("خطأ");
+        mb.setText("لا يوجد يوميه بهذا الكود");
+    }
+    else{
+        qry.exec("delete from `Daily` where `Dcode` = "+code+";");
+        mb.setWindowTitle("تم");
+        mb.setText("تم الحذف.");
+    }
+    mb.exec();
+}
+
+void MainWindow::on_pushButton_63_clicked()
+{
+    QString from, to;
+    from = english.toString(ui->from->date(), "yyyy-MM-dd");
+    to = english.toString(ui->to->date(), "yyyy-MM-dd");
+    QSqlQueryModel *model1=new QSqlQueryModel;
+    model1->setQuery("select e.`Ecode` as 'كود الموظف',e.`Name`as 'اسم الموظف' , (select sum(`Amount`) from `OverTime` where (`Date` BETWEEN '"+from+"' AND '"+to+"') and `Ecode` = e.`Ecode`) as 'عدد الساعات' , e.`HourRate` as 'سعر الساعه', ( (select sum(`Amount`) from `OverTime` where (`Date` BETWEEN '"+from+"' AND '"+to+"') and `Ecode` = e.`Ecode`) * e.`HourRate`) as 'المجموع'  from `Employee` as e ");
+    ui->salaryReportTable->setModel(model1);
+}
+
+
+void MainWindow::on_pushButton_64_clicked()
+{
+    QString  month=english.toString(ui->salaryReportdate->date(),"MM")
+            ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
+    QSqlQuery qry;
+    qry.exec("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' ,(select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' from `employee` as e");
+    QString text = "الراتب المستحق" "\t"
+            "عدد ايام الغياب" "\t"
+            "عدد ساعات التأخير" "\t"
+             "اجمالي الزياده" "\t"
+            "اجمالي السلفه" "\t"
+            "اجمالي الخصم" "\t"
+              "الراتب الاساسي" "\t"
+                   "الاسم" "\t"
+                   "الكود" "\n"  ;
+    while (qry.next()) {
+        text+= qry.value(8).toString() + "\t" + qry.value(7).toString() + "\t"
+             + qry.value(6).toString() + "\t" + qry.value(5).toString() + "\t"
+             + qry.value(4).toString() + "\t" + qry.value(3).toString() + "\t"
+             + qry.value(2).toString() + "\t" + qry.value(1).toString() + "\t"
+             + qry.value(0).toString() + "\n";
+    }
+    QApplication::clipboard()->setText(text);
+}
+
+void MainWindow::on_pushButton_65_clicked()
+{
+    QString from, to;
+    from = english.toString(ui->from->date(), "yyyy-MM-dd");
+    to = english.toString(ui->to->date(), "yyyy-MM-dd");
+    QSqlQuery qry;
+    qry.exec("select e.`Ecode` as 'كود الموظف',e.`Name`as 'اسم الموظف' , (select sum(`Amount`) from `OverTime` where (`Date` BETWEEN '"+from+"' AND '"+to+"') and `Ecode` = e.`Ecode`) as 'عدد الساعات' , e.`HourRate` as 'ثمن الساعه', ( (select sum(`Amount`) from `OverTime` where (`Date` BETWEEN '"+from+"' AND '"+to+"') and `Ecode` = e.`Ecode`) * e.`HourRate`) as 'المجموع'  from `Employee` as e ");
+    QString text;
+    text += "المجموع" "\t"
+            "ثمن الساعه" "\t"
+            "عدد الساعات""\t"
+            "اسم الموظف" "\t"
+            "كود الموظف" "\n";
+    while (qry.next()) {
+        text+= qry.value(4).toString() + "\t" + qry.value(3).toString() + "\t"
+             + qry.value(2).toString() + "\t" + qry.value(1).toString() + "\t"
+             + qry.value(0).toString() + "\n";
+
+    }
+    QApplication::clipboard()->setText(text);
 }
 
 void MainWindow::on_cusnumber_returnPressed()

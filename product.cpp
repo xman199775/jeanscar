@@ -20,6 +20,10 @@ product::product(QWidget *parent, QString o) :
     qry.exec("select  `Name` from `Order`,`Employee` where `Order-num` = "+opnum+" and `A-code` = `Ecode`;");
     qry.first();
     ui->salescode->setText(qry.value(0).toString());
+    qry.exec("select  `Time2` from `Order` where `Order-num` = "+opnum+"");
+    qry.first();
+    ui->time->setText(qry.value(0).toString());
+
     qry.exec("select `cur` from  `Order` where `Order-num` = "+opnum+";");
     qry.first();
 

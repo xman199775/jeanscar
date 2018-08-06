@@ -104,6 +104,11 @@
         </item>
         <item>
          <property name="text">
+          <string>ساعات إضافيه</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string>ملاحظات</string>
          </property>
         </item>

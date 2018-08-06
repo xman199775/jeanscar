@@ -35,7 +35,7 @@
         </font>
        </property>
        <property name="text">
-        <string>موديل السيارة:</string>
+        <string>موديل السيارة: </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -61,7 +61,7 @@
         </font>
        </property>
        <property name="text">
-        <string>اسطمبة:       </string>
+        <string>اسطمبة:         </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -83,7 +83,29 @@
         </font>
        </property>
        <property name="text">
-        <string>اسم البائع:    </string>
+        <string>اسم البائع:      </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLineEdit" name="time"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>وقت التسليم:    </string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
