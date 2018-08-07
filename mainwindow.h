@@ -254,6 +254,8 @@ private slots:
 
     void on_pushButton_65_clicked();
 
+    void on_customertable_activated(const QModelIndex &index);
+
 private:
     Ui::MainWindow *ui;
     QString *name;

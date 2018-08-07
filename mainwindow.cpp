@@ -2840,7 +2840,7 @@ void MainWindow::on_pushButton_56_clicked()
             ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
 
     QSqlQueryModel *model=new  QSqlQueryModel();
-    model->setQuery("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' ,(select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' from `employee` as e");
+    model->setQuery("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) = '1' as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' , (select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount` from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' , (select IF(`Done` = '1' , 'تم', 'لم يتم') from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'تم التسليم'  from `employee` as e");
     ui->salaryReportTable->setModel(model);
 }
 
@@ -3577,6 +3577,33 @@ void MainWindow::on_lineEdit_returnPressed()
     ui->orderdeal->setText(qry.value(0).toString());
 }
 
+void MainWindow::on_cusnumber_returnPressed()
+{
+    QString num = ui->cusnumber->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
+    qry.first();
+    ui->cusname->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_cusnumber_editingFinished()
+{
+    QString num = ui->cusnumber->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
+    qry.first();
+    ui->cusname->setText(qry.value(0).toString());
+}
+
+void MainWindow::on_lineEdit_editingFinished()
+{
+    QString code = ui->lineEdit->text();
+    QSqlQuery qry;
+    qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+code+"';");
+    qry.first();
+    ui->orderdeal->setText(qry.value(0).toString());
+}
+
 void MainWindow::on_pushButton_59_clicked()
 {
     QSqlQueryModel* qry = new QSqlQueryModel;
@@ -3595,28 +3622,28 @@ void MainWindow::on_pushButton_60_clicked()
 
     if(opcode!="")
     {
-        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where a.`code` like  '"+opcode+"%' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',c.`Name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where a.`code` like  '"+opcode+"%' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customerphone!="")
     {
-        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum`as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Number` = '"+customerphone+"' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ', c.`name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Number` = '"+customerphone+"' and a.`ccode` = c.`Cnum` and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customename!="")
     {
-        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Name` like '%"+customename+"%' and e.`Ecode` = a.`ecode` ");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',c.`Name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Name` like '%"+customename+"%' and e.`Ecode` = a.`ecode` ");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
     else if(customercode!="")
     {
-        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Cnum` = '"+customercode+"'  and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ', c.`Name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and c.`Cnum` = '"+customercode+"'  and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
 
     }
     else if(cardetail!="")
     {
-        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and a.`carDetail` like  '%"+cardetail+"%' and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
+        model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ', c.`Name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and a.`carDetail` like  '%"+cardetail+"%' and e.`Ecode` = a.`ecode`");//معلومات كاملة عن عملية الشراء
         ui->delevertable->setModel(model1);
     }
 
@@ -3626,7 +3653,7 @@ void MainWindow::on_pushButton_61_clicked()
 {
     QSqlQueryModel *model1=new QSqlQueryModel;
     QString opcode= ui->archdate->date().toString("yyyy");
-    model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',`order` as 'الطلب ',a.`cnum` as 'كودالعميل', `cname` as 'اسم العميل',c.`cnum` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and e.`Ecode` = a.`ecode` and year(a.`Date`) = "+ opcode +" ");//معلومات كاملة عن عملية الشراء
+    model1->setQuery("select a.`Code` as 'كود العملية',a.`ecode` as 'كود المستخدم', e.`Name` as 'اسم المتعاقد', a.`ccode` as 'كود العميل', a.`carDetail` as 'تفاصيل السيارة' ,a.`total` as 'السعر الكلي' ,a.`pay` as 'دفع' , `remain` as 'المتبقي' , a.`Date` as 'وقت التسليم',a.`order` as 'الطلب ', c.`Name` as 'اسم العميل',c.`Number` as 'رقم الهاتف' from `Customer` as c ,`Arch` as a, `Employee` as e where  c.`Cnum` = a.`ccode` and e.`Ecode` = a.`ecode` and year(a.`Date`) = "+ opcode +" ");//معلومات كاملة عن عملية الشراء
     ui->delevertable->setModel(model1);
 }
 
@@ -3659,14 +3686,14 @@ void MainWindow::on_pushButton_63_clicked()
     ui->salaryReportTable->setModel(model1);
 }
 
-
 void MainWindow::on_pushButton_64_clicked()
 {
     QString  month=english.toString(ui->salaryReportdate->date(),"MM")
             ,year=english.toString(ui->salaryReportdate->date(),"yyyy");
     QSqlQuery qry;
-    qry.exec("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' ,(select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' from `employee` as e");
-    QString text = "الراتب المستحق" "\t"
+    qry.exec("select e.`Ecode` as 'الكود' , e.`Name` as 'الاسم', e.`Clear-salary` as 'الراتب الاساسي' , ( select   sum(`Amount`) as dis from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd' ) as 'اجمالي الخصم' , ( select  sum(`Amount`) as solfa from `Modify-salary`  where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 's' ) as 'اجمالي السلفة' , ( select   sum(`Amount`) as zyada from `Modify-salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'z' ) as 'اجمالي الزيادة' ,(select sum(`Amount`) from `delay-time` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ساعات التأخير',(select count(`E-code`) from `attendence` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'عدد ايام الغياب' , (select `Amount`  from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'الراتب المستحق' , (select IF(`Done` = '1' , 'تم', 'لم يتم') from `Salary` where `E-code` = e.`Ecode` and month(`Date`) = "+month+" and year(`Date`) = "+year+") as 'تم التسليم' from `employee` as e");
+    QString text ="تم التسليم" "\t"
+            "الراتب المستحق" "\t"
             "عدد ايام الغياب" "\t"
             "عدد ساعات التأخير" "\t"
              "اجمالي الزياده" "\t"
@@ -3676,11 +3703,11 @@ void MainWindow::on_pushButton_64_clicked()
                    "الاسم" "\t"
                    "الكود" "\n"  ;
     while (qry.next()) {
-        text+= qry.value(8).toString() + "\t" + qry.value(7).toString() + "\t"
-             + qry.value(6).toString() + "\t" + qry.value(5).toString() + "\t"
-             + qry.value(4).toString() + "\t" + qry.value(3).toString() + "\t"
-             + qry.value(2).toString() + "\t" + qry.value(1).toString() + "\t"
-             + qry.value(0).toString() + "\n";
+        text+= qry.value(9).toString() + "\t" + qry.value(8).toString() + "\t" +
+               qry.value(7).toString() + "\t" + qry.value(6).toString() + "\t" +
+               qry.value(5).toString() + "\t" + qry.value(4).toString() + "\t" +
+               qry.value(3).toString() + "\t" + qry.value(2).toString() + "\t" +
+               qry.value(1).toString() + "\t" + qry.value(0).toString() + "\n";
     }
     QApplication::clipboard()->setText(text);
 }
@@ -3707,29 +3734,7 @@ void MainWindow::on_pushButton_65_clicked()
     QApplication::clipboard()->setText(text);
 }
 
-void MainWindow::on_cusnumber_returnPressed()
+void MainWindow::on_customertable_activated(const QModelIndex &index)
 {
-    QString num = ui->cusnumber->text();
-    QSqlQuery qry;
-    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
-    qry.first();
-    ui->cusname->setText(qry.value(0).toString());
-}
 
-void MainWindow::on_cusnumber_editingFinished()
-{
-    QString num = ui->cusnumber->text();
-    QSqlQuery qry;
-    qry.exec("SELECT `Name` FROM `Customer` where  `Number` = '"+num+"';");
-    qry.first();
-    ui->cusname->setText(qry.value(0).toString());
-}
-
-void MainWindow::on_lineEdit_editingFinished()
-{
-    QString code = ui->lineEdit->text();
-    QSqlQuery qry;
-    qry.exec("SELECT `Name` FROM `employee` where  `Ecode` = '"+code+"';");
-    qry.first();
-    ui->orderdeal->setText(qry.value(0).toString());
 }

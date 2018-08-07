@@ -23,6 +23,11 @@ private slots:
 
     void setValue(const int recNo, const QString paramName, QVariant &paramValue, const int reportPage);
 
+    void on_pushButton_clicked();
+
+    void on_table_doubleClicked(const QModelIndex &index);
+
+
 private:
     Ui::Taqrer_salar *ui;
     QString ecode, month, year;
@@ -34,6 +39,7 @@ private:
     void setModelTa5eer();
     void setModelOver();
     void setRest();
+    void setProduce();
 };
 
 #endif // TAQRER_SALAR_H
