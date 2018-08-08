@@ -303,67 +303,35 @@ void MainWindow::on_pushButton_23_clicked()//تعديل موظف واظهار ت
 void MainWindow::on_pushButton_24_clicked()//تحضير المرتبات
 {
     QString date=english.toString(ui->salarydate->date(),"yyyy-MM-dd")
-            ,ecode;
+            ,ecode,
+            month=english.toString(ui->salarydate->date(),"MM")
+            ,year=english.toString(ui->salarydate->date(),"yyyy");
     bool found=false;
     QSqlQuery qryf;
     QSqlQuery qry;
     QSqlQuery qryd;
-    qryd.exec("select `Date` from `Salary`");
+    qryd.exec("select `Ecode` from `Employee` ");
     while (qryd.next())
     {
-        if(qryd.value(0).toString()==date)
+        ecode = qryd.value(0).toString();
+        qry.exec("select `E-code` from `Salary` where month(`Date`) = "+month+" and year(`Date`) = "+year+" and `E-code` = '"+ecode+"'");
+        qry.first();
+        if(qry.value(0).toString() != ecode)
         {
-            found=true;
-            break;
+            qry.exec("INSERT INTO `JeansCar`.`Salary` (`E-code`, `Date`, `Amount`, `Done`) select '"+ecode+"', '"+date+"', `Clear-salary` , 0 from `Employee` WHERE `Ecode` = '"+ecode+"';");
+            found = true;
         }
     }
-
-    if(!found)
-    {
-        if(qryf.exec("SELECT Ecode FROM JeansCar.Employee;"))//نبحث عن الموظف
-        {
-            while (qryf.next())
-            {
-                ecode=qryf.value(0).toString();
-                if(qry.exec("INSERT INTO `JeansCar`.`Salary` (`E-code`, `Date`, `Amount`, `Done`) select '"+ecode+"', '"+date+"', `Clear-salary` , 0 from `Employee` WHERE `Ecode` = '"+ecode+"';"))
-                {
-
-
-                }
-                else
-                {
-                    QMessageBox msgBox (this);
-                    msgBox.setWindowTitle("خطاء");
-                    msgBox.setText(qry.lastError().text());
-                    msgBox.exec();
-                    found=true;
-                    break;
-                }
-            }
-            if(!found)
-            {
-                QMessageBox msgBox (this);
-                msgBox.setWindowTitle("تم");
-                msgBox.setText("تم تحضير المرتب");
-                msgBox.exec();
-            }
-        }
-
-        else
-        {
-            QMessageBox msgBox (this);
-            msgBox.setWindowTitle("خطاء");
-            msgBox.setText(qryf.lastError().text());
-            msgBox.exec();
-        }
+    QMessageBox mb(this);
+    if (found){
+        mb.setWindowTitle("تم");
+        mb.setText("تم التحضير");
     }
-    else
-    {
-        QMessageBox msgBox (this);
-        msgBox.setWindowTitle("خطاء");
-        msgBox.setText("تم تحضير الشهر من قبل");
-        msgBox.exec();
+    else{
+        mb.setWindowTitle("خطأ");
+        mb.setText("تم التحضير من قبل!");
     }
+    mb.exec();
 }
 
 void MainWindow::on_pushButton_13_clicked()//اضافة مستخدم
