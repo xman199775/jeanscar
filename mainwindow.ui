@@ -282,7 +282,7 @@ background-color: rgb(108, 108, 108);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
