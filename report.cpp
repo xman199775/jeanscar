@@ -70,6 +70,32 @@ void report::on_pushButton_2_clicked()
     table=new QSqlTableModel();
     table->setTable("Employee");
     table->select();
+    table->setHeaderData(0,  Qt::Horizontal, tr("كود الموظف"));
+    table->setHeaderData(1,  Qt::Horizontal, tr("الإسم"));
+    table->setHeaderData(2,  Qt::Horizontal, tr("الرقم القومي"));
+    table->setHeaderData(3,  Qt::Horizontal, tr("الحالة الإجتماعيه"));
+    table->setHeaderData(4,  Qt::Horizontal, tr("تاريخ الميلاد"));
+    table->setHeaderData(5,  Qt::Horizontal, tr("رقم التليفون"));
+    table->setHeaderData(6,  Qt::Horizontal, tr("هاتف المنزل"));
+    table->setHeaderData(7,  Qt::Horizontal, tr("عنوان البطاقه"));
+    table->setHeaderData(8,  Qt::Horizontal, tr("عنوان آخر"));
+    table->setHeaderData(9,  Qt::Horizontal, tr("الراتب الاساسي"));
+    table->setHeaderData(10, Qt::Horizontal, tr("آخر راتب حصل عليه"));
+    table->setHeaderData(11, Qt::Horizontal, tr("عدد ساعات العمل"));
+    table->setHeaderData(12, Qt::Horizontal, tr("وقت الحضور"));
+    table->setHeaderData(13, Qt::Horizontal, tr("وقت الانصراف"));
+    table->setHeaderData(14, Qt::Horizontal, tr("القسم"));
+    table->setHeaderData(15, Qt::Horizontal, tr("آخر شهاده تم الحصول عليها"));
+    table->setHeaderData(16, Qt::Horizontal, tr("تاريخ التخرج"));
+    table->setHeaderData(17, Qt::Horizontal, tr("تاريخ الحصول على المهنه"));
+    table->setHeaderData(18, Qt::Horizontal, tr("الوظيفه الحاليه"));
+    table->setHeaderData(19, Qt::Horizontal, tr("عدد سنوات ممارسه المهنه"));
+    table->setHeaderData(20, Qt::Horizontal, tr("خبرات آخرى"));
+    table->setHeaderData(21, Qt::Horizontal, tr("مؤمن عليه"));
+    table->setHeaderData(22, Qt::Horizontal, tr("اسبوعي"));
+    table->setHeaderData(23, Qt::Horizontal, tr("ملاحظات خاصه"));
+    table->setHeaderData(24, Qt::Horizontal, tr("حد ادنى للمرتب"));
+    table->setHeaderData(25, Qt::Horizontal, tr("ثمن الساعه الاضافيه"));
     ui->tableView->setModel(table);
 }
 

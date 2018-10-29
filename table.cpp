@@ -2223,7 +2223,7 @@ table::table(QWidget *parent, QDate date1) :
     cur = date1;
     date = date1;
     set11to5(date);
-    ui->change_date->setDate(QDate::currentDate());
+    ui->change_date->setDate(date1);
     set_curr(date1);
 }
 
