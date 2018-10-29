@@ -29,7 +29,7 @@ SOURCES += main.cpp\
     priority.cpp \
     accounting.cpp \
     settings.cpp \
-    print.cpp \
+    print.cpp
 
 HEADERS  += mainwindow.h \
     password.h \

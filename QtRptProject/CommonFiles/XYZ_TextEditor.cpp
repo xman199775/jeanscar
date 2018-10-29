@@ -25,7 +25,7 @@ limitations under the License.
 #include "XYZ_TextEditor.h"
 #include "ui_XYZ_TextEditor.h"
 #include <QDebug>
-
+#include <QButtonGroup>
 XYZTextEditor::XYZTextEditor(QWidget *parent)
 : QWidget(parent), m_ui(new Ui::XYZTextEditor)
 {

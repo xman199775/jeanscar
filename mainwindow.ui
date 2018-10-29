@@ -282,7 +282,7 @@ background-color: rgb(108, 108, 108);
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <property name="iconSize">
        <size>
@@ -3526,8 +3526,8 @@ background-color: rgb(108, 108, 108);
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1476</width>
-             <height>726</height>
+             <width>1488</width>
+             <height>723</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_79">
