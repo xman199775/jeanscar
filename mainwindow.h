@@ -256,6 +256,11 @@ private slots:
 
     void on_customertable_activated(const QModelIndex &index);
 
+    void on_employeecodea7wal_cursorPositionChanged(int arg1, int arg2);
+
+    void on_attends_2_clicked();
+
+    
 private:
     Ui::MainWindow *ui;
     QString *name;
