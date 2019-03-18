@@ -2818,12 +2818,13 @@ void MainWindow::on_pushButton_56_clicked()
     QSqlQuery qry, qry1;
     qry.exec("Select `Ecode`, `Clear-salary`, `Hours` from `employee`;");
     QString code;
-    int hours, salary;
+    int hours;
+    double salary;
     double absents;
     double dis, bouns, solfa, late, day, remain = 0;
     while (qry.next()) {
         code = qry.value(0).toString();
-        salary = qry.value(1).toInt();
+        salary = qry.value(1).toDouble();
         hours = qry.value(2).toInt();
         day = salary / 30.0;
         qry1.exec("select  sum(`Amount`) as dis from `Modify-salary` where `E-code` = '"+ code +"' and month(`Date`) = "+month+" and year(`Date`) = "+year+" and `Type` = 'd'");
