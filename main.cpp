@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QSqlDatabase mydata = QSqlDatabase::addDatabase("QMYSQL");
 
-    mydata.setHostName("Jeans.jns.com");
+    mydata.setHostName("JEANSCARSERVER.jeanscar.local");
     mydata.setDatabaseName("JeansCar");
     mydata.setUserName("jeanscar");
     mydata.setPassword("ASHnouhcompany");
